@@ -1883,6 +1883,7 @@ function computeMMR(){
     const tId = e.torneoId ?? null;
     if(e._tipo==='partido'){
       if(!e.e1?.length || !e.e2?.length) continue;
+      if(e.e1.length !== e.e2.length) continue; // equipos de tamaño desparejo: no distorsionan el MMR
       const a1 = e.e1.reduce((s,x)=>s+get(x),0)/e.e1.length;
       const a2 = e.e2.reduce((s,x)=>s+get(x),0)/e.e2.length;
       const s1 = e.res==='E1'?1: e.res==='E2'?0:0.5;
@@ -2030,7 +2031,7 @@ function getCache(){
 <script>
 /* ================= RENDER ================= */
 const TABS = [
-  ['tabla','Tabla'], ['partidos','Partidos'], ['tris','Triangulares'],
+  ['tabla','Tabla'], ['evolucion','Evolución histórica'], ['partidos','Partidos'], ['tris','Triangulares'],
   ['mmr','MMR'], ['sorteo','Armar equipos'], ['matriz','Matriz'], ['sanciones','Sanciones'],
   ['jugadores','Jugadores'], ['config','Configuración']
 ];
@@ -2063,7 +2064,7 @@ function render(){
   $('#btnAdmin').firstChild.textContent = isAdmin ? '🔓 ' : '🔒 ';
   renderTabs(); renderTorneoSel();
   const m=$('#main'); m.innerHTML='';
-  ({tabla:vTabla, partidos:vPartidos, tris:vTris, mmr:vMMR,
+  ({tabla:vTabla, evolucion:vEvolucionHistorica, partidos:vPartidos, tris:vTris, mmr:vMMR,
     sorteo:vSorteo, matriz:vMatriz, sanciones:vSanciones, jugadores:vJugadores, config:vConfig}[tab])(m);
 }
 
@@ -2081,7 +2082,15 @@ function tablaRows(tid){
   let rows = Object.entries(st)
     .filter(([id])=> !jugador(id).borrado)
     .map(([id,x])=>({id, nombre:jnom(id), ...x, total:totalPts(x,P), mmr:ratings[id]??S.config.mmr.inicial, ppp: x.pj? totalPts(x,P)/x.pj : 0}));
-  jugadoresActivos().forEach(j=>{ if(!st[j.id]) rows.push({id:j.id,nombre:j.nombre,...statsBlank(),total:0,mmr:ratings[j.id]??S.config.mmr.inicial,ppp:0}); });
+  if(tid==='ALL' || tid==='AMISTOSO'){
+    jugadoresActivos().forEach(j=>{ if(!st[j.id]) rows.push({id:j.id,nombre:j.nombre,...statsBlank(),total:0,mmr:ratings[j.id]??S.config.mmr.inicial,ppp:0}); });
+  } else {
+    const t = torneo(tid);
+    const zonaIds = t?.zonas ? new Set([...(t.zonas.primera||[]),...(t.zonas.b||[])]) : null;
+    if(zonaIds){
+      jugadoresActivos().forEach(j=>{ if(!st[j.id] && zonaIds.has(j.id)) rows.push({id:j.id,nombre:j.nombre,...statsBlank(),total:0,mmr:ratings[j.id]??S.config.mmr.inicial,ppp:0}); });
+    }
+  }
   return rows;
 }
 function ordenar(rows, k, base){ rows.sort((a,b)=> ((b[k]??0)-(a[k]??0)) || b.total-a.total || (base? (base[a.id]??1e9)-(base[b.id]??1e9) : 0) || a.nombre.localeCompare(b.nombre)); return rows; }
@@ -2139,7 +2148,7 @@ function tablaUnica(rows){
   const ordenDef = S.config.ordenTabla || 'mmr';
   const orden = ordenColAll || ordenDef;
   const base = {}; rows.forEach((r,i)=>base[r.id]=i);
-  const sorted = orden===ordenDef ? rows : ordenar([...rows], orden, base);
+  const sorted = ordenar([...rows], orden, base);
   const {F, cols, MIN} = colsTabla();
   const p = el('div',{className:'panel'});
   p.innerHTML = `<div class="zona-h"><h2 class="display">Histórico completo</h2></div>`;
@@ -2148,7 +2157,7 @@ function tablaUnica(rows){
   let html = `<table class="tabla"><thead><tr><th class="zh">#</th><th class="nombre">Jugador</th>` +
     cols.map(([k,l])=>`<th data-k="${k}" class="${MIN.has(k)?'min ':''}${orden===k?'sorted':''}">${l}</th>`).join('') + `</tr></thead><tbody>`;
   sorted.forEach((r,i)=>{
-    html += `<tr class="${i<4?'r-top':''}"><td class="rank">${i+1}</td><td class="nombre">${esc(r.nombre)}${campeonBadge(r.id)}</td>
+    html += `<tr><td class="rank">${i+1}</td><td class="nombre">${esc(r.nombre)}${campeonBadge(r.id)}</td>
       <td class="pts">${fmt(r.total)}</td>
       ${F.mmrCol?`<td class="mmr">${fmt(r.mmr,0)}</td>`:''}
       <td>${r.pj}</td><td>${r.g}</td><td>${r.e}</td><td>${r.p}</td>
@@ -2169,7 +2178,6 @@ function tablaUnica(rows){
 }
 function bloqueDerechaTabla(tid){
   const box=el('div');
-  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--azul);margin-bottom:8px',textContent:'Puntos totales, partido a partido'}));
   const pt=pointsTimeline(tid);
   if(!pt.events.length){ box.appendChild(el('div',{className:'empty',textContent:'Sin partidos todavía.'})); return box; }
   const idsSet=new Set(); pt.events.forEach(e=>participantesDe(e).forEach(id=>idsSet.add(id)));
@@ -2232,21 +2240,23 @@ function vTabla(m){
   p.querySelector('#btnWsp').onclick=()=>copiarTablaWsp();
   m.appendChild(p);
 
-  const grid=el('div',{className:'mmr-grid'});
-  const leftCol=el('div');
   if(esAll){
     const rows=tablaRows('ALL');
-    if(rows.length) leftCol.appendChild(tablaUnica(rows));
-    else leftCol.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
+    if(rows.length) m.appendChild(tablaUnica(rows));
+    else m.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
   } else {
     const {primera, b, base} = zonasSplitFor(torneoFiltro);
-    if(primera.length) leftCol.appendChild(tablaZona('A', primera, base));
-    if(b.length) leftCol.appendChild(tablaZona('B', b, base));
-    if(!primera.length && !b.length) leftCol.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
+    if(primera.length) m.appendChild(tablaZona('A', primera, base));
+    if(b.length) m.appendChild(tablaZona('B', b, base));
+    if(!primera.length && !b.length) m.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
   }
-  grid.appendChild(leftCol);
-  grid.appendChild(bloqueDerechaTabla(torneoFiltro));
-  m.appendChild(grid);
+}
+function vEvolucionHistorica(m){
+  const p=el('div',{className:'panel'});
+  p.innerHTML = `<h2 class="display">Evolución histórica · ${esc(nombreFiltro())}</h2>
+    <div class="hint">Puntos totales acumulados, partido a partido.</div>`;
+  p.appendChild(bloqueDerechaTabla(torneoFiltro));
+  m.appendChild(p);
 }
 function copiarTablaWsp(){
   const conMMR = S.config.mostrarMMR===true;

@@ -1,48 +1,313 @@
 {
  "version": 1,
- "updatedAt": "2026-07-03T03:26:12.738Z",
+ "updatedAt": "2026-07-03T12:52:02.703Z",
  "config": {
   "nombreLiga": "Copa de la Liga Matheu",
   "zonaCorte": 16,
-  "ordenTabla": "mmr",
+  "ordenTabla": "total",
   "mmr": {
    "inicial": 1000,
    "K": 100
   },
   "puntos": {
    "pj": 1,
-   "g": 2,
-   "e": 1,
+   "g": 1,
+   "e": 0,
    "p": 0,
    "mvp": 1,
    "domador": 1,
    "domado": -1,
    "goleadaFavor": 1,
    "goleadaContra": -1,
-   "tri1": 3,
-   "tri2": 2,
-   "tri3": 1,
+   "tri1": 2,
+   "tri2": 1,
+   "tri3": 0,
    "gano4pj": 1
   },
-  "flags": {}
+  "flags": {
+   "goleada": true,
+   "tri": true
+  }
  },
  "torneos": [
   {
+   "id": "to6wp96b",
+   "nombre": "Apertura 2023",
+   "cerrado": true,
+   "fechaInicio": "2023-03-02",
+   "fechaFin": "2023-06-23",
+   "puntos": {
+    "pj": 0,
+    "g": 2,
+    "p": 1,
+    "e": 1,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j9"
+  },
+  {
+   "id": "ttk1dbq9",
+   "nombre": "Clausura 2023",
+   "cerrado": true,
+   "fechaInicio": "2023-07-13",
+   "fechaFin": "2023-11-30",
+   "puntos": {
+    "pj": 0,
+    "g": 2,
+    "p": 1,
+    "e": 1,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j28"
+  },
+  {
+   "id": "toe2s4p9",
+   "nombre": "Apertura 2024",
+   "cerrado": true,
+   "fechaInicio": "2024-02-01",
+   "fechaFin": "2024-06-27",
+   "puntos": {
+    "pj": 0,
+    "g": 2,
+    "p": 1,
+    "e": 1,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j11"
+  },
+  {
+   "id": "tewu9u5g",
+   "nombre": "Clausura 2024",
+   "cerrado": true,
+   "fechaInicio": "2024-07-11",
+   "fechaFin": "2024-11-28",
+   "puntos": {
+    "pj": 1,
+    "g": 2,
+    "p": 0,
+    "e": 0,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j3"
+  },
+  {
+   "id": "tcrmhw5f",
+   "nombre": "Apertura 2025",
+   "cerrado": true,
+   "fechaInicio": "2025-01-02",
+   "fechaFin": "2025-05-22",
+   "puntos": {
+    "pj": 0,
+    "g": 2,
+    "p": 1,
+    "e": 1,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j9"
+  },
+  {
+   "id": "tmmaram2",
+   "nombre": "Apertura 2026",
+   "cerrado": true,
+   "fechaInicio": "2026-02-05",
+   "fechaFin": "2026-06-18",
+   "puntos": {
+    "pj": 0,
+    "g": 2,
+    "p": 1,
+    "e": 1,
+    "mvp": 1,
+    "domador": 1,
+    "domado": -1,
+    "goleadaFavor": 1,
+    "goleadaContra": -1,
+    "tri1": 0,
+    "tri2": 0,
+    "tri3": 0,
+    "gano4pj": 0
+   },
+   "campeonId": "j11",
+   "zonas": {
+    "primera": [
+     "j11",
+     "j17",
+     "j3",
+     "j34",
+     "j9",
+     "j8",
+     "j30",
+     "j22",
+     "j31",
+     "j27",
+     "j10"
+    ],
+    "b": [
+     "j12",
+     "j24",
+     "j25",
+     "jtp89cay",
+     "j14",
+     "j7",
+     "j32",
+     "j28",
+     "j5",
+     "j50",
+     "j51",
+     "j4",
+     "j33",
+     "j2",
+     "j52",
+     "j16",
+     "j29",
+     "j23",
+     "j6"
+    ]
+   }
+  },
+  {
    "id": "t1",
    "nombre": "Clausura 2025",
-   "cerrado": false
+   "cerrado": true,
+   "fechaInicio": "2025-06-12",
+   "fechaFin": "2025-11-13",
+   "zonas": {
+    "primera": [
+     "j9",
+     "j28",
+     "j3",
+     "j10",
+     "j17",
+     "j30",
+     "j34",
+     "j11",
+     "j2",
+     "j31",
+     "j27",
+     "j7",
+     "j13",
+     "j14",
+     "j32",
+     "j8",
+     "j12",
+     "j22",
+     "j19",
+     "j24",
+     "j29",
+     "j16",
+     "j21",
+     "j15",
+     "j18",
+     "j5",
+     "j4",
+     "j26",
+     "j6",
+     "j35",
+     "j33",
+     "jiwhkfog",
+     "j23",
+     "j25",
+     "jtp89cay"
+    ],
+    "b": []
+   }
+  },
+  {
+   "id": "t2e0od2k",
+   "nombre": "Clausura 2026",
+   "zonas": {
+    "primera": [
+     "j3",
+     "j35",
+     "j8",
+     "j9",
+     "j10",
+     "j11",
+     "j12",
+     "j13",
+     "j15",
+     "j17",
+     "j31",
+     "j22",
+     "j24",
+     "j25",
+     "j27",
+     "j30",
+     "j34",
+     "jtp89cay"
+    ],
+    "b": [
+     "j18",
+     "j19",
+     "j1",
+     "j20",
+     "j21",
+     "j23",
+     "j26",
+     "j28",
+     "j29",
+     "j32",
+     "j33",
+     "j14",
+     "j4",
+     "j5",
+     "j6",
+     "j7",
+     "j16",
+     "jiwhkfog"
+    ]
+   }
   }
  ],
  "jugadores": [
   {
    "id": "j1",
    "nombre": "Jugadores",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j2",
    "nombre": "Agusreggi",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j3",
@@ -97,7 +362,7 @@
   {
    "id": "j13",
    "nombre": "Gazza",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j14",
@@ -107,7 +372,7 @@
   {
    "id": "j15",
    "nombre": "German",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j16",
@@ -122,22 +387,22 @@
   {
    "id": "j18",
    "nombre": "Joacym",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j19",
    "nombre": "Juan-Soad",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j20",
    "nombre": "Leaan7",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j21",
    "nombre": "Luigi",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j22",
@@ -162,7 +427,7 @@
   {
    "id": "j26",
    "nombre": "PichiTrader",
-   "activo": true
+   "activo": false
   },
   {
    "id": "j27",
@@ -207,6 +472,96 @@
   {
    "id": "j35",
    "nombre": "DrGenial",
+   "activo": false
+  },
+  {
+   "id": "jiwhkfog",
+   "nombre": "Ale Mendieta",
+   "activo": true
+  },
+  {
+   "id": "jtp89cay",
+   "nombre": "Segu",
+   "activo": true
+  },
+  {
+   "id": "j36",
+   "nombre": "Kevinch",
+   "activo": true
+  },
+  {
+   "id": "j37",
+   "nombre": "Chocman",
+   "activo": true
+  },
+  {
+   "id": "j38",
+   "nombre": "Hotchner",
+   "activo": true
+  },
+  {
+   "id": "j39",
+   "nombre": "Die",
+   "activo": true
+  },
+  {
+   "id": "j40",
+   "nombre": "Gordohelado",
+   "activo": true
+  },
+  {
+   "id": "j41",
+   "nombre": "Alejandro2020",
+   "activo": true
+  },
+  {
+   "id": "j42",
+   "nombre": "Mengeche",
+   "activo": true
+  },
+  {
+   "id": "j43",
+   "nombre": "Gabb 32",
+   "activo": true
+  },
+  {
+   "id": "j44",
+   "nombre": "Tetsumaru",
+   "activo": true
+  },
+  {
+   "id": "j45",
+   "nombre": "Ironicz",
+   "activo": true
+  },
+  {
+   "id": "j46",
+   "nombre": "Figazin",
+   "activo": true
+  },
+  {
+   "id": "j47",
+   "nombre": "Jay",
+   "activo": true
+  },
+  {
+   "id": "j48",
+   "nombre": "Agus",
+   "activo": true
+  },
+  {
+   "id": "j50",
+   "nombre": "Diego Mareque",
+   "activo": true
+  },
+  {
+   "id": "j51",
+   "nombre": "Sergio Ultra",
+   "activo": true
+  },
+  {
+   "id": "j52",
+   "nombre": "Marce Quara",
    "activo": true
   }
  ],
@@ -969,7 +1324,7 @@
    "domados": [
     "j25"
    ],
-   "cuentaMMR": true,
+   "cuentaMMR": false,
    "votos": {},
    "votacionAbierta": false
   },
@@ -1028,6 +1383,3507 @@
    "domadores": [],
    "domados": [],
    "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pd76ykvw",
+   "fecha": "2026-07-03",
+   "torneoId": "t2e0od2k",
+   "e1": [
+    "jiwhkfog",
+    "j3",
+    "j5",
+    "j16",
+    "j22",
+    "j30"
+   ],
+   "e2": [
+    "j34",
+    "j27",
+    "j17",
+    "j9",
+    "j8",
+    "j7"
+   ],
+   "res": "E",
+   "goleada": false,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p9oo1tpv",
+   "fecha": "2023-03-02",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j9",
+    "j30",
+    "j3",
+    "j19",
+    "j36",
+    "j13"
+   ],
+   "e2": [
+    "j4",
+    "j11",
+    "j16",
+    "j37",
+    "j17",
+    "j41"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pb9681hs",
+   "fecha": "2023-03-09",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j3",
+    "j19",
+    "j36",
+    "j6",
+    "j5"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j30",
+    "j22",
+    "j11",
+    "j16",
+    "j13",
+    "j28",
+    "j17",
+    "j29",
+    "j25",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pysr4on8",
+   "fecha": "2023-03-16",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j22",
+    "j6",
+    "j16",
+    "j32",
+    "j43"
+   ],
+   "e2": [
+    "j9",
+    "j30",
+    "j3",
+    "j19",
+    "j11",
+    "j27",
+    "j36",
+    "j37",
+    "j5",
+    "j17",
+    "j39",
+    "j41"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pd5lx5f0",
+   "fecha": "2023-03-24",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j22",
+    "j11",
+    "j27",
+    "j16",
+    "j17",
+    "j42"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j30",
+    "j3",
+    "j36",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j4",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p07rlaaq",
+   "fecha": "2023-03-30",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j9",
+    "j30",
+    "j19",
+    "j11",
+    "j36",
+    "j29"
+   ],
+   "e2": [
+    "j4",
+    "j22",
+    "j16",
+    "j37",
+    "j32",
+    "j17"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p1qy1bns",
+   "fecha": "2023-04-05",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j30",
+    "j22",
+    "j19",
+    "j32",
+    "j17"
+   ],
+   "e2": [
+    "j9",
+    "j3",
+    "j36",
+    "j5",
+    "j28",
+    "j38"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pxyiae2r",
+   "fecha": "2023-04-13",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j11",
+    "j32",
+    "j39",
+    "j43",
+    "j45"
+   ],
+   "e2": [
+    "j3",
+    "j22",
+    "j5",
+    "j13",
+    "j28",
+    "j29"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p1nvl0us",
+   "fecha": "2023-04-20",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j3",
+    "j19",
+    "j11",
+    "j27",
+    "j5",
+    "j38"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j30",
+    "j36",
+    "j6",
+    "j16",
+    "j37",
+    "j32",
+    "j13",
+    "j25",
+    "j42",
+    "j43"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j19",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pdqdufzm",
+   "fecha": "2023-04-28",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j27",
+    "j6",
+    "j37",
+    "j13",
+    "j39",
+    "j40"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j30",
+    "j3",
+    "j22",
+    "j11",
+    "j16",
+    "j5",
+    "j28",
+    "j17",
+    "j25",
+    "j42"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j11",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p0axt2nm",
+   "fecha": "2023-05-04",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j30",
+    "j36",
+    "j6",
+    "j37",
+    "j25",
+    "j41"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j3",
+    "j11",
+    "j27",
+    "j16",
+    "j5",
+    "j13",
+    "j17",
+    "j29",
+    "j39",
+    "j21",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j27",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p1fwguzg",
+   "fecha": "2023-05-11",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j3",
+    "j22",
+    "j27",
+    "j16",
+    "j40",
+    "j41"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j30",
+    "j19",
+    "j11",
+    "j36",
+    "j37",
+    "j32",
+    "j13",
+    "j38",
+    "j25",
+    "j43",
+    "j21",
+    "j10"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j36",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pkkrmao1",
+   "fecha": "2023-05-18",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j3",
+    "j22",
+    "j19",
+    "j27",
+    "j16"
+   ],
+   "e2": [
+    "j9",
+    "j30",
+    "j11",
+    "j36",
+    "j5",
+    "j13",
+    "j28",
+    "j17",
+    "j39",
+    "j40",
+    "j10",
+    "j44"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p74lqvl2",
+   "fecha": "2023-05-25",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j30",
+    "j27",
+    "j6",
+    "j28"
+   ],
+   "e2": [
+    "j9",
+    "j3",
+    "j19",
+    "j11",
+    "j16",
+    "j5",
+    "j38",
+    "j17",
+    "j42"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j6",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p4v3q1el",
+   "fecha": "2023-06-01",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j9",
+    "j4",
+    "j22",
+    "j5",
+    "j13",
+    "j40"
+   ],
+   "e2": [
+    "j19",
+    "j11",
+    "j6",
+    "j37",
+    "j32",
+    "j28",
+    "j38",
+    "j10"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j6",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ptf9de4v",
+   "fecha": "2023-06-08",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j9",
+    "j30",
+    "j3",
+    "j6",
+    "j32",
+    "j28",
+    "j38"
+   ],
+   "e2": [
+    "j4",
+    "j27",
+    "j36",
+    "j37",
+    "j29",
+    "j43"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j6",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pichdrtu",
+   "fecha": "2023-06-15",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j9",
+    "j3",
+    "j22",
+    "j27",
+    "j5",
+    "j13"
+   ],
+   "e2": [
+    "j4",
+    "j30",
+    "j19",
+    "j36",
+    "j28",
+    "j29"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ph9ecakp",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "e1": [
+    "j4",
+    "j30",
+    "j27",
+    "j36",
+    "j6",
+    "j28"
+   ],
+   "e2": [
+    "j9",
+    "j19",
+    "j11",
+    "j16",
+    "j37",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j37",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p69u2akq",
+   "fecha": "2023-07-13",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j13",
+    "j27",
+    "j16",
+    "j6",
+    "j40"
+   ],
+   "e2": [
+    "j28",
+    "j9",
+    "j22",
+    "j4",
+    "j5",
+    "j36"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [
+    "j28",
+    "j17",
+    "j6"
+   ],
+   "domados": [
+    "j9",
+    "j13"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p0me1q1a",
+   "fecha": "2023-07-20",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j9",
+    "j6",
+    "j46",
+    "j21",
+    "j39"
+   ],
+   "e2": [
+    "j28",
+    "j13",
+    "j3",
+    "j4",
+    "j5",
+    "j32"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [
+    "j28",
+    "j46"
+   ],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p5z4e0qs",
+   "fecha": "2023-07-27",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j9",
+    "j19",
+    "j27",
+    "j5",
+    "j36"
+   ],
+   "e2": [
+    "j28",
+    "j13",
+    "j3",
+    "j11",
+    "j16",
+    "j30"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [
+    "j19",
+    "j30"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pjjopujm",
+   "fecha": "2023-08-03",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j17",
+    "j13",
+    "j3",
+    "j11",
+    "j36"
+   ],
+   "e2": [
+    "j9",
+    "j19",
+    "j22",
+    "j27",
+    "j30",
+    "j41"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "phu7mqk2",
+   "fecha": "2023-08-10",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j13",
+    "j3",
+    "j22",
+    "j30",
+    "j36"
+   ],
+   "e2": [
+    "j17",
+    "j9",
+    "j19",
+    "j11",
+    "j5",
+    "j32"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pjhq82u0",
+   "fecha": "2023-08-18",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j17",
+    "j19",
+    "j7",
+    "j16"
+   ],
+   "e2": [
+    "j3",
+    "j22",
+    "j5",
+    "j36"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j19",
+   "domadores": [],
+   "domados": [
+    "j7"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pu7ijm1k",
+   "fecha": "2023-08-24",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j3",
+    "j19",
+    "j7",
+    "j6",
+    "j32"
+   ],
+   "e2": [
+    "j17",
+    "j9",
+    "j22",
+    "j27",
+    "j46",
+    "j36"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j19",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pf4velvm",
+   "fecha": "2023-08-31",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j17",
+    "j13",
+    "j27",
+    "j32",
+    "j36"
+   ],
+   "e2": [
+    "j9",
+    "j3",
+    "j19",
+    "j22",
+    "j30",
+    "j46"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p8a4k0f8",
+   "fecha": "2023-09-14",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j13",
+    "j11",
+    "j7",
+    "j20",
+    "j29"
+   ],
+   "e2": [
+    "j28",
+    "j9",
+    "j22",
+    "j27",
+    "j32",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pnqcw3rc",
+   "fecha": "2023-09-21",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j9",
+    "j11",
+    "j22",
+    "j27",
+    "j16"
+   ],
+   "e2": [
+    "j17",
+    "j13",
+    "j19",
+    "j40",
+    "j20",
+    "j23"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j11",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pryenzqi",
+   "fecha": "2023-09-28",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j13",
+    "j11",
+    "j7",
+    "j46"
+   ],
+   "e2": [
+    "j9",
+    "j19",
+    "j24",
+    "j8",
+    "j34"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pqq8iyfd",
+   "fecha": "2023-10-05",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j3",
+    "j11",
+    "j7"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j8",
+    "j5"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j4",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p7wk644x",
+   "fecha": "2023-10-19",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j3",
+    "j27",
+    "j16",
+    "j4",
+    "j29"
+   ],
+   "e2": [
+    "j28",
+    "j9",
+    "j19",
+    "j7",
+    "j24",
+    "j8"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j27",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pdgmhl17",
+   "fecha": "2023-10-26",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j19",
+    "j22",
+    "j24",
+    "j8",
+    "j40"
+   ],
+   "e2": [
+    "j17",
+    "j9",
+    "j13",
+    "j3",
+    "j11",
+    "j7",
+    "j27",
+    "j4",
+    "j5",
+    "j46",
+    "j21",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pnqlda18",
+   "fecha": "2023-11-02",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j9",
+    "j22",
+    "j7",
+    "j24",
+    "j8"
+   ],
+   "e2": [
+    "j17",
+    "j3",
+    "j19",
+    "j11",
+    "j4",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pmnoduc1",
+   "fecha": "2023-11-10",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j17",
+    "j13",
+    "j3",
+    "j22",
+    "j4",
+    "j24"
+   ],
+   "e2": [
+    "j28",
+    "j9",
+    "j11",
+    "j8",
+    "j5",
+    "j30"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j5",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ptw7cqv6",
+   "fecha": "2023-11-23",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j9",
+    "j19",
+    "j11",
+    "j30",
+    "j34"
+   ],
+   "e2": [
+    "j17",
+    "j3",
+    "j7",
+    "j4",
+    "j6",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pia4mhrv",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "e1": [
+    "j28",
+    "j9",
+    "j13",
+    "j3",
+    "j22",
+    "j24"
+   ],
+   "e2": [
+    "j17",
+    "j7",
+    "j4",
+    "j40",
+    "j34",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j21",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p4rukicu",
+   "fecha": "2024-02-01",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j9",
+    "j36",
+    "j28",
+    "j8",
+    "j10",
+    "j24"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j27",
+    "j4",
+    "j7",
+    "j13",
+    "j33",
+    "j22",
+    "j34",
+    "j16",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j11",
+   "domadores": [
+    "j36",
+    "j7",
+    "j28",
+    "j13"
+   ],
+   "domados": [
+    "j12",
+    "j9",
+    "j16",
+    "j19"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ptj0jwd5",
+   "fecha": "2024-02-08",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j27",
+    "j4",
+    "j36",
+    "j7",
+    "j10",
+    "j24"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j9",
+    "j28",
+    "j22",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j11",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "prisfvkx",
+   "fecha": "2024-02-15",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j12",
+    "j7",
+    "j28",
+    "j33",
+    "j24",
+    "j29"
+   ],
+   "e2": [
+    "j11",
+    "j9",
+    "j4",
+    "j36",
+    "j30",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [
+    "j30"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pgkb16mv",
+   "fecha": "2024-02-22",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j4",
+    "j7",
+    "j28",
+    "j8",
+    "j10"
+   ],
+   "e2": [
+    "j12",
+    "j9",
+    "j27",
+    "j36",
+    "j17",
+    "j30",
+    "j33",
+    "j5",
+    "j32",
+    "j24",
+    "j16",
+    "j26"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [
+    "j17"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pz39c7mx",
+   "fecha": "2024-03-07",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j9",
+    "j4",
+    "j17",
+    "j22",
+    "j10",
+    "j34"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j27",
+    "j36",
+    "j7",
+    "j33"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pynp8uy5",
+   "fecha": "2024-03-14",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j12",
+    "j9",
+    "j17",
+    "j33",
+    "j10",
+    "j20"
+   ],
+   "e2": [
+    "j11",
+    "j27",
+    "j4",
+    "j7",
+    "j30",
+    "j5"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p0hx58b5",
+   "fecha": "2024-03-21",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j36",
+    "j8",
+    "j22",
+    "j32",
+    "j40",
+    "j19"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j9",
+    "j27",
+    "j4",
+    "j7",
+    "j28",
+    "j17",
+    "j3",
+    "j33",
+    "j5",
+    "j24"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j4",
+   "domadores": [],
+   "domados": [
+    "j3"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pbe2xm0v",
+   "fecha": "2024-03-28",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j12",
+    "j27",
+    "j36",
+    "j8",
+    "j3"
+   ],
+   "e2": [
+    "j9",
+    "j7",
+    "j17",
+    "j13",
+    "j5",
+    "j24"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j36",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "priamffj",
+   "fecha": "2024-04-04",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j12",
+    "j36",
+    "j7",
+    "j3",
+    "j22"
+   ],
+   "e2": [
+    "j9",
+    "j28",
+    "j8",
+    "j17",
+    "j30",
+    "j34"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "polepjw8",
+   "fecha": "2024-04-11",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j4",
+    "j28",
+    "j5",
+    "j15",
+    "j40"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j3",
+    "j30",
+    "j22",
+    "j29"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j4",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ppma39ct",
+   "fecha": "2024-04-18",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j9",
+    "j34",
+    "j35",
+    "j15",
+    "j6"
+   ],
+   "e2": [
+    "j12",
+    "j27",
+    "j4",
+    "j36",
+    "j7",
+    "j28",
+    "j8",
+    "j17",
+    "j3",
+    "j30",
+    "j13",
+    "j5"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [
+    "j6"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pt8i05r4",
+   "fecha": "2024-04-25",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j3",
+    "j5",
+    "j35",
+    "j6",
+    "j16",
+    "j21"
+   ],
+   "e2": [
+    "j11",
+    "j12",
+    "j9",
+    "j27",
+    "j4",
+    "j36",
+    "j7",
+    "j28",
+    "j8",
+    "j17",
+    "j30",
+    "j29"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pxdxarx4",
+   "fecha": "2024-05-02",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j12",
+    "j27",
+    "j4",
+    "j28",
+    "j22"
+   ],
+   "e2": [
+    "j9",
+    "j36",
+    "j7",
+    "j8",
+    "j17",
+    "j3",
+    "j5",
+    "j34",
+    "j32",
+    "j35",
+    "j6",
+    "j47"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j5",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p7lijfsr",
+   "fecha": "2024-05-09",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j12",
+    "j8",
+    "j17",
+    "j33",
+    "j32"
+   ],
+   "e2": [
+    "j9",
+    "j7",
+    "j28",
+    "j3",
+    "j34",
+    "j15"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j33",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "po023xut",
+   "fecha": "2024-05-16",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j27",
+    "j28",
+    "j33",
+    "j34",
+    "j6"
+   ],
+   "e2": [
+    "j12",
+    "j9",
+    "j4",
+    "j36",
+    "j7",
+    "j8",
+    "j17",
+    "j3",
+    "j30",
+    "j13",
+    "j5",
+    "j22"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p4ujfasx",
+   "fecha": "2024-05-23",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j4",
+    "j36",
+    "j7",
+    "j13",
+    "j5"
+   ],
+   "e2": [
+    "j12",
+    "j9",
+    "j27",
+    "j28",
+    "j8",
+    "j17",
+    "j3",
+    "j30",
+    "j32",
+    "j35",
+    "j6",
+    "j16"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p4eu7cf7",
+   "fecha": "2024-05-30",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j27",
+    "j4",
+    "j36",
+    "j8",
+    "j34"
+   ],
+   "e2": [
+    "j12",
+    "j9",
+    "j28",
+    "j3",
+    "j30",
+    "j22"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pa1hahaj",
+   "fecha": "2024-06-06",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j12",
+    "j9",
+    "j27",
+    "j3",
+    "j30"
+   ],
+   "e2": [
+    "j4",
+    "j36",
+    "j7",
+    "j17",
+    "j13",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pjrjuyn1",
+   "fecha": "2024-06-13",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j7",
+    "j8",
+    "j3",
+    "j13",
+    "j5"
+   ],
+   "e2": [
+    "j12",
+    "j9",
+    "j27",
+    "j4",
+    "j17",
+    "j32",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pwzxs8sf",
+   "fecha": "2024-06-20",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j27",
+    "j7",
+    "j17",
+    "j13",
+    "j10"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j5",
+    "j35",
+    "j15"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pi9xex4y",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "e1": [
+    "j11",
+    "j27",
+    "j17",
+    "j13",
+    "j32"
+   ],
+   "e2": [
+    "j9",
+    "j4",
+    "j7",
+    "j28",
+    "j8",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p2yw0umx",
+   "fecha": "2024-07-11",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j13",
+    "j36",
+    "j27",
+    "j12"
+   ],
+   "e2": [
+    "j7",
+    "j17",
+    "j9",
+    "j32",
+    "j5",
+    "j4"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [
+    "j3",
+    "j17",
+    "j9",
+    "j13",
+    "j36"
+   ],
+   "domados": [
+    "j28",
+    "j7",
+    "j12"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p3hftiuk",
+   "fecha": "2024-07-18",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j17",
+    "j27",
+    "j5",
+    "j6",
+    "j33"
+   ],
+   "e2": [
+    "j28",
+    "j7",
+    "j9",
+    "j13",
+    "j36",
+    "j10",
+    "j12",
+    "j32",
+    "j4",
+    "j16",
+    "j35",
+    "j40"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [
+    "j3",
+    "j36"
+   ],
+   "domados": [
+    "j28",
+    "j7"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p3gjre0h",
+   "fecha": "2024-07-25",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j13",
+    "j11",
+    "j8",
+    "j12",
+    "j21",
+    "j33"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j17",
+    "j9",
+    "j27",
+    "j32"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [],
+   "domados": [
+    "j28"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p3g4dgbx",
+   "fecha": "2024-08-01",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j7",
+    "j36",
+    "j8",
+    "j21",
+    "j32",
+    "j15"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j17",
+    "j9",
+    "j27",
+    "j10",
+    "j11",
+    "j12",
+    "j5",
+    "j34",
+    "j30",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j7",
+   "domadores": [],
+   "domados": [
+    "j7",
+    "j15"
+   ],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p82ws3u0",
+   "fecha": "2024-08-08",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j7",
+    "j9",
+    "j13",
+    "j11",
+    "j8",
+    "j5"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j17",
+    "j12",
+    "j32",
+    "j15"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j7",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p1d2b7wj",
+   "fecha": "2024-08-15",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j7",
+    "j17",
+    "j9",
+    "j27",
+    "j10",
+    "j11"
+   ],
+   "e2": [
+    "j28",
+    "j13",
+    "j8",
+    "j19",
+    "j4",
+    "j26"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pxcj87bc",
+   "fecha": "2024-08-22",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j7",
+    "j9",
+    "j13",
+    "j29"
+   ],
+   "e2": [
+    "j17",
+    "j36",
+    "j8",
+    "j34",
+    "j4",
+    "j26"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [
+    "j29"
+   ],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pcauzf1r",
+   "fecha": "2024-08-29",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j9",
+    "j19",
+    "j34",
+    "j22"
+   ],
+   "e2": [
+    "j17",
+    "j13",
+    "j36",
+    "j27",
+    "j8",
+    "j21",
+    "j32",
+    "j4",
+    "j30",
+    "j26",
+    "j15",
+    "j16"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ppscqwck",
+   "fecha": "2024-09-12",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j9",
+    "j36",
+    "j27",
+    "j21",
+    "j22",
+    "j30"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j7",
+    "j11",
+    "j8",
+    "j12"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j27",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p6kk99sv",
+   "fecha": "2024-09-12",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j7",
+    "j21",
+    "j29",
+    "j26"
+   ],
+   "e2": [
+    "j17",
+    "j36",
+    "j8",
+    "j12",
+    "j32",
+    "j30"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pv7ymu3j",
+   "fecha": "2024-09-26",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j8",
+    "j22",
+    "j6"
+   ],
+   "e2": [
+    "j17",
+    "j13",
+    "j36",
+    "j27",
+    "j32",
+    "j5",
+    "j19",
+    "j34",
+    "j29",
+    "j30",
+    "j26",
+    "j33"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j32",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p216ce8w",
+   "fecha": "2024-10-03",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j7",
+    "j17",
+    "j36",
+    "j10",
+    "j24"
+   ],
+   "e2": [
+    "j9",
+    "j27",
+    "j11",
+    "j5",
+    "j19",
+    "j4"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j10",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p1nvorjv",
+   "fecha": "2024-10-03",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j7",
+    "j13",
+    "j36",
+    "j10",
+    "j32",
+    "j5",
+    "j24"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j17",
+    "j12",
+    "j19",
+    "j34"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j10",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pw2x7jo8",
+   "fecha": "2024-10-03",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j13",
+    "j27",
+    "j11",
+    "j34",
+    "j4"
+   ],
+   "e2": [
+    "j28",
+    "j9",
+    "j8",
+    "j32",
+    "j19",
+    "j26"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j11",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pfa3d30e",
+   "fecha": "2024-10-03",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j7",
+    "j17",
+    "j13",
+    "j27",
+    "j34",
+    "j15"
+   ],
+   "e2": [
+    "j3",
+    "j28",
+    "j8",
+    "j12",
+    "j22"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p7tvjmii",
+   "fecha": "2024-11-07",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j28",
+    "j7",
+    "j17",
+    "j9",
+    "j12",
+    "j19"
+   ],
+   "e2": [
+    "j3",
+    "j13",
+    "j10",
+    "j11",
+    "j34",
+    "j4"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j10",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pcmlyj4m",
+   "fecha": "2024-11-14",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j28",
+    "j7",
+    "j17",
+    "j10",
+    "j21"
+   ],
+   "e2": [
+    "j27",
+    "j8",
+    "j12",
+    "j5",
+    "j30",
+    "j15"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "phkqu6jm",
+   "fecha": "2024-11-22",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j28",
+    "j17",
+    "j32",
+    "j29",
+    "j26",
+    "j16"
+   ],
+   "e2": [
+    "j7",
+    "j5",
+    "j19",
+    "j30",
+    "j33"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p093skfa",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "e1": [
+    "j3",
+    "j13",
+    "j10",
+    "j11",
+    "j5",
+    "j34"
+   ],
+   "e2": [
+    "j28",
+    "j7",
+    "j17",
+    "j27",
+    "j12",
+    "j21",
+    "j32",
+    "j19",
+    "j15",
+    "j24",
+    "j20"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pjd0hrku",
+   "fecha": "2025-01-02",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j28",
+    "j11",
+    "j24",
+    "j3",
+    "j21"
+   ],
+   "e2": [
+    "j17",
+    "j19",
+    "j7",
+    "j8",
+    "j34",
+    "j16"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j9",
+   "domadores": [
+    "j9",
+    "j28",
+    "j19"
+   ],
+   "domados": [
+    "j7"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pm54fdi2",
+   "fecha": "2025-01-09",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j17",
+    "j22",
+    "j24",
+    "j19",
+    "j3",
+    "j8"
+   ],
+   "e2": [
+    "j9",
+    "j30",
+    "j28",
+    "j10",
+    "j7",
+    "j27"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [
+    "j30",
+    "j27"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pbsdc1b4",
+   "fecha": "2025-01-16",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j12",
+    "j13",
+    "j19",
+    "j4",
+    "j27",
+    "j34"
+   ],
+   "e2": [
+    "j9",
+    "j30",
+    "j17",
+    "j7",
+    "j3",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [
+    "j12",
+    "j13"
+   ],
+   "domados": [
+    "j25"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "px401hb4",
+   "fecha": "2025-01-23",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j12",
+    "j28",
+    "j19",
+    "j3",
+    "j4",
+    "j8"
+   ],
+   "e2": [
+    "j9",
+    "j24",
+    "j10",
+    "j7",
+    "j29",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pgmucalc",
+   "fecha": "2025-01-30",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j17",
+    "j13",
+    "j5",
+    "j3",
+    "j4",
+    "j14"
+   ],
+   "e2": [
+    "j12",
+    "j28",
+    "j11",
+    "j24",
+    "j7",
+    "j33"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j28",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p2yb0p17",
+   "fecha": "2025-02-06",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j28",
+    "j11",
+    "j22",
+    "j19",
+    "j14"
+   ],
+   "e2": [
+    "j17",
+    "j24",
+    "j5",
+    "j4",
+    "j27",
+    "j33"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ppdg290e",
+   "fecha": "2025-02-13",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j12",
+    "j17",
+    "j28",
+    "j22",
+    "j24",
+    "j19"
+   ],
+   "e2": [
+    "j9",
+    "j11",
+    "j13",
+    "j10",
+    "j32",
+    "j8"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j13",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "ppvouq16",
+   "fecha": "2025-02-20",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j12",
+    "j17",
+    "j24",
+    "j29",
+    "j15"
+   ],
+   "e2": [
+    "j30",
+    "j28",
+    "j11",
+    "j13",
+    "j7",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "paqvhujb",
+   "fecha": "2025-02-27",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j12",
+    "j24",
+    "j5",
+    "j29",
+    "j25"
+   ],
+   "e2": [
+    "j30",
+    "j17",
+    "j13",
+    "j32",
+    "j4",
+    "j8"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pkzwlrn9",
+   "fecha": "2025-03-06",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j12",
+    "j22",
+    "j24",
+    "j32",
+    "j29"
+   ],
+   "e2": [
+    "j17",
+    "j28",
+    "j5",
+    "j4",
+    "j25",
+    "j16"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p6pxls0j",
+   "fecha": "2025-03-13",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j30",
+    "j22",
+    "j10",
+    "j31",
+    "j21"
+   ],
+   "e2": [
+    "j9",
+    "j12",
+    "j5",
+    "j14",
+    "j26"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pmwwom10",
+   "fecha": "2025-03-20",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j30",
+    "j12",
+    "j28",
+    "j11",
+    "j10"
+   ],
+   "e2": [
+    "j17",
+    "j22",
+    "j7",
+    "j5",
+    "j32",
+    "j31"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p8w0zd0j",
+   "fecha": "2025-03-27",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j30",
+    "j13",
+    "j22",
+    "j10",
+    "j5",
+    "j48"
+   ],
+   "e2": [
+    "j9",
+    "j17",
+    "j7",
+    "j8",
+    "j31",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pov20gaa",
+   "fecha": "2025-04-03",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j28",
+    "j32",
+    "j48",
+    "j31",
+    "j33",
+    "j23"
+   ],
+   "e2": [
+    "j12",
+    "j17",
+    "j13",
+    "j7",
+    "j5",
+    "j4"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j32",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pit6n2o3",
+   "fecha": "2025-04-10",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j30",
+    "j28",
+    "j11",
+    "j5",
+    "j48"
+   ],
+   "e2": [
+    "j22",
+    "j10",
+    "j7",
+    "j32",
+    "j8",
+    "j31"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p9yang1r",
+   "fecha": "2025-04-17",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j11",
+    "j13",
+    "j10",
+    "j7",
+    "j32",
+    "j14"
+   ],
+   "e2": [
+    "j9",
+    "j30",
+    "j17",
+    "j28",
+    "j19",
+    "j29"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j19",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "plej9q5p",
+   "fecha": "2025-04-24",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j17",
+    "j13",
+    "j32",
+    "j3",
+    "j34",
+    "j6"
+   ],
+   "e2": [
+    "j30",
+    "j10",
+    "j7",
+    "j5",
+    "j31",
+    "j16"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j3",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pu3k69jo",
+   "fecha": "2025-05-08",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j11",
+    "j10",
+    "j7",
+    "j14",
+    "j48"
+   ],
+   "e2": [
+    "j30",
+    "j12",
+    "j17",
+    "j5",
+    "j32",
+    "j18"
+   ],
+   "res": "E1",
+   "goleada": false,
+   "mvpId": "j14",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p255vh4g",
+   "fecha": "2025-05-15",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j9",
+    "j30",
+    "j12",
+    "j10",
+    "j48",
+    "j21"
+   ],
+   "e2": [
+    "j11",
+    "j29",
+    "j31",
+    "j27",
+    "j34",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j21",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p56gmdfg",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "e1": [
+    "j30",
+    "j17",
+    "j11",
+    "j7",
+    "j5",
+    "j8"
+   ],
+   "e2": [
+    "j9",
+    "j10",
+    "j48",
+    "j31",
+    "j27",
+    "j18"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pako6r1e",
+   "fecha": "2026-02-05",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j3",
+    "j12",
+    "j14",
+    "j21"
+   ],
+   "e2": [
+    "j9",
+    "j31",
+    "j24",
+    "j25",
+    "j7",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [
+    "j11",
+    "j12",
+    "j14"
+   ],
+   "domados": [
+    "j9"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pc6lbi7v",
+   "fecha": "2026-02-12",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j34",
+    "j12",
+    "j25",
+    "j7",
+    "j19"
+   ],
+   "e2": [
+    "j17",
+    "j3",
+    "j9",
+    "j10",
+    "j28",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j17",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pfmxre9i",
+   "fecha": "2026-02-20",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j9",
+    "j25",
+    "j5",
+    "j21"
+   ],
+   "e2": [
+    "j3",
+    "j8",
+    "j30",
+    "j22",
+    "j12",
+    "j24"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j9",
+   "domadores": [],
+   "domados": [
+    "j22"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p5s0k3kr",
+   "fecha": "2026-02-27",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j8",
+    "j30",
+    "j14",
+    "j50",
+    "j21"
+   ],
+   "e2": [
+    "j3",
+    "j10",
+    "j12",
+    "j25",
+    "j32",
+    "j5"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j30",
+   "domadores": [],
+   "domados": [
+    "j50"
+   ],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pj7k8ses",
+   "fecha": "2026-03-05",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j34",
+    "j8",
+    "j10",
+    "j12",
+    "j7"
+   ],
+   "e2": [
+    "j17",
+    "j9",
+    "j30",
+    "j31",
+    "j27",
+    "jtp89cay"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j34",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pb93pkth",
+   "fecha": "2026-03-12",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j34",
+    "j10",
+    "jtp89cay",
+    "j14",
+    "j32",
+    "j15"
+   ],
+   "e2": [
+    "j17",
+    "j3",
+    "j9",
+    "j31",
+    "j27",
+    "j12",
+    "j24",
+    "j5",
+    "j50",
+    "j2",
+    "j19",
+    "j21"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j27",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p0776v2v",
+   "fecha": "2026-03-19",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j22",
+    "j12",
+    "j24",
+    "jtp89cay",
+    "j5",
+    "j19"
+   ],
+   "e2": [
+    "j3",
+    "j9",
+    "j31",
+    "j14",
+    "j28",
+    "j50"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j22",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pzxs6xgz",
+   "fecha": "2026-03-26",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j3",
+    "j9",
+    "j31",
+    "j12"
+   ],
+   "e2": [
+    "jtp89cay",
+    "j5",
+    "j50",
+    "j51"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p030iwdw",
+   "fecha": "2026-04-02",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j9",
+    "j8",
+    "j7"
+   ],
+   "e2": [
+    "j3",
+    "j34",
+    "j27",
+    "j10",
+    "j24",
+    "j25"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j24",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p8h8t21k",
+   "fecha": "2026-04-09",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j17",
+    "j3",
+    "j12",
+    "jtp89cay",
+    "j19"
+   ],
+   "e2": [
+    "j11",
+    "j34",
+    "j30",
+    "j31",
+    "j10",
+    "j24"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p7mlpsly",
+   "fecha": "2026-04-17",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j8",
+    "j27",
+    "j10",
+    "j19"
+   ],
+   "e2": [
+    "j3",
+    "j9",
+    "j12",
+    "j24",
+    "j50",
+    "j52"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j12",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pm4qjg3u",
+   "fecha": "2026-04-23",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j34",
+    "j30",
+    "j24",
+    "j51",
+    "j19"
+   ],
+   "e2": [
+    "j17",
+    "j3",
+    "j9",
+    "j8",
+    "j10",
+    "jtp89cay"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j24",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pzlibzcq",
+   "fecha": "2026-04-30",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j34",
+    "j8",
+    "j22",
+    "j12",
+    "j14",
+    "j51"
+   ],
+   "e2": [
+    "j17",
+    "j9",
+    "j28",
+    "j50",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j14",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p9fatqwh",
+   "fecha": "2026-05-14",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j34",
+    "j31",
+    "j7",
+    "j32"
+   ],
+   "e2": [
+    "j3",
+    "j9",
+    "j24",
+    "j5",
+    "j51",
+    "j19"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j51",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p9an6k89",
+   "fecha": "2026-05-21",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j3",
+    "j30",
+    "j22",
+    "j31",
+    "j27"
+   ],
+   "e2": [
+    "j17",
+    "j34",
+    "j9",
+    "j8",
+    "j7",
+    "j50"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pl3poo3t",
+   "fecha": "2026-06-04",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j17",
+    "j3",
+    "j30",
+    "j22",
+    "j25",
+    "j33"
+   ],
+   "e2": [
+    "j9",
+    "j10",
+    "j24",
+    "jtp89cay",
+    "j7",
+    "j50"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j25",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "p5fxnlmh",
+   "fecha": "2026-06-11",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j11",
+    "j17",
+    "j3",
+    "j34",
+    "j27",
+    "j5"
+   ],
+   "e2": [
+    "j8",
+    "j30",
+    "j22",
+    "j24",
+    "j7",
+    "j50"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": null,
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": true,
+   "votos": {},
+   "votacionAbierta": false
+  },
+  {
+   "id": "pkbf4zg8",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "e1": [
+    "j17",
+    "j3",
+    "j34",
+    "j22",
+    "j24",
+    "j4"
+   ],
+   "e2": [
+    "j11",
+    "j9",
+    "j30",
+    "j27",
+    "j5"
+   ],
+   "res": "E1",
+   "goleada": true,
+   "mvpId": "j4",
+   "domadores": [],
+   "domados": [],
+   "cuentaMMR": false,
    "votos": {},
    "votacionAbierta": false
   }
@@ -1552,6 +5408,846 @@
    "jugadorId": "j34",
    "puntos": 0.5,
    "motivo": ""
+  },
+  {
+   "id": "s1lz9dzi",
+   "fecha": "2026-07-03",
+   "torneoId": "t2e0od2k",
+   "jugadorId": "j9",
+   "puntos": 0.5,
+   "motivo": ""
+  },
+  {
+   "id": "szhhdovh",
+   "fecha": "2026-07-03",
+   "torneoId": "t2e0od2k",
+   "jugadorId": "j17",
+   "puntos": 0.5,
+   "motivo": ""
+  },
+  {
+   "id": "sn46lsx5",
+   "fecha": "2026-07-03",
+   "torneoId": "t2e0od2k",
+   "jugadorId": "j5",
+   "puntos": 0.5,
+   "motivo": ""
+  },
+  {
+   "id": "sppfw5iz",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j9",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "stmxhufn",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j30",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s6d1mby2",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j19",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "szmbcvng",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j27",
+   "puntos": 2.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sr8n1mxg",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j36",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s4nkuai2",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j6",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s6gywse1",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j16",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s2gb4cnp",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j32",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "stmpi4b6",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j5",
+   "puntos": 3,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9ppikp8",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j13",
+   "puntos": 3,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "scmd1hgr",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j28",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s75qpcgv",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j17",
+   "puntos": 3.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sot8r5ip",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j39",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ssdcs00v",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j40",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ssowmjui",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j41",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sxs8fbba",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j42",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9vdw1wn",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j43",
+   "puntos": 4,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sdiqh42y",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j21",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sl8pxeep",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j44",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sp86mccg",
+   "fecha": "2023-06-23",
+   "torneoId": "to6wp96b",
+   "jugadorId": "j45",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s8ou4bfn",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j17",
+   "puntos": 3.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "so1nhn6k",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j9",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sadb5yu4",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j13",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "snoy4rih",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j19",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sl25owip",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j22",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sq6oqku1",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j7",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sf4sixpa",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j27",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "szol42gn",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j4",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sc9iug51",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j5",
+   "puntos": 2.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s1n852vv",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j30",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sz5wfg0u",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j6",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "svgcet95",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j32",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sbl03f4l",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j46",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sad7w0qc",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j21",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "svihu6nc",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j25",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "snqre8r5",
+   "fecha": "2023-11-30",
+   "torneoId": "ttk1dbq9",
+   "jugadorId": "j23",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sjnlywc1",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j27",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "soqwmlfk",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j4",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s6qaj338",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j7",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9v95cjp",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j17",
+   "puntos": 4,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "st2yso8u",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j13",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s57h05ah",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j33",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sfud4raj",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j5",
+   "puntos": 2.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s1nwnsn7",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j22",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sgy119ho",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j10",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "skj13tf3",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j32",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "slo26xwg",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j24",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sby79rro",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j15",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "snog5skm",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j6",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sy6eecph",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j16",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ssf2sjnz",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j47",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s84mbmhg",
+   "fecha": "2024-06-27",
+   "torneoId": "toe2s4p9",
+   "jugadorId": "j26",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s1afegum",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j3",
+   "puntos": 2.0,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "seun374w",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j7",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "shahe84y",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j17",
+   "puntos": 6,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sk764sny",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j13",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ss1tn4da",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j27",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s34vg8kz",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j10",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sfv6kswx",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j12",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "smroaytf",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j21",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "svcik4zs",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j32",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sw0gu95c",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j5",
+   "puntos": 3.0,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "syr9nq4d",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j34",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s7rdtcgo",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j4",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sjzsz1o6",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j26",
+   "puntos": 2.0,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sniv98m9",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j15",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9ay7qky",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j6",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sko8p8vp",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j16",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "shczv5mm",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j33",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sweitjjs",
+   "fecha": "2024-11-28",
+   "torneoId": "tewu9u5g",
+   "jugadorId": "j24",
+   "puntos": 3,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ss0wan9w",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j9",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "shzjktht",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j30",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sparzjvk",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j12",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sprshwkq",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j17",
+   "puntos": 3,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sxcy0hf7",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j28",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s0h4vjkd",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j11",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "stpf2bu5",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j22",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sqio6pmy",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j10",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s8bnnvab",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j19",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sh9pmaze",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j7",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s67850xm",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j5",
+   "puntos": 3,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s89bg59z",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j32",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9uy9vu1",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j4",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "slsslogy",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j8",
+   "puntos": 2,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sdm9vm5n",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j29",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s1vsybzu",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j48",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "stq6hf1h",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j27",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sv2ehx5k",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j25",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s4w0bhjq",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j21",
+   "puntos": 3.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sfwxufie",
+   "fecha": "2025-05-22",
+   "torneoId": "tcrmhw5f",
+   "jugadorId": "j15",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "seuz71yd",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j17",
+   "puntos": 5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s7pamato",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j9",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "smtx5mjo",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j27",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sde2a7x6",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j10",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s6ljtwkk",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j14",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sm5wfwim",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j7",
+   "puntos": 3.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sjay6ldz",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j32",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "ssolc7ay",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j28",
+   "puntos": 1,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "sqyjsbkv",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j5",
+   "puntos": 1.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "scqt13uj",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j50",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "s9qnf8yv",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j51",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
+  },
+  {
+   "id": "syrrv3cv",
+   "fecha": "2026-06-18",
+   "torneoId": "tmmaram2",
+   "jugadorId": "j4",
+   "puntos": 0.5,
+   "motivo": "Ajuste de importación histórica"
   }
  ]
 }
