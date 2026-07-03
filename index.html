@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Copa de la Liga Prudan</title>
+<title>Copa de la Liga Matheu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -24,7 +24,6 @@ header{background:linear-gradient(135deg,#14532d 0%,#1e7a3c 60%,#2e9e54 100%); c
 .hrow{display:flex; align-items:center; gap:12px; max-width:1180px; margin:0 auto; flex-wrap:wrap}
 .copa h1{font-size:clamp(20px,4vw,30px); line-height:1}
 .copa .liga{color:#ffd75e}
-.copa .sub{font-size:11px; text-transform:uppercase; letter-spacing:.22em; opacity:.75}
 .tsel{margin-left:auto; background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:8px; padding:7px 10px; font:600 13px 'Inter'; max-width:46vw}
 .tsel option{color:#222}
 #btnAdmin{border-color:rgba(255,255,255,.4); color:#fff; background:rgba(255,255,255,.1)}
@@ -183,9 +182,25 @@ details.pcard[open] summary{border-bottom:1px solid var(--line)}
 .mmr-table td.delta-neg{color:var(--rojo); font-weight:700}
 svg.chart{width:100%; height:auto; background:#fff; border:1px solid var(--line); border-radius:10px}
 .legend{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0}
-.legend button{border:1px solid var(--line2); background:#fff; border-radius:16px; padding:4px 11px; font:700 12px 'Inter'; cursor:pointer; color:var(--muted)}
-.legend button.on{color:#fff}
+.legend .lg{border:1px solid var(--line2); background:#fff; border-radius:16px; padding:4px 11px 4px 9px; font:700 12px 'Inter'; cursor:pointer; color:var(--muted); display:inline-flex; align-items:center; gap:6px; transition:.15s}
+.legend .lg:hover{border-color:var(--verde); color:var(--verde)}
+.legend .lg.on{color:#fff; border-color:transparent}
+.legend .lg .dot{width:9px; height:9px; border-radius:50%; display:inline-block; background:currentColor}
 .spark{vertical-align:middle}
+.mmr-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:start}
+@media(max-width:760px){.mmr-grid{grid-template-columns:1fr}}
+.fechatabla{overflow:auto; border:1px solid var(--line); border-radius:10px; max-height:520px}
+.fechatabla table{border-collapse:collapse; font-size:12px; background:#fff}
+.fechatabla th{background:#20372a; color:#e8e4d5; padding:5px 8px; font-size:10.5px; white-space:nowrap; position:sticky; top:0; z-index:2}
+.fechatabla th.fcol{position:sticky; left:0; z-index:3}
+.fechatabla td{border:1px solid var(--line); padding:4px 8px; text-align:center; min-width:56px; white-space:nowrap}
+.fechatabla td.fcol{background:#faf9f4; font-weight:700; text-align:left; position:sticky; left:0; color:var(--ink)}
+.fechatabla td.np{color:var(--line2)}
+.chart-wrap{position:relative}
+.chart-tip{position:absolute; pointer-events:none; background:#20372a; color:#e8e4d5; font:600 11.5px 'Inter'; padding:6px 9px; border-radius:8px; opacity:0; transition:.08s; white-space:nowrap; z-index:5; box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.chart-tip.on{opacity:1}
+.pcard-mini{background:var(--panel2); border:1px solid var(--line); border-radius:9px; padding:9px 11px; margin-bottom:7px; font-size:12.5px}
+.pcard-mini b{color:var(--verde)}
 .matriz{overflow-x:auto; border:1px solid var(--line); border-radius:10px}
 .matriz table{border-collapse:collapse; font-size:12px; background:#fff}
 .matriz th{background:#20372a; color:#e8e4d5; padding:5px 7px; font-size:10.5px; white-space:nowrap; position:sticky; top:0}
@@ -211,8 +226,7 @@ body.is-admin .admin-only.panel{display:block}
 <header>
   <div class="hrow">
     <div class="copa">
-      <h1 class="display">Copa de la Liga <span class="liga" id="hLiga">Prudan</span></h1>
-      <span class="sub">Fútbol entre amigos</span>
+      <h1 class="display">Copa de la Liga <span class="liga" id="hLiga">Matheu</span></h1>
     </div>
     <select id="torneoSel" class="tsel" title="Torneo"></select>
     <button class="btn ghost" id="btnAdmin" title="Modo administrador">🔒 <span id="adminLbl">Admin</span></button>
@@ -233,12 +247,12 @@ body.is-admin .admin-only.panel{display:block}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ================= Copa de la Liga Prudan — app ================= */
+/* ================= Copa de la Liga Matheu — app ================= */
 const SEED = {
  "version": 1,
  "updatedAt": "2026-07-02T00:00:00Z",
  "config": {
-  "nombreLiga": "Copa de la Liga Prudan",
+  "nombreLiga": "Copa de la Liga Matheu",
   "zonaCorte": 16,
   "ordenTabla": "mmr",
   "mmr": {
@@ -1824,14 +1838,17 @@ function primeraFechaDe(tid){
   const fs=[...S.partidos, ...S.triangulares].filter(x=>x.torneoId===tid).map(x=>x.fecha).filter(Boolean).sort();
   return fs[0]||null;
 }
+function ultimaFechaDe(tid){
+  const fs=[...S.partidos, ...S.triangulares].filter(x=>x.torneoId===tid).map(x=>x.fecha).filter(Boolean).sort();
+  return fs[fs.length-1]||null;
+}
 function rangoTorneoTxt(t){
   if(!t) return '';
   const ini = t.fechaInicio || primeraFechaDe(t.id);
-  if(t.cerrado){
-    const rango = ini ? `Del ${fFecha(ini)} al ${fFecha(t.fechaFin)}` : (t.fechaFin?`Finalizó el ${fFecha(t.fechaFin)}`:'');
-    return `🏁 Finalizado${rango?` · ${rango}`:''}`;
-  }
-  return ini ? `En juego desde el ${fFecha(ini)}` : '';
+  const fin = t.fechaFin || ultimaFechaDe(t.id);
+  if(ini && fin) return `Desde el ${fFecha(ini)} hasta el ${fFecha(fin)}`;
+  if(ini) return `Desde el ${fFecha(ini)}`;
+  return '';
 }
 function jugadoresActivos(){ return S.jugadores.filter(j=>j.activo!==false && !j.borrado).sort((a,b)=>a.nombre.localeCompare(b.nombre)) }
 
@@ -1855,24 +1872,27 @@ function eventosCrono(){
 /* ---------- Motor MMR (Elo por equipos) ---------- */
 function computeMMR(){
   const K = +S.config.mmr.K || 100, INI = +S.config.mmr.inicial || 1000;
+  const GOLK = +S.config.mmr.golK || 2;
   const r = {}, hist = {};
-  S.jugadores.forEach(j=>{ r[j.id]=INI; hist[j.id]=[{fecha:null, r:INI, delta:0, label:'Inicial'}]; });
-  const get = id => { if(r[id]==null){ r[id]=INI; hist[id]=[{fecha:null,r:INI,delta:0,label:'Inicial'}]; } return r[id]; };
+  S.jugadores.forEach(j=>{ r[j.id]=INI; hist[j.id]=[{fecha:null, r:INI, delta:0, label:'Inicial', eventId:null, torneoId:null}]; });
+  const get = id => { if(r[id]==null){ r[id]=INI; hist[id]=[{fecha:null,r:INI,delta:0,label:'Inicial',eventId:null,torneoId:null}]; } return r[id]; };
   const exp = (mio, rival) => 1/(1+Math.pow(10,(rival-mio)/400));
 
   for(const e of eventosCrono()){
     if(e.cuentaMMR===false) continue;
+    const tId = e.torneoId ?? null;
     if(e._tipo==='partido'){
       if(!e.e1?.length || !e.e2?.length) continue;
       const a1 = e.e1.reduce((s,x)=>s+get(x),0)/e.e1.length;
       const a2 = e.e2.reduce((s,x)=>s+get(x),0)/e.e2.length;
       const s1 = e.res==='E1'?1: e.res==='E2'?0:0.5;
+      const mult = e.goleada ? GOLK : 1;
       const deltas={};
-      e.e1.forEach(x=> deltas[x]=K*(s1-exp(get(x),a2)));
-      e.e2.forEach(x=> deltas[x]=K*((1-s1)-exp(get(x),a1)));
-      const label = `${fFecha(e.fecha)} · ${e.res==='E'?'Empate': e.res==='E1'?'Ganó E1':'Ganó E2'}`;
-      for(const [x,d] of Object.entries(deltas)){ r[x]+=d; hist[x].push({fecha:e.fecha, r:r[x], delta:d, label}); }
-    } else { // triangular: cada equipo vs promedio de los otros dos; S = 1 / 0.5 / 0
+      e.e1.forEach(x=> deltas[x]=mult*K*(s1-exp(get(x),a2)));
+      e.e2.forEach(x=> deltas[x]=mult*K*((1-s1)-exp(get(x),a1)));
+      const label = `${fFecha(e.fecha)} · ${e.res==='E'?'Empate': e.res==='E1'?'Ganó E1':'Ganó E2'}${e.goleada?' (goleada)':''}`;
+      for(const [x,d] of Object.entries(deltas)){ r[x]+=d; hist[x].push({fecha:e.fecha, r:r[x], delta:d, label, eventId:e.id, torneoId:tId}); }
+    } else { // triangular: cada equipo vs promedio de los otros dos; S = 1 / 0.5 / 0 (sin multiplicador de goleada: no aplica a triangulares)
       const eqs = e.equipos; if(!eqs || eqs.some(q=>!q.length)) continue;
       const avgs = eqs.map(q=> q.reduce((s,x)=>s+get(x),0)/q.length);
       const Sarr=[0,0,0];
@@ -1882,10 +1902,30 @@ function computeMMR(){
         const rival=(avgs[0]+avgs[1]+avgs[2]-avgs[i])/2;
         q.forEach(x=> deltas[x]=K*(Sarr[i]-exp(get(x),rival)));
       });
-      for(const [x,d] of Object.entries(deltas)){ r[x]+=d; hist[x].push({fecha:e.fecha, r:r[x], delta:d, label:`${fFecha(e.fecha)} · Triangular`}); }
+      for(const [x,d] of Object.entries(deltas)){ r[x]+=d; hist[x].push({fecha:e.fecha, r:r[x], delta:d, label:`${fFecha(e.fecha)} · Triangular`, eventId:e.id, torneoId:tId}); }
     }
   }
   return {ratings:r, hist};
+}
+/* timeline compartido: eventos de un torneo (o 'ALL') + serie por jugador con líneas planas cuando no jugó */
+function mmrTimeline(tid){
+  const {hist} = getCache().mmr;
+  const events = eventosCrono().filter(e=> e.fecha && e.cuentaMMR!==false && matchTorneo(tid, e.torneoId ?? null));
+  const byEvent = {}; // playerId -> Map(eventId -> hist entry)
+  const series = (playerId) => {
+    const h = hist[playerId] || [];
+    if(!byEvent[playerId]){ const map=new Map(); h.forEach(x=>{ if(x.eventId) map.set(x.eventId, x); }); byEvent[playerId]=map; }
+    const map = byEvent[playerId];
+    let last = h.length ? h[0].r : (+S.config.mmr.inicial || 1000);
+    const out = [];
+    for(const e of events){
+      const hit = map.get(e.id);
+      if(hit){ last = hit.r; out.push({eventId:e.id, fecha:e.fecha, r:hit.r, played:true}); }
+      else out.push({eventId:e.id, fecha:e.fecha, r:last, played:false});
+    }
+    return out;
+  };
+  return { events, series };
 }
 
 /* ---------- Motor de estadísticas y puntos por torneo ---------- */
@@ -1922,6 +1962,55 @@ function computeStats(tid){
     of(s.jugadorId).sanc += +s.puntos||0;
   }
   return st;
+}
+/* timeline de puntos de tabla (no MMR) acumulados evento a evento, para el gráfico "puntos" del torneo */
+function pointsTimeline(tid){
+  const P = puntosDe(tid);
+  const events = eventosCrono().filter(e=> e.fecha && matchTorneo(tid, e.torneoId ?? null));
+  const sancs = S.sanciones.filter(s=>matchTorneo(tid, s.torneoId)).slice().sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||''));
+  let si = 0;
+  const st = {};
+  const of = id => st[id] || (st[id]=statsBlank());
+  const snapshots = [];
+  for(const e of events){
+    while(si < sancs.length && (sancs[si].fecha||'') <= (e.fecha||'')){ of(sancs[si].jugadorId).sanc += +sancs[si].puntos||0; si++; }
+    let participantes;
+    if(e._tipo==='partido'){
+      participantes = [...(e.e1||[]), ...(e.e2||[])];
+      if(e.e1?.length && e.e2?.length){
+        const win = e.res==='E1'?e.e1: e.res==='E2'?e.e2:[];
+        const lose= e.res==='E1'?e.e2: e.res==='E2'?e.e1:[];
+        [...e.e1,...e.e2].forEach(x=>{ of(x).pj++; if(e.res==='E') of(x).e++; });
+        win.forEach(x=>{ of(x).g++; if(e.goleada) of(x).gf++; });
+        lose.forEach(x=>{ of(x).p++; if(e.goleada) of(x).gc++; });
+        if(e.mvpId) of(e.mvpId).mvp++;
+        (e.domadores||[]).forEach(x=>of(x).domador++);
+        (e.domados||[]).forEach(x=>of(x).domado++);
+      }
+    } else {
+      const eqs = e.equipos||[];
+      participantes = eqs.flat();
+      if(eqs.length && !eqs.some(q=>!q.length)){
+        ['t1','t2','t3'].forEach((k,i)=> eqs[e.posiciones[i]].forEach(x=>{ of(x)[k]++; of(x).triPJ++; }));
+        if(e.mvpId) of(e.mvpId).mvp++;
+        (e.gano4||[]).forEach(x=>of(x).g4++);
+        (e.domadores||[]).forEach(x=>of(x).domador++);
+        (e.domados||[]).forEach(x=>of(x).domado++);
+      }
+    }
+    const totales = {}; Object.keys(st).forEach(id=> totales[id]=totalPts(st[id], P));
+    snapshots.push({eventId:e.id, fecha:e.fecha, totales, participantes:new Set(participantes)});
+  }
+  const series = (playerId) => {
+    let last = 0; const out=[];
+    snapshots.forEach(s=>{
+      const jugo = s.participantes.has(playerId);
+      if(jugo) last = s.totales[playerId] ?? last;
+      out.push({fecha:s.fecha, r:last, played:jugo});
+    });
+    return out;
+  };
+  return { events, series };
 }
 function totalPts(x, Pt){
   const P=Pt||S.config.puntos;
@@ -2032,6 +2121,19 @@ function colsTabla(){
   ];
   return {F, cols, MIN};
 }
+function campeonesMap(){
+  const mp = {};
+  S.torneos.forEach(t=>{ if(t.campeonId) mp[t.campeonId]=(mp[t.campeonId]||0)+1; });
+  return mp;
+}
+function campeonBadge(playerId){
+  if(torneoFiltro==='ALL'){
+    const n = campeonesMap()[playerId]||0;
+    return n>0 ? ` <span title="Campeón de ${n} torneo${n>1?'s':''}">🏆${n>1?`×${n}`:''}</span>` : '';
+  }
+  const t = torneo(torneoFiltro);
+  return (t && t.campeonId===playerId) ? ` <span title="Campeón de ${esc(t.nombre)}">🏆</span>` : '';
+}
 function tablaZona(tipo, zrows, base){
   const ordenDef = S.config.ordenTabla || 'mmr';
   const orden = (tipo==='A'? ordenColA : ordenColB) || ordenDef;
@@ -2047,7 +2149,7 @@ function tablaZona(tipo, zrows, base){
   rows.forEach(r=>{
     const dr = rankDef[r.id];
     const tint = tipo==='A' ? (dr<=4?'r-top': dr>zrows.length-4?'r-desc':'') : (dr<=4?'r-asc':'');
-    html += `<tr class="${tint}"><td class="rank">${dr}</td><td class="nombre">${esc(r.nombre)}</td>
+    html += `<tr class="${tint}"><td class="rank">${dr}</td><td class="nombre">${esc(r.nombre)}${campeonBadge(r.id)}</td>
       <td class="pts">${fmt(r.total)}</td>
       ${F.mmrCol?`<td class="mmr">${fmt(r.mmr,0)}</td>`:''}
       <td>${r.pj}</td><td>${r.g}</td><td>${r.e}</td><td>${r.p}</td>
@@ -2075,7 +2177,7 @@ function vTabla(m){
   p.innerHTML = `<div class="rowflex"><h2 class="display">Tabla · ${esc(nombreFiltro())}</h2><span class="spacer"></span>
     <button class="btn wsp" id="btnWsp">📋 Copiar para WhatsApp</button></div>
     ${rango?`<div class="trango">${rango}</div>`:''}
-    <div class="leyenda"><span class="l-top">Puestos 1–4 de la A</span><span class="l-desc">Descienden (últimos 4 de la A)</span><span class="l-asc">Ascienden (primeros 4 de la B)</span></div>`;
+    <div class="leyenda"><span class="l-desc">Descienden (últimos 4 de la A)</span><span class="l-asc">Ascienden (primeros 4 de la B)</span></div>`;
   if(isAdmin && t){
     const fr = p.querySelector('.rowflex');
     fr.insertBefore(el('button',{className:'btn',textContent:'⚑ Editar zonas A/B',onclick:()=>formZonas(t)}), fr.querySelector('#btnWsp'));
@@ -2208,13 +2310,37 @@ function vTris(m){
 
 <script>
 /* ---------- MMR ---------- */
-let mmrSel = null;
+let mmrSel = null, ptsSel = null;
+const mmrColorMap = new Map(), ptsColorMap = new Map();
+const CHART_COLORS = ['#f2c13d','#4cb872','#5aa7d6','#e05548','#c48ef2','#f2985a'];
+function asignarColor(colorMap, id){
+  if(colorMap.has(id)) return colorMap.get(id);
+  const usados = new Set(colorMap.values());
+  const libre = CHART_COLORS.find(c=>!usados.has(c)) ?? CHART_COLORS[colorMap.size % CHART_COLORS.length];
+  colorMap.set(id, libre);
+  return libre;
+}
+function renderLegend(rows, sel, colorMap){
+  const leg=el('div',{className:'legend'});
+  if(!rows.length) return leg;
+  rows.forEach(r=>{
+    const on=sel.has(r.id);
+    const b=el('span',{className:'lg'+(on?' on':''),onclick:()=>{ on?sel.delete(r.id):(sel.size<6&&sel.add(r.id)); render(); }});
+    if(on){ const color=asignarColor(colorMap,r.id); b.style.background=color; b.style.borderColor=color; b.innerHTML='<span class="dot"></span>'; }
+    else colorMap.delete(r.id);
+    b.appendChild(document.createTextNode(r.nombre));
+    leg.appendChild(b);
+  });
+  return leg;
+}
+function participantesDe(e){ return e._tipo==='partido' ? [...(e.e1||[]),...(e.e2||[])] : (e.equipos||[]).flat(); }
 function vMMR(m){
   const {ratings,hist}=getCache().mmr;
   const rows = S.jugadores.filter(j=>j.activo!==false).map(j=>({id:j.id,nombre:j.nombre,r:ratings[j.id],h:hist[j.id]})).sort((a,b)=>b.r-a.r);
+  const golK = +S.config.mmr.golK || 2;
   const p=el('div',{className:'panel'});
   p.innerHTML=`<h2 class="display">Ranking MMR</h2>
-  <div class="hint">Elo por equipos: todos arrancan en ${S.config.mmr.inicial} y cada partido mueve el puntaje según el resultado y la diferencia contra el promedio rival (K=${S.config.mmr.K}). Se recalcula siempre desde el historial completo. Este número se usa para armar equipos parejos.</div>`;
+  <div class="hint">Elo por equipos: todos arrancan en ${S.config.mmr.inicial} y cada partido mueve el puntaje según el resultado y la diferencia contra el promedio rival (K=${S.config.mmr.K}, goleada ×${fmt(golK,1)}). Se recalcula siempre desde el historial completo. Este número se usa para armar equipos parejos.</div>`;
   let html=`<div class="tablewrap"><table class="tabla mmr-table"><thead><tr><th>#</th><th class="nombre">Jugador</th><th>MMR</th><th>Último Δ</th><th>Evolución</th></tr></thead><tbody>`;
   rows.forEach((r,i)=>{
     const last=r.h.length>1? r.h[r.h.length-1].delta : 0;
@@ -2224,23 +2350,72 @@ function vMMR(m){
   });
   p.innerHTML+=html+'</tbody></table></div>'; m.appendChild(p);
 
-  // Gráfico evolución
+  // Gráfico Evolución — histórico completo (todos los torneos), eje X con fechas reales
   const p2=el('div',{className:'panel'});
-  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Tocá los nombres para comparar hasta 6 jugadores.</div>`;
+  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Tocá los nombres para comparar hasta 6 jugadores. Tramo punteado = ese jugador no jugó ese partido.</div>`;
   if(!mmrSel) mmrSel = new Set(rows.slice(0,4).map(r=>r.id));
-  const colores=['#f2c13d','#4cb872','#5aa7d6','#e05548','#c48ef2','#f2985a'];
-  const leg=el('div',{className:'legend'});
-  rows.forEach(r=>{
-    const on=mmrSel.has(r.id);
-    const b=el('span',{className:'lg'+(on?' on':''),onclick:()=>{ on?mmrSel.delete(r.id):(mmrSel.size<6&&mmrSel.add(r.id)); render(); }});
-    if(on) b.innerHTML=`<span class="dot" style="background:${colores[[...mmrSel].indexOf(r.id)%6]}"></span>`;
-    b.appendChild(document.createTextNode(r.nombre));
-    leg.appendChild(b);
-  });
-  p2.appendChild(leg);
-  const series=[...mmrSel].map((id,i)=>({nombre:jnom(id), color:colores[i%6], pts:hist[id].map(x=>x.r)}));
-  p2.appendChild(chartLineas(series));
+  p2.appendChild(renderLegend(rows, mmrSel, mmrColorMap));
+  const tlAll = mmrTimeline('ALL');
+  const serieEvol = [...mmrSel].map(id=>({nombre:jnom(id), color:asignarColor(mmrColorMap,id), pts:tlAll.series(id)}));
+  p2.appendChild(chartLineas(serieEvol, tlAll.events));
   m.appendChild(p2);
+
+  // Detalle del torneo elegido: fecha a fecha (MMR) + partidos + evolución de puntos de tabla
+  const p3=el('div',{className:'panel'});
+  p3.innerHTML=`<h2 class="display">Detalle · ${esc(nombreFiltro())}</h2>`;
+  const grid=el('div',{className:'mmr-grid'});
+  grid.appendChild(bloqueFechaAFecha(torneoFiltro));
+  grid.appendChild(bloqueDerechaMMR(torneoFiltro));
+  p3.appendChild(grid);
+  m.appendChild(p3);
+}
+function bloqueFechaAFecha(tid){
+  const box=el('div');
+  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--verde);margin-bottom:8px',textContent:'MMR fecha a fecha'}));
+  const tl=mmrTimeline(tid);
+  if(!tl.events.length){ box.appendChild(el('div',{className:'empty',textContent:'Sin partidos en este torneo todavía.'})); return box; }
+  const idsSet=new Set(); tl.events.forEach(e=> participantesDe(e).forEach(id=>idsSet.add(id)));
+  const jugadores=[...idsSet].map(id=>({id,nombre:jnom(id)})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  const seriePorJ={}; jugadores.forEach(j=> seriePorJ[j.id]=tl.series(j.id));
+  let html=`<div class="fechatabla"><table><thead><tr><th class="fcol">Fecha</th>${jugadores.map(j=>`<th title="${esc(j.nombre)}">${esc(j.nombre.slice(0,8))}</th>`).join('')}</tr></thead><tbody>`;
+  tl.events.forEach((e,i)=>{
+    html+=`<tr><td class="fcol">${fFecha(e.fecha)}</td>`+jugadores.map(j=>{
+      const pt=seriePorJ[j.id][i];
+      return pt.played? `<td>${fmt(pt.r,0)}</td>` : `<td class="np" title="${fmt(pt.r,0)} (no jugó)">—</td>`;
+    }).join('')+`</tr>`;
+  });
+  html+='</tbody></table></div>';
+  box.appendChild(el('div',{innerHTML:html}).firstChild);
+  return box;
+}
+function bloqueDerechaMMR(tid){
+  const box=el('div');
+  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--azul);margin-bottom:8px',textContent:'Puntos de tabla, partido a partido'}));
+  const pt=pointsTimeline(tid);
+  const rowsTorneo=S.jugadores.filter(j=> pt.events.some(e=>participantesDe(e).includes(j.id))).map(j=>({id:j.id,nombre:j.nombre})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  if(!pt.events.length){
+    box.appendChild(el('div',{className:'empty',textContent:'Sin partidos en este torneo todavía.'}));
+  } else {
+    ptsSel = new Set([...(ptsSel||[])].filter(id=>rowsTorneo.some(r=>r.id===id)));
+    if(!ptsSel.size) ptsSel = new Set(rowsTorneo.slice(0,4).map(r=>r.id));
+    box.appendChild(renderLegend(rowsTorneo, ptsSel, ptsColorMap));
+    const seriePts=[...ptsSel].map(id=>({nombre:jnom(id), color:asignarColor(ptsColorMap,id), pts:pt.series(id)}));
+    box.appendChild(chartLineas(seriePts, pt.events));
+  }
+  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--verde);margin:16px 0 8px',textContent:'Partidos de este torneo'}));
+  const listWrap=el('div',{style:'max-height:420px;overflow:auto'});
+  const partidos=S.partidos.filter(x=>matchTorneo(tid,x.torneoId)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const tris=S.triangulares.filter(x=>matchTorneo(tid,x.torneoId)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(!partidos.length && !tris.length) listWrap.appendChild(el('div',{className:'empty',textContent:'Sin partidos cargados.'}));
+  partidos.forEach(pp=>{
+    const resTxt = pp.res==='E'?'Empate':`Ganó Equipo ${pp.res==='E1'?1:2}`;
+    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(pp.fecha)}</b> — ${resTxt} · ${pp.e1.length} vs ${pp.e2.length}${pp.goleada?' · 🔥 Goleada':''}`}));
+  });
+  tris.forEach(tt=>{
+    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(tt.fecha)}</b> — Triangular · 🥇 Equipo ${tt.posiciones[0]+1}`}));
+  });
+  box.appendChild(listWrap);
+  return box;
 }
 function spark(vals){
   if(vals.length<2) return '<span class="muted small">—</span>';
@@ -2249,26 +2424,56 @@ function spark(vals){
   const up=vals[vals.length-1]>=vals[0];
   return `<svg width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${up?'var(--verde)':'var(--rojo)'}" stroke-width="1.8"/></svg>`;
 }
-function chartLineas(series){
-  const wrap=el('div');
-  if(!series.length || series.every(s=>s.pts.length<2)){ wrap.innerHTML='<div class="empty">Elegí jugadores con partidos jugados.</div>'; return wrap; }
-  const W=980,H=340,pad={l:52,r:14,t:14,b:26};
-  const all=series.flatMap(s=>s.pts);
-  const min=Math.floor(Math.min(...all)/25)*25, max=Math.ceil(Math.max(...all)/25)*25;
-  const maxN=Math.max(...series.map(s=>s.pts.length));
-  const X=i=> pad.l+(maxN<2?0:i/(maxN-1))*(W-pad.l-pad.r);
+function chartLineas(series, events){
+  const wrap=el('div',{className:'chart-wrap'});
+  if(!series.length || !events || events.length<2){ wrap.innerHTML='<div class="empty">Elegí jugadores con partidos jugados.</div>'; return wrap; }
+  const W=980,H=340,pad={l:52,r:14,t:14,b:34};
+  const allVals=series.flatMap(s=>s.pts.map(x=>x.r));
+  const min=Math.floor(Math.min(...allVals,0)/25)*25, max=Math.ceil(Math.max(...allVals,25)/25)*25;
+  const n=events.length;
+  const X=i=> pad.l+(n<2?0:i/(n-1))*(W-pad.l-pad.r);
   const Y=v=> pad.t+(1-(v-min)/((max-min)||1))*(H-pad.t-pad.b);
-  let g='';
+  let defs='', g='';
   for(let v=min; v<=max; v+=Math.max(25,Math.round((max-min)/6/25)*25)){
-    g+=`<line x1="${pad.l}" x2="${W-pad.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(233,242,228,.08)"/><text x="${pad.l-8}" y="${Y(v)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${v}</text>`;
+    g+=`<line x1="${pad.l}" x2="${W-pad.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(233,242,228,.5)"/><text x="${pad.l-8}" y="${Y(v)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${v}</text>`;
   }
-  series.forEach(s=>{
-    const pts=s.pts.map((v,i)=>`${X(i)},${Y(v)}`).join(' ');
-    g+=`<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round"/>`;
-    g+=`<circle cx="${X(s.pts.length-1)}" cy="${Y(s.pts.at(-1))}" r="3.4" fill="${s.color}"/>`;
+  const step=Math.max(1, Math.ceil(n/7));
+  for(let i=0;i<n;i+=step){
+    g+=`<text x="${X(i)}" y="${H-10}" fill="var(--muted)" font-size="10" text-anchor="middle">${fFecha(events[i].fecha)}</text>`;
+  }
+  series.forEach((s,si)=>{
+    const gid='grad'+si+'_'+Math.random().toString(36).slice(2,7);
+    defs+=`<linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.color}" stop-opacity=".22"/><stop offset="1" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+    const areaPts=s.pts.map((pt,i)=>`${X(i)},${Y(pt.r)}`).join(' ');
+    g+=`<polygon points="${pad.l},${Y(min)} ${areaPts} ${X(n-1)},${Y(min)}" fill="url(#${gid})" stroke="none"/>`;
+    let i=0;
+    while(i<s.pts.length){
+      let j=i;
+      while(j+1<s.pts.length && s.pts[j+1].played===s.pts[i].played) j++;
+      const start=i>0? i-1 : i;
+      const seg=s.pts.slice(start,j+1).map((pt,k)=>`${X(start+k)},${Y(pt.r)}`).join(' ');
+      const dashed=!s.pts[i].played;
+      g+=`<polyline points="${seg}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round" ${dashed?'stroke-dasharray="5,4" opacity=".5"':''}/>`;
+      i=j+1;
+    }
+    const li=s.pts.length-1;
+    g+=`<circle cx="${X(li)}" cy="${Y(s.pts[li].r)}" r="5" fill="${s.color}" stroke="#fff" stroke-width="1.5"/>`;
+    g+=`<text x="${X(li)+8}" y="${Y(s.pts[li].r)+4}" fill="${s.color}" font-size="11.5" font-weight="700">${fmt(s.pts[li].r,0)}</text>`;
   });
-  g+=`<text x="${pad.l}" y="${H-6}" fill="var(--muted)" font-size="11">→ partidos jugados</text>`;
-  wrap.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución de MMR">${g}</svg>`;
+  wrap.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución">${defs?`<defs>${defs}</defs>`:''}${g}<rect x="${pad.l}" y="${pad.t}" width="${W-pad.l-pad.r}" height="${H-pad.t-pad.b}" fill="transparent"/></svg><div class="chart-tip"></div>`;
+  const svg=wrap.querySelector('svg'), tip=wrap.querySelector('.chart-tip'), rectEl=wrap.querySelector('rect');
+  rectEl.addEventListener('mousemove', ev=>{
+    const box=svg.getBoundingClientRect();
+    const xSvg=(ev.clientX-box.left)/box.width*W;
+    let idx=Math.round((xSvg-pad.l)/(W-pad.l-pad.r)*(n-1));
+    idx=Math.max(0, Math.min(n-1, idx));
+    const linea=series.map(s=>`<b style="color:${s.color}">${esc(s.nombre)}:</b> ${fmt(s.pts[idx].r,0)}${s.pts[idx].played?'':' (no jugó)'}`).join('<br>');
+    tip.innerHTML=`${fFecha(events[idx].fecha)}<br>${linea}`;
+    tip.classList.add('on');
+    tip.style.left=Math.min(78, Math.max(2, xSvg/W*100))+'%';
+    tip.style.top='6px';
+  });
+  rectEl.addEventListener('mouseleave', ()=> tip.classList.remove('on'));
   return wrap;
 }
 
@@ -2445,7 +2650,7 @@ function vJugadores(m){
     || S.triangulares.some(x=>x.equipos.flat().includes(id)) || S.sanciones.some(x=>x.jugadorId===id);
   const p=el('div',{className:'panel'});
   p.innerHTML=`<div class="rowflex"><h2 class="display">Jugadores</h2><span class="spacer"></span></div>
-  <div class="hint"><b>Inactivo</b>: no aparece en la tabla ni en el armado de equipos, pero conserva su historial y puede volver.
+  <div class="hint"><b>Inactivo</b>: no aparece en la tabla ni en el armado de equipos, pero conserva su historial y puede volver — figura en la lista de "Inactivos" más abajo.
   <b>Eliminar</b>: si jugó partidos, queda como <i>desafiliado</i> (figura en los partidos viejos pero desaparece de la tabla); si nunca jugó, se borra del todo.</div>`;
   if(isAdmin){
     const fr=el('div',{className:'rowflex',style:'margin-bottom:12px'});
@@ -2457,90 +2662,58 @@ function vJugadores(m){
     }}));
     p.querySelector('.rowflex').after(fr);
   }
-  const vivos=S.jugadores.filter(j=>!j.borrado).sort((a,b)=>a.nombre.localeCompare(b.nombre));
-  let html=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th><th>Estado</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
-  vivos.forEach(j=>{
-    html+=`<tr><td class="nombre">${j.activo!==false?esc(j.nombre):`<span class="muted">${esc(j.nombre)}</span>`}</td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
-    <td>${j.activo!==false?'<span class="pos">Activo</span>':'<span class="muted">Inactivo</span>'}</td>
-    ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎ Renombrar</button> <button class="btn small ghost" data-tog="${j.id}">${j.activo!==false?'Desactivar':'Activar'}</button> <button class="btn small danger" data-del="${j.id}">Eliminar</button></td>`:''}</tr>`;
+  const bind = (root) => {
+    root.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.tog); j.activo=!(j.activo!==false); marcar(); render(); });
+    root.querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.ren); const n=prompt('Nuevo nombre para '+j.nombre, j.nombre); if(n&&n.trim()){ j.nombre=n.trim(); marcar(); render(); } });
+    root.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+      const j=jugador(b.dataset.del);
+      if(apariciones(j.id)){
+        if(!confirm(`${j.nombre} tiene historial: quedará como "desafiliado" en los partidos viejos y desaparecerá de la tabla y del armado de equipos. ¿Continuar?`)) return;
+        j.borrado=true; j.activo=false; toast(j.nombre+' pasó a desafiliado');
+      } else {
+        if(!confirm(`${j.nombre} nunca jugó: se borra definitivamente. ¿Continuar?`)) return;
+        S.jugadores=S.jugadores.filter(x=>x.id!==j.id); toast('Jugador eliminado');
+      }
+      marcar(); render();
+    });
+  };
+
+  const activos=S.jugadores.filter(j=>!j.borrado && j.activo!==false).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  let html=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
+  activos.forEach(j=>{
+    html+=`<tr><td class="nombre">${esc(j.nombre)}</td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
+    ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎ Renombrar</button> <button class="btn small ghost" data-tog="${j.id}">Desactivar</button> <button class="btn small danger" data-del="${j.id}">Eliminar</button></td>`:''}</tr>`;
   });
   const wrap=el('div',{innerHTML:html+'</tbody></table></div>'});
-  wrap.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.tog); j.activo=!(j.activo!==false); marcar(); render(); });
-  wrap.querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.ren); const n=prompt('Nuevo nombre para '+j.nombre, j.nombre); if(n&&n.trim()){ j.nombre=n.trim(); marcar(); render(); } });
-  wrap.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
-    const j=jugador(b.dataset.del);
-    if(apariciones(j.id)){
-      if(!confirm(`${j.nombre} tiene historial: quedará como "desafiliado" en los partidos viejos y desaparecerá de la tabla y del armado de equipos. ¿Continuar?`)) return;
-      j.borrado=true; j.activo=false; toast(j.nombre+' pasó a desafiliado');
-    } else {
-      if(!confirm(`${j.nombre} nunca jugó: se borra definitivamente. ¿Continuar?`)) return;
-      S.jugadores=S.jugadores.filter(x=>x.id!==j.id); toast('Jugador eliminado');
-    }
-    marcar(); render();
-  });
+  bind(wrap);
   p.appendChild(wrap.firstChild); m.appendChild(p);
+
+  const inactivos=S.jugadores.filter(j=>!j.borrado && j.activo===false).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  if(inactivos.length){
+    const p2=el('div',{className:'panel'});
+    p2.innerHTML=`<h2 class="display" style="font-size:17px;color:var(--muted)">Inactivos</h2>`;
+    let html2=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
+    inactivos.forEach(j=>{
+      html2+=`<tr><td class="nombre"><span class="muted">${esc(j.nombre)}</span></td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
+      ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎ Renombrar</button> <button class="btn small" data-tog="${j.id}">Activar</button> <button class="btn small danger" data-del="${j.id}">Eliminar</button></td>`:''}</tr>`;
+    });
+    const wrap2=el('div',{innerHTML:html2+'</tbody></table></div>'});
+    bind(wrap2);
+    p2.appendChild(wrap2.firstChild); m.appendChild(p2);
+  }
 
   const borrados=S.jugadores.filter(j=>j.borrado);
   if(borrados.length && isAdmin){
-    const p2=el('div',{className:'panel'});
-    p2.innerHTML=`<h2 class="display" style="font-size:17px;color:var(--muted)">Desafiliados</h2>`;
+    const p3=el('div',{className:'panel'});
+    p3.innerHTML=`<h2 class="display" style="font-size:17px;color:var(--muted)">Desafiliados</h2>`;
     borrados.forEach(j=>{
       const r=el('div',{className:'jrow'});
       r.append(el('span',{className:'desaf',textContent:j.nombre}), el('span',{className:'spacer'}),
         el('button',{className:'btn small',textContent:'↩ Restaurar',onclick:()=>{ delete j.borrado; j.activo=true; marcar(); render(); toast(j.nombre+' restaurado'); }}));
-      p2.appendChild(r);
+      p3.appendChild(r);
     });
-    m.appendChild(p2);
+    m.appendChild(p3);
   }
-}
-
-function formSancion(){
-  const jsel = jugadoresActivos().map(j=>`<option value="${j.id}">${esc(j.nombre)}</option>`).join('');
-  const tsel = S.torneos.map(t=>`<option value="${t.id}">${esc(t.nombre)}</option>`).join('');
-  openModal(`<h3 class="display">Nueva sanción</h3>
-    <div class="grid2">
-      <div class="field"><label>Fecha</label><input type="date" id="fFecha" value="${hoy()}"></div>
-      <div class="field"><label>Torneo</label><select id="fTorneo">${tsel}</select></div>
-      <div class="field"><label>Jugador</label><select id="fJug">${jsel}</select></div>
-      <div class="field"><label>Puntos a restar</label><input type="number" id="fPts" step="0.5" min="0" value="1"></div>
-    </div>
-    <div class="field"><label>Motivo (opcional)</label><input type="text" id="fMotivo" placeholder="Llegó 20 minutos tarde…"></div>
-    <div class="modalacts"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn primary" id="fOk">Guardar</button></div>`);
-  const tsl=$('#fTorneo'); if(torneo(torneoFiltro)) tsl.value=torneoFiltro;
-  $('#fOk').onclick=()=>{
-    const pts=+$('#fPts').value;
-    if(!(pts>0)) return toast('Los puntos deben ser mayores a 0');
-    S.sanciones.push({id:uid('s'),fecha:$('#fFecha').value||hoy(),torneoId:$('#fTorneo').value,jugadorId:$('#fJug').value,puntos:pts,motivo:$('#fMotivo').value.trim()});
-    marcar(); closeModal(); render();
-  };
-}
-
-/* ---------- JUGADORES ---------- */
-function vJugadores(m){
-  const {ratings}=getCache().mmr;
-  const p=el('div',{className:'panel'});
-  p.innerHTML=`<div class="rowflex"><h2 class="display">Jugadores</h2><span class="spacer"></span></div>
-  <div class="hint">Los jugadores inactivos no aparecen en la tabla ni en el armado de equipos, pero su historial se conserva.</div>`;
-  if(isAdmin){
-    const fr=el('div',{className:'rowflex',style:'margin-bottom:12px'});
-    const inp=el('input',{type:'text',placeholder:'Nombre del nuevo jugador'});
-    fr.append(inp, el('button',{className:'btn primary',textContent:'+ Agregar',onclick:()=>{
-      const n=inp.value.trim(); if(!n) return;
-      if(S.jugadores.some(j=>j.nombre.toLowerCase()===n.toLowerCase())) return toast('Ya existe ese nombre');
-      S.jugadores.push({id:uid('j'),nombre:n,activo:true}); marcar(); render();
-    }}));
-    p.querySelector('.rowflex').after(fr);
-  }
-  let html=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th><th>Estado</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>`;
-  [...S.jugadores].sort((a,b)=>a.nombre.localeCompare(b.nombre)).forEach(j=>{
-    html+=`<tr><td class="nombre">${esc(j.nombre)}</td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
-    <td>${j.activo!==false?'<span class="pos">Activo</span>':'<span class="muted">Inactivo</span>'}</td>
-    ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎</button> <button class="btn small ghost" data-tog="${j.id}">${j.activo!==false?'Desactivar':'Activar'}</button></td>`:''}</tr>`;
-  });
-  const wrap=el('div',{innerHTML:html+'</tbody></table></div>'});
-  wrap.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.tog); j.activo=!(j.activo!==false); marcar(); render(); });
-  wrap.querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>{ const j=jugador(b.dataset.ren); const n=prompt('Nuevo nombre para '+j.nombre, j.nombre); if(n&&n.trim()){ j.nombre=n.trim(); marcar(); render(); } });
-  p.appendChild(wrap.firstChild); m.appendChild(p);
 }
 
 /* ---------- SELECTOR DE EQUIPO (chips) ---------- */
@@ -2694,7 +2867,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 /* ---------- CONFIGURACIÓN ---------- */
 function vConfig(m){
   if(!isAdmin){ m.appendChild(el('div',{className:'empty',textContent:'Sección solo para el admin: tocá el candado arriba a la derecha e ingresá el PIN.'})); return; }
-  const C=S.config, P=C.puntos;
+  const C=S.config;
   C.flags = C.flags || {};
 
   const p0=el('div',{className:'panel'});
@@ -2709,23 +2882,8 @@ function vConfig(m){
   p0.querySelectorAll('[data-f]').forEach(i=> i.onchange=()=>{ C.flags[i.dataset.f]=i.checked; marcar(); render(); toast(i.checked?'Módulo activado':'Módulo desactivado'); });
   m.appendChild(p0);
 
-  const p=el('div',{className:'panel'});
-  const FLAG={mvp:'mvp',domador:'doma',domado:'doma',goleadaFavor:'goleada',goleadaContra:'goleada',tri1:'tri',tri2:'tri',tri3:'tri',gano4pj:'tri'};
-  const pf=(k,l)=>`<div class="field ${FLAG[k]&&!flagOn(FLAG[k])?'off-flag':''}"><label>${l}</label><input type="number" step="0.5" data-p="${k}" value="${P[k]}"></div>`;
-  p.innerHTML=`<h2 class="display">Puntos por evento</h2>
-    <div class="hint">Cambiá cualquier valor y toda la tabla se recalcula al instante (también hacia atrás). Poné <b>Partido jugado</b> en 0 si no quieren dar puntos por ir a jugar. Los grises pertenecen a módulos apagados.</div>
-    <div class="pgrid">
-      ${pf('pj','Partido jugado (ir a jugar)')}${pf('g','Victoria')}${pf('e','Empate')}${pf('p','Derrota')}
-      ${pf('mvp','MVP')}${pf('domador','Domador')}${pf('domado','Domado')}
-      ${pf('goleadaFavor','Goleada a favor')}${pf('goleadaContra','Goleada en contra')}
-      ${pf('tri1','Triangular 1°')}${pf('tri2','Triangular 2°')}${pf('tri3','Triangular 3°')}${pf('gano4pj','Ganó 4PJ (triangular)')}
-    </div>`;
-  p.querySelectorAll('[data-p]').forEach(i=> i.onchange=()=>{ P[i.dataset.p]=+i.value||0; marcar(); toast('Puntos actualizados'); });
-  m.appendChild(p);
-
   const p2=el('div',{className:'panel'});
   p2.innerHTML=`<h2 class="display">Tabla y MMR</h2><div class="grid3">
-    <div class="field"><label>Corte zona Primera por defecto</label><input type="number" id="cZona" value="${C.zonaCorte}"></div>
     <div class="field"><label>Orden oficial de la tabla</label><select id="cOrden">
       <option value="mmr" ${C.ordenTabla==='mmr'?'selected':''}>MMR (como el Excel)</option>
       <option value="total" ${C.ordenTabla==='total'?'selected':''}>Total de puntos</option>
@@ -2733,13 +2891,14 @@ function vConfig(m){
     <div class="field"><label>&nbsp;</label><label class="check"><input type="checkbox" id="cVerMMR" ${C.mostrarMMR===true?'checked':''}> Mostrar columna MMR en la tabla</label></div>
     <div class="field"><label>MMR inicial</label><input type="number" id="cIni" value="${C.mmr.inicial}"></div>
     <div class="field"><label>Factor K (sensibilidad del MMR)</label><input type="number" id="cK" value="${C.mmr.K}"></div>
+    <div class="field"><label>Factor goleada (multiplica el K en partidos con goleada)</label><input type="number" step="0.1" id="cGolK" value="${C.mmr.golK??2}"></div>
   </div>
-  <div class="hint">El MMR se sigue calculando siempre (para armar equipos parejos y para la pestaña MMR), mostrarlo en la tabla es opcional.</div>`;
-  p2.querySelector('#cZona').onchange=e=>{C.zonaCorte=Math.max(1,+e.target.value||16); marcar(); render();};
+  <div class="hint">El MMR se sigue calculando siempre (para armar equipos parejos y para la pestaña MMR), mostrarlo en la tabla es opcional. El corte de zona Primera A/B y los puntos por evento ahora se configuran por torneo, en el panel "Torneos" de abajo.</div>`;
   p2.querySelector('#cOrden').onchange=e=>{C.ordenTabla=e.target.value; ordenColA=ordenColB=null; marcar(); render();};
   p2.querySelector('#cVerMMR').onchange=e=>{C.mostrarMMR=e.target.checked; marcar(); render();};
   p2.querySelector('#cIni').onchange=e=>{C.mmr.inicial=+e.target.value||1000; marcar();};
   p2.querySelector('#cK').onchange=e=>{C.mmr.K=+e.target.value||100; marcar();};
+  p2.querySelector('#cGolK').onchange=e=>{C.mmr.golK=+e.target.value||2; marcar(); toast('Factor de goleada actualizado');};
   m.appendChild(p2);
 
   const p3=el('div',{className:'panel'});
@@ -2761,6 +2920,7 @@ function vConfig(m){
       el('span',{className:'muted small',textContent:'Corte:'}), corteInp,
       el('button',{className:'btn small',textContent:'⚑ Zonas A/B',onclick:()=>formZonas(t)}),
       el('button',{className:'btn small',textContent:'★ Puntos',onclick:()=>formPuntosTorneo(t)}),
+      el('button',{className:'btn small',textContent:'🏆 Campeón',onclick:()=>formCampeon(t)}),
       el('button',{className:'btn small',textContent:'✎',title:'Renombrar',onclick:()=>{const n=prompt('Nombre del torneo',t.nombre); if(n&&n.trim()){t.nombre=n.trim(); marcar(); render();}}}),
       t.cerrado
         ? el('button',{className:'btn small ghost',textContent:'↩ Reabrir',onclick:()=>{ t.cerrado=false; marcar(); render(); toast('Torneo reabierto'); }})
@@ -2806,6 +2966,8 @@ function finalizarTorneo(t){
 function nuevoTorneo(prevId){
   const n=prompt('Nombre del nuevo torneo (ej: Apertura 2026)'); if(!n||!n.trim()) return;
   const t={id:uid('t'),nombre:n.trim(),fechaInicio:hoy()};
+  const prev=prevId?torneo(prevId):null;
+  if(prev?.zonaCorte) t.zonaCorte=prev.zonaCorte;
   const z=prevId? computarZonas(prevId) : null;
   if(z) t.zonas=z;
   S.torneos.push(t); torneoFiltro=t.id; ordenColA=ordenColB=null;
@@ -2869,6 +3031,19 @@ function formPuntosTorneo(t){
   document.querySelectorAll('[data-tp]').forEach(i=> i.onchange=()=>{ t.puntos=t.puntos||{}; t.puntos[i.dataset.tp]=+i.value||0; marcar(); toast('Puntos del torneo actualizados'); });
   $('#tpReset').onclick=()=>{ delete t.puntos; marcar(); closeModal(); render(); toast('El torneo vuelve a usar los puntos de la liga'); };
   $('#tpOk').onclick=()=>{ closeModal(); render(); };
+}
+function formCampeon(t){
+  const jugs = jugadoresActivos();
+  const opts = `<option value="">— Sin campeón —</option>` + jugs.map(j=>`<option value="${j.id}" ${t.campeonId===j.id?'selected':''}>${esc(j.nombre)}</option>`).join('');
+  openModal(`<h3 class="display">Campeón · ${esc(t.nombre)}</h3>
+    <div class="hint">Elegí quién se consagró campeón de este torneo. Va a aparecer con 🏆 junto a su nombre en la tabla de este torneo, y también en "Todos los torneos".</div>
+    <div class="field"><label>Campeón</label><select id="fCampeon">${opts}</select></div>
+    <div class="modalacts"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn primary" id="fOk">Guardar</button></div>`);
+  $('#fOk').onclick=()=>{
+    const v=$('#fCampeon').value;
+    if(v) t.campeonId=v; else delete t.campeonId;
+    marcar(); closeModal(); render(); toast(v?'Campeón guardado':'Campeón quitado');
+  };
 }
 
 /* ---------- Guardado en servidor ---------- */
@@ -2935,7 +3110,7 @@ async function boot(){
   const savedPin=store.get('prudanAdminPin');
   if(savedPin && await loginAdmin(savedPin)){ isAdmin=true; pinAdmin=savedPin; }
   torneoFiltro = S.torneos.at(-1)?.id || 'ALL';
-  $('#hLiga').textContent = (S.config.nombreLiga||'Prudan').replace(/^Copa de la Liga\s*/i,'') || 'Prudan';
+  $('#hLiga').textContent = (S.config.nombreLiga||'Matheu').replace(/^Copa de la Liga\s*/i,'') || 'Matheu';
   estadoGuardado(base?'✓ Datos del servidor':'⚠ Sin servidor: modo local','var(--muted)');
   render();
 }
