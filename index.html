@@ -2579,8 +2579,9 @@ function selVals(id){ return [...$('#'+id).selectedOptions].map(o=>o.value); }
 function formPartido(pt){
   const editando=!!pt;
   const e1=[...(pt?.e1||[])], e2=[...(pt?.e2||[])];
-  const tsel = S.torneos.map(t=>`<option value="${t.id}" ${pt?.torneoId===t.id?'selected':''}>${esc(t.nombre)}</option>`).join('')
-    + `<option value="" ${pt&&pt.torneoId==null?'selected':''}>Amistoso (solo MMR, sin puntos)</option>`;
+  const defTid = pt ? pt.torneoId : (torneo(torneoFiltro)?.id ?? null);
+  const tsel = S.torneos.map(t=>`<option value="${t.id}" ${defTid===t.id?'selected':''}>${esc(t.nombre)}</option>`).join('')
+    + `<option value="" ${defTid==null?'selected':''}>Amistoso (solo MMR, sin puntos)</option>`;
   openModal(`<h3 class="display">${editando?'Editar':'Nuevo'} partido</h3>
     <div class="grid2">
       <div class="field"><label>Fecha</label><input type="date" id="fFecha" value="${pt?.fecha||hoy()}"></div>
@@ -2633,7 +2634,8 @@ function formPartido(pt){
 function formTri(t){
   const editando=!!t;
   const eqs=[[...(t?.equipos?.[0]||[])],[...(t?.equipos?.[1]||[])],[...(t?.equipos?.[2]||[])]];
-  const tsel=S.torneos.map(x=>`<option value="${x.id}" ${t?.torneoId===x.id?'selected':''}>${esc(x.nombre)}</option>`).join('');
+  const defTid = t ? t.torneoId : (torneo(torneoFiltro)?.id ?? S.torneos.at(-1)?.id);
+  const tsel=S.torneos.map(x=>`<option value="${x.id}" ${defTid===x.id?'selected':''}>${esc(x.nombre)}</option>`).join('');
   const posSel=(id,val)=>`<select id="${id}">${[0,1,2].map(i=>`<option value="${i}" ${val===i?'selected':''}>Equipo ${i+1}</option>`).join('')}</select>`;
   openModal(`<h3 class="display">${editando?'Editar':'Nuevo'} triangular</h3>
     <div class="grid2">
