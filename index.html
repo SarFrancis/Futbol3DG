@@ -91,6 +91,13 @@ tr.zona-sep td{background:#20372a !important; padding:2px}
 .leyenda .l-desc::before{background:var(--rojo-suave); border:1px solid var(--rojo)}
 .leyenda .l-asc::before{background:var(--verde-suave); border:1px solid var(--verde)}
 .chip-zona{font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:20px; padding:3px 10px}
+.zona-h{text-align:center; margin:0 0 12px}
+.zona-h .display{font-size:26px}
+.zona-h.za .display{color:var(--verde)}
+.zona-h.zb .display{color:var(--azul)}
+.trango{text-align:center; font-size:12.5px; color:var(--muted); margin:2px 0 8px}
+.tabla th.min{font-size:10px; padding:9px 5px}
+.tabla td.min{font-size:12px; padding:7px 5px}
 
 /* ---------- partidos (cards colapsables) ---------- */
 details.pcard{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); margin-bottom:10px; box-shadow:var(--shadow); overflow:hidden}
@@ -1812,6 +1819,20 @@ function jnom(id){ return jugador(id).nombre }
 function jdisp(id){ const j=jugador(id); return j.borrado ? `<span class="desaf">${esc(j.nombre)} (desafiliado)</span>` : esc(j.nombre); }
 function flagOn(k){ const F=S.config.flags||{}; return F[k]!==false; }
 function torneo(id){ return S.torneos.find(t=>t.id===id) }
+function puntosDe(tid){ const t=torneo(tid); return (t && t.puntos) ? {...S.config.puntos, ...t.puntos} : S.config.puntos; }
+function primeraFechaDe(tid){
+  const fs=[...S.partidos, ...S.triangulares].filter(x=>x.torneoId===tid).map(x=>x.fecha).filter(Boolean).sort();
+  return fs[0]||null;
+}
+function rangoTorneoTxt(t){
+  if(!t) return '';
+  const ini = t.fechaInicio || primeraFechaDe(t.id);
+  if(t.cerrado){
+    const rango = ini ? `Del ${fFecha(ini)} al ${fFecha(t.fechaFin)}` : (t.fechaFin?`Finalizó el ${fFecha(t.fechaFin)}`:'');
+    return `🏁 Finalizado${rango?` · ${rango}`:''}`;
+  }
+  return ini ? `En juego desde el ${fFecha(ini)}` : '';
+}
 function jugadoresActivos(){ return S.jugadores.filter(j=>j.activo!==false && !j.borrado).sort((a,b)=>a.nombre.localeCompare(b.nombre)) }
 
 function marcar(){ dirty=true; S.updatedAt=new Date().toISOString(); cache=null;
@@ -1902,8 +1923,8 @@ function computeStats(tid){
   }
   return st;
 }
-function totalPts(x){
-  const P=S.config.puntos;
+function totalPts(x, Pt){
+  const P=Pt||S.config.puntos;
   let t = x.pj*P.pj + x.g*P.g + x.e*P.e + x.p*P.p - x.sanc;
   if(flagOn('mvp'))     t += x.mvp*P.mvp;
   if(flagOn('doma'))    t += x.domador*P.domador + x.domado*P.domado;
@@ -1928,6 +1949,7 @@ function renderTabs(){
   const n=$('#tabs'); n.innerHTML='';
   TABS.forEach(([id,lbl])=>{
     if(id==='config' && !isAdmin) return;
+    if((id==='mmr' || id==='sorteo') && !isAdmin) return;
     if(id==='tris' && !flagOn('tri')) return;
     const b=el('button',{textContent:lbl,onclick:()=>{tab=id;render()}});
     if(tab===id) b.classList.add('on');
@@ -1936,7 +1958,7 @@ function renderTabs(){
 }
 function renderTorneoSel(){
   const s=$('#torneoSel'); s.innerHTML='';
-  S.torneos.forEach(t=> s.appendChild(el('option',{value:t.id,textContent:t.nombre})));
+  [...S.torneos].reverse().forEach(t=> s.appendChild(el('option',{value:t.id,textContent:t.nombre+(t.cerrado?' · 🏁':'')})));
   s.appendChild(el('option',{value:'AMISTOSO',textContent:'Amistosos (solo MMR)'}));
   s.appendChild(el('option',{value:'ALL',textContent:'⚽ Todos los torneos'}));
   if(![...s.options].some(o=>o.value===torneoFiltro)) torneoFiltro = S.torneos.at(-1)?.id || 'ALL';
@@ -1945,6 +1967,7 @@ function renderTorneoSel(){
 }
 function render(){
   if(tab==='votacion' || (tab==='tris'&&!flagOn('tri'))) tab='tabla';
+  if(!isAdmin && (tab==='mmr' || tab==='sorteo' || tab==='config')) tab='tabla';
   document.body.classList.toggle('is-admin', isAdmin);
   $('#adminbar').classList.toggle('on', isAdmin);
   $('#adminLbl').textContent = isAdmin ? 'Salir de admin' : 'Admin';
@@ -1956,89 +1979,122 @@ function render(){
 }
 
 /* ---------- TABLA ---------- */
-let ordenCol = null;
+let ordenColA = null, ordenColB = null;
 function corteActual(){
   const t = torneo(torneoFiltro);
   return (t && t.zonaCorte) ? t.zonaCorte : S.config.zonaCorte;
 }
-function tablaRows(){
-  const st = computeStats(torneoFiltro);
+function tablaRows(tid){
+  tid = tid ?? torneoFiltro;
+  const st = computeStats(tid);
+  const P = puntosDe(tid);
   const {ratings} = getCache().mmr;
   let rows = Object.entries(st)
     .filter(([id])=> !jugador(id).borrado)
-    .map(([id,x])=>({id, nombre:jnom(id), ...x, total:totalPts(x), mmr:ratings[id]??S.config.mmr.inicial, ppp: x.pj? totalPts(x)/x.pj : 0}));
+    .map(([id,x])=>({id, nombre:jnom(id), ...x, total:totalPts(x,P), mmr:ratings[id]??S.config.mmr.inicial, ppp: x.pj? totalPts(x,P)/x.pj : 0}));
   jugadoresActivos().forEach(j=>{ if(!st[j.id]) rows.push({id:j.id,nombre:j.nombre,...statsBlank(),total:0,mmr:ratings[j.id]??S.config.mmr.inicial,ppp:0}); });
   return rows;
 }
-function ordenar(rows, k){ rows.sort((a,b)=> ((b[k]??0)-(a[k]??0)) || b.total-a.total || a.nombre.localeCompare(b.nombre)); return rows; }
-function vTabla(m){
+function ordenar(rows, k, base){ rows.sort((a,b)=> ((b[k]??0)-(a[k]??0)) || b.total-a.total || (base? (base[a.id]??1e9)-(base[b.id]??1e9) : 0) || a.nombre.localeCompare(b.nombre)); return rows; }
+/* división en zonas: usa las zonas fijadas del torneo si existen; si no, corta la tabla general */
+function zonasSplitFor(tid){
   const ordenDef = S.config.ordenTabla || 'mmr';
-  const orden = ordenCol || ordenDef;
-  const corte = corteActual();
-  // ranking "oficial" (orden por defecto) fija quién está en Primera y quién en la B
-  const defRank = {};
-  ordenar(tablaRows(), ordenDef).forEach((r,i)=> defRank[r.id]=i+1);
-  // ordenar DENTRO de cada zona por separado
-  const todos = tablaRows();
-  const primera = ordenar(todos.filter(r=>defRank[r.id]<=corte), orden);
-  const bnac    = ordenar(todos.filter(r=>defRank[r.id]>corte), orden);
-  const rows = [...primera, ...bnac];
-
-  const p = el('div',{className:'panel'});
-  p.innerHTML = `<div class="rowflex"><h2 class="display">Tabla · ${esc(nombreFiltro())}</h2><span class="spacer"></span>
-    <button class="btn wsp" id="btnWsp">📋 Copiar para WhatsApp</button></div>
-    <div class="leyenda"><span class="l-top">Puestos 1–4</span><span class="l-desc">Zona de descenso (${corte-3}–${corte})</span><span class="l-asc">Zona de ascenso (${corte+1}–${corte+4})</span></div>`;
-  const wrap = el('div',{className:'tablewrap'});
-
+  const rows = tablaRows(tid);
+  const t = torneo(tid);
+  let pr, bn, base = {};
+  if(t?.zonas && ((t.zonas.primera||[]).length || (t.zonas.b||[]).length)){
+    (t.zonas.primera||[]).forEach((id,i)=> base[id]=i);
+    (t.zonas.b||[]).forEach((id,i)=> base[id]=1000+i);
+    const inA = new Set(t.zonas.primera||[]);
+    pr = rows.filter(r=> inA.has(r.id));
+    bn = rows.filter(r=> !inA.has(r.id));
+  } else {
+    const corte = (t && t.zonaCorte) ? t.zonaCorte : S.config.zonaCorte;
+    ordenar([...rows], ordenDef).forEach((r,i)=> base[r.id]=i);
+    pr = rows.filter(r=> base[r.id]<corte);
+    bn = rows.filter(r=> base[r.id]>=corte);
+  }
+  ordenar(pr, ordenDef, base); ordenar(bn, ordenDef, base);
+  return {primera:pr, b:bn, base};
+}
+function colsTabla(){
   const F = {mvp:flagOn('mvp'), doma:flagOn('doma'), gol:flagOn('goleada'), tri:flagOn('tri'), mmrCol:S.config.mostrarMMR===true};
+  const MIN = new Set(['mvp','domador','domado','gf','gc','t1','t2','t3','g4','sanc','ppp']);
   const cols = [
     ['total','Pts'],
     ...(F.mmrCol?[['mmr','MMR']]:[]),
     ['pj','PJ'],['g','G'],['e','E'],['p','P'],
     ...(F.mvp?[['mvp','MVP']]:[]),
-    ...(F.doma?[['domador','Domador'],['domado','Domado']]:[]),
-    ...(F.gol?[['gf','Goleada +'],['gc','Goleada −']]:[]),
+    ...(F.doma?[['domador','Doma +'],['domado','Doma −']]:[]),
+    ...(F.gol?[['gf','Gol +'],['gc','Gol −']]:[]),
     ...(F.tri?[['t1','Tri 1°'],['t2','Tri 2°'],['t3','Tri 3°'],['g4','4PJ']]:[]),
     ['sanc','Sanc.'],['ppp','Pts/PJ']
   ];
-  let html = `<table class="tabla"><thead><tr><th class="zh"></th><th>#</th><th class="nombre">Jugador</th>` +
-    cols.map(([k,l])=>`<th data-k="${k}" class="${orden===k?'sorted':''}">${l}</th>`).join('') + `</tr></thead><tbody>`;
-  rows.forEach((r,i)=>{
-    const dr = defRank[r.id];
-    const tint = dr<=4 ? 'r-top' : (dr>=corte-3 && dr<=corte) ? 'r-desc' : (dr>corte && dr<=corte+4) ? 'r-asc' : '';
-    let zcell='';
-    if(i===0) zcell = `<td class="zcell zprimera" rowspan="${primera.length}">PRIMERA</td>`;
-    else if(i===primera.length){
-      html += `<tr class="zona-sep"><td colspan="${cols.length+3}"></td></tr>`;
-      zcell = `<td class="zcell zbnac" rowspan="${bnac.length}">B NACIONAL</td>`;
-    }
-    html += `<tr class="${tint}">${zcell}<td class="rank">${dr}</td><td class="nombre">${esc(r.nombre)}</td>
+  return {F, cols, MIN};
+}
+function tablaZona(tipo, zrows, base){
+  const ordenDef = S.config.ordenTabla || 'mmr';
+  const orden = (tipo==='A'? ordenColA : ordenColB) || ordenDef;
+  const rankDef = {}; zrows.forEach((r,i)=> rankDef[r.id]=i+1);
+  const rows = orden===ordenDef ? zrows : ordenar([...zrows], orden, base);
+  const {F, cols, MIN} = colsTabla();
+  const p = el('div',{className:'panel'});
+  p.innerHTML = `<div class="zona-h ${tipo==='A'?'za':'zb'}"><h2 class="display">${tipo==='A'?'Primera A':'Primera B'}</h2></div>`;
+  const wrap = el('div',{className:'tablewrap'});
+  const td = (k,inner)=>`<td class="${MIN.has(k)?'min':''}">${inner}</td>`;
+  let html = `<table class="tabla"><thead><tr><th class="zh">#</th><th class="nombre">Jugador</th>` +
+    cols.map(([k,l])=>`<th data-k="${k}" class="${MIN.has(k)?'min ':''}${orden===k?'sorted':''}">${l}</th>`).join('') + `</tr></thead><tbody>`;
+  rows.forEach(r=>{
+    const dr = rankDef[r.id];
+    const tint = tipo==='A' ? (dr<=4?'r-top': dr>zrows.length-4?'r-desc':'') : (dr<=4?'r-asc':'');
+    html += `<tr class="${tint}"><td class="rank">${dr}</td><td class="nombre">${esc(r.nombre)}</td>
       <td class="pts">${fmt(r.total)}</td>
       ${F.mmrCol?`<td class="mmr">${fmt(r.mmr,0)}</td>`:''}
       <td>${r.pj}</td><td>${r.g}</td><td>${r.e}</td><td>${r.p}</td>
-      ${F.mvp?`<td>${r.mvp||''}</td>`:''}
-      ${F.doma?`<td>${r.domador?`<span class="pos">${r.domador}</span>`:''}</td><td>${r.domado?`<span class="neg">${r.domado}</span>`:''}</td>`:''}
-      ${F.gol?`<td>${r.gf||''}</td><td>${r.gc?`<span class="neg">${r.gc}</span>`:''}</td>`:''}
-      ${F.tri?`<td>${r.t1||''}</td><td>${r.t2||''}</td><td>${r.t3||''}</td><td>${r.g4||''}</td>`:''}
-      <td>${r.sanc?`<span class="neg">−${fmt(r.sanc)}</span>`:''}</td><td>${fmt(r.ppp,2)}</td></tr>`;
+      ${F.mvp?td('mvp',r.mvp||''):''}
+      ${F.doma?td('domador',r.domador?`<span class="pos">${r.domador}</span>`:'')+td('domado',r.domado?`<span class="neg">${r.domado}</span>`:''):''}
+      ${F.gol?td('gf',r.gf||'')+td('gc',r.gc?`<span class="neg">${r.gc}</span>`:''):''}
+      ${F.tri?td('t1',r.t1||'')+td('t2',r.t2||'')+td('t3',r.t3||'')+td('g4',r.g4||''):''}
+      ${td('sanc',r.sanc?`<span class="neg">−${fmt(r.sanc)}</span>`:'')}${td('ppp',fmt(r.ppp,2))}</tr>`;
   });
   wrap.innerHTML = html + '</tbody></table>';
-  wrap.querySelectorAll('th[data-k]').forEach(th=> th.onclick=()=>{ ordenCol = th.dataset.k===orden? null : th.dataset.k; render(); });
+  wrap.querySelectorAll('th[data-k]').forEach(th=> th.onclick=()=>{
+    const nuevo = th.dataset.k===orden ? null : th.dataset.k;
+    if(tipo==='A') ordenColA=nuevo; else ordenColB=nuevo;
+    render();
+  });
   p.appendChild(wrap);
-  if(orden!==ordenDef) p.appendChild(el('div',{className:'hint',style:'margin-top:8px',innerHTML:'Ordenado por otra columna <b>dentro de cada zona</b>: el <b>#</b> sigue mostrando la posición real. Tocá de nuevo la columna para volver.'}));
+  if(orden!==ordenDef) p.appendChild(el('div',{className:'hint',style:'margin-top:8px',innerHTML:'Ordenada por otra columna: el <b>#</b> sigue mostrando la posición real de esta zona. Tocá de nuevo la columna para volver.'}));
+  return p;
+}
+function vTabla(m){
+  const t = torneo(torneoFiltro);
+  const {primera, b, base} = zonasSplitFor(torneoFiltro);
+  const p = el('div',{className:'panel'});
+  const rango = rangoTorneoTxt(t);
+  p.innerHTML = `<div class="rowflex"><h2 class="display">Tabla · ${esc(nombreFiltro())}</h2><span class="spacer"></span>
+    <button class="btn wsp" id="btnWsp">📋 Copiar para WhatsApp</button></div>
+    ${rango?`<div class="trango">${rango}</div>`:''}
+    <div class="leyenda"><span class="l-top">Puestos 1–4 de la A</span><span class="l-desc">Descienden (últimos 4 de la A)</span><span class="l-asc">Ascienden (primeros 4 de la B)</span></div>`;
+  if(isAdmin && t){
+    const fr = p.querySelector('.rowflex');
+    fr.insertBefore(el('button',{className:'btn',textContent:'⚑ Editar zonas A/B',onclick:()=>formZonas(t)}), fr.querySelector('#btnWsp'));
+  }
   p.querySelector('#btnWsp').onclick=()=>copiarTablaWsp();
   m.appendChild(p);
+  if(primera.length) m.appendChild(tablaZona('A', primera, base));
+  if(b.length) m.appendChild(tablaZona('B', b, base));
+  if(!primera.length && !b.length) m.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
 }
 function copiarTablaWsp(){
-  const corte=corteActual();
-  const rows = ordenar(tablaRows(), S.config.ordenTabla||'mmr');
+  const {primera, b} = zonasSplitFor(torneoFiltro);
   const conMMR = S.config.mostrarMMR===true;
-  let t = `🏆 *${S.config.nombreLiga}* — ${nombreFiltro()}\n\n🟢 *PRIMERA*\n`;
-  rows.forEach((r,i)=>{
-    if(i===corte) t+=`\n🔵 *B NACIONAL*\n`;
-    const ico = i<4?'⭐': (i>=corte-4&&i<corte)?'🔻': (i>=corte&&i<corte+4)?'🔺':'▪️';
-    t += `${ico} ${i+1}. ${r.nombre} — *${fmt(r.total)} pts*${conMMR?` · MMR ${fmt(r.mmr,0)}`:''} · ${r.pj}PJ\n`;
-  });
+  const linea = (r,i,ico) => `${ico} ${i+1}. ${r.nombre} — *${fmt(r.total)} pts*${conMMR?` · MMR ${fmt(r.mmr,0)}`:''} · ${r.pj}PJ\n`;
+  let t = `🏆 *${S.config.nombreLiga}* — ${nombreFiltro()}\n`;
+  const rango = rangoTorneoTxt(torneo(torneoFiltro)); if(rango) t += `_${rango}_\n`;
+  t += `\n🟢 *PRIMERA A*\n`;
+  primera.forEach((r,i)=> t += linea(r,i, i<4?'⭐': i>=primera.length-4?'🔻':'▪️'));
+  if(b.length){ t += `\n🔵 *PRIMERA B*\n`; b.forEach((r,i)=> t += linea(r,i, i<4?'🔺':'▪️')); }
   t += `\n_Actualizada ${fFecha(hoy())}_`;
   (navigator.clipboard?.writeText(t)||Promise.reject()).then(()=>toast('Tabla copiada: pegala en WhatsApp'))
     .catch(()=>{ prompt('Copiá el texto:', t); });
@@ -2051,12 +2107,24 @@ function nombreFiltro(){
 function vPartidos(m){
   const p = el('div',{className:'panel'});
   p.innerHTML = `<div class="rowflex"><h2 class="display">Partidos · ${esc(nombreFiltro())}</h2><span class="spacer"></span></div>
-  <div class="hint">Ordenados del más nuevo al más viejo. Tocá un partido para ver los equipos completos.</div>`;
+  <div class="hint">Ordenados por torneo (el más reciente primero) y del partido más nuevo al más viejo. Tocá un partido para ver los equipos completos.</div>`;
   if(isAdmin) p.querySelector('.rowflex').appendChild(el('button',{className:'btn primary',textContent:'+ Nuevo partido',onclick:()=>formPartido()}));
   m.appendChild(p);
-  const list = S.partidos.filter(x=>matchTorneo(torneoFiltro,x.torneoId)).sort((a,b)=> b.fecha.localeCompare(a.fecha) || b.id.localeCompare(a.id));
+  const tIdx = tid => tid==null ? -1 : S.torneos.findIndex(t=>t.id===tid);
+  const list = S.partidos.filter(x=>matchTorneo(torneoFiltro,x.torneoId))
+    .sort((a,b)=> (tIdx(b.torneoId)-tIdx(a.torneoId)) || (b.fecha||'').localeCompare(a.fecha||'') || b.id.localeCompare(a.id));
   if(!list.length){ m.appendChild(el('div',{className:'empty',textContent:'Todavía no hay partidos cargados acá.'})); return; }
-  list.forEach((pt,idx)=> m.appendChild(cardPartido(pt, list.length-idx)));
+  let grupo = '__init';
+  list.forEach(pt=>{
+    if(torneoFiltro==='ALL' && (pt.torneoId||null)!==grupo){
+      grupo = pt.torneoId||null;
+      const tt = grupo ? torneo(grupo) : null;
+      const h = el('div',{style:'margin:16px 2px 8px'});
+      h.innerHTML = `<h3 class="display" style="color:var(--verde);font-size:20px">${tt?esc(tt.nombre):'Amistosos'}</h3>${tt&&rangoTorneoTxt(tt)?`<div class="small muted">${rangoTorneoTxt(tt)}</div>`:''}`;
+      m.appendChild(h);
+    }
+    m.appendChild(cardPartido(pt));
+  });
 }
 function torneoBadge(tid){
   return tid==null ? `<span class="tbadge amistoso">Amistoso · solo MMR</span>`
@@ -2095,9 +2163,10 @@ function cardPartido(pt, nro){
 
 /* ---------- TRIANGULARES ---------- */
 function vTris(m){
+  const PT = puntosDe(torneoFiltro);
   const p = el('div',{className:'panel'});
   p.innerHTML = `<div class="rowflex"><h2 class="display">Triangulares · ${esc(nombreFiltro())}</h2><span class="spacer"></span></div>
-  <div class="hint">Tres equipos, todos contra todos. Puntos por posición final (${S.config.puntos.tri1} / ${S.config.puntos.tri2} / ${S.config.puntos.tri3}) + bonus por ganar 4 partidos.</div>`;
+  <div class="hint">Tres equipos, todos contra todos. Puntos por posición final (${PT.tri1} / ${PT.tri2} / ${PT.tri3}) + bonus por ganar 4 partidos.</div>`;
   if(isAdmin) p.querySelector('.rowflex').appendChild(el('button',{className:'btn primary',textContent:'+ Nuevo triangular',onclick:()=>formTri()}));
   m.appendChild(p);
   const list = S.triangulares.filter(x=>matchTorneo(torneoFiltro,x.torneoId)).sort((a,b)=> b.fecha.localeCompare(a.fecha));
@@ -2665,7 +2734,7 @@ function vConfig(m){
   </div>
   <div class="hint">El MMR se sigue calculando siempre (para armar equipos parejos y para la pestaña MMR), mostrarlo en la tabla es opcional.</div>`;
   p2.querySelector('#cZona').onchange=e=>{C.zonaCorte=Math.max(1,+e.target.value||16); marcar(); render();};
-  p2.querySelector('#cOrden').onchange=e=>{C.ordenTabla=e.target.value; ordenCol=null; marcar(); render();};
+  p2.querySelector('#cOrden').onchange=e=>{C.ordenTabla=e.target.value; ordenColA=ordenColB=null; marcar(); render();};
   p2.querySelector('#cVerMMR').onchange=e=>{C.mostrarMMR=e.target.checked; marcar(); render();};
   p2.querySelector('#cIni').onchange=e=>{C.mmr.inicial=+e.target.value||1000; marcar();};
   p2.querySelector('#cK').onchange=e=>{C.mmr.K=+e.target.value||100; marcar();};
@@ -2673,15 +2742,27 @@ function vConfig(m){
 
   const p3=el('div',{className:'panel'});
   p3.innerHTML=`<div class="rowflex"><h2 class="display">Torneos</h2><span class="spacer"></span><button class="btn primary" id="cNuevoT">+ Nuevo torneo</button></div>
-  <div class="hint">Cada torneo puede tener su propio corte de zona Primera / B Nacional. Vacío = usa el corte por defecto (${C.zonaCorte}).</div>`;
+  <div class="hint">Cada torneo tiene sus fechas, su corte de zona, sus <b>zonas A/B</b> y sus <b>puntos propios</b>. Al finalizar un torneo podés crear el siguiente con ascensos y descensos automáticos: bajan los últimos 4 de la A y suben los primeros 4 de la B (después podés retocarlo a mano en "Zonas A/B").</div>`;
   const ul=el('div');
+  const inpStyle='border:1px solid var(--line2);border-radius:8px;padding:6px 8px;font:600 13px Inter';
   S.torneos.forEach(t=>{
     const r=el('div',{className:'jrow'});
-    const corteInp=el('input',{type:'number',value:t.zonaCorte||'',placeholder:String(C.zonaCorte),style:'width:70px;border:1px solid var(--line2);border-radius:8px;padding:6px 8px;font:600 13px Inter'});
+    const corteInp=el('input',{type:'number',value:t.zonaCorte||'',placeholder:String(C.zonaCorte),style:'width:64px;'+inpStyle});
     corteInp.onchange=()=>{ const v=+corteInp.value; if(v>0) t.zonaCorte=v; else delete t.zonaCorte; marcar(); render(); toast('Corte de zona actualizado'); };
-    r.append(el('b',{textContent:t.nombre}), el('span',{className:'spacer'}),
-      el('span',{className:'muted small',textContent:'Corte Primera:'}), corteInp,
-      el('button',{className:'btn small',textContent:'✎ Renombrar',onclick:()=>{const n=prompt('Nombre del torneo',t.nombre); if(n&&n.trim()){t.nombre=n.trim(); marcar(); render();}}}),
+    const fIni=el('input',{type:'date',value:t.fechaInicio||'',title:'Fecha de inicio',style:inpStyle});
+    fIni.onchange=()=>{ if(fIni.value) t.fechaInicio=fIni.value; else delete t.fechaInicio; marcar(); render(); };
+    const fFin=el('input',{type:'date',value:t.fechaFin||'',title:'Fecha de finalización',style:inpStyle});
+    fFin.onchange=()=>{ if(fFin.value) t.fechaFin=fFin.value; else delete t.fechaFin; marcar(); render(); };
+    r.append(el('b',{textContent:t.nombre+(t.cerrado?' · 🏁':'')}), el('span',{className:'spacer'}),
+      el('span',{className:'muted small',textContent:'Del'}), fIni,
+      el('span',{className:'muted small',textContent:'al'}), fFin,
+      el('span',{className:'muted small',textContent:'Corte:'}), corteInp,
+      el('button',{className:'btn small',textContent:'⚑ Zonas A/B',onclick:()=>formZonas(t)}),
+      el('button',{className:'btn small',textContent:'★ Puntos',onclick:()=>formPuntosTorneo(t)}),
+      el('button',{className:'btn small',textContent:'✎',title:'Renombrar',onclick:()=>{const n=prompt('Nombre del torneo',t.nombre); if(n&&n.trim()){t.nombre=n.trim(); marcar(); render();}}}),
+      t.cerrado
+        ? el('button',{className:'btn small ghost',textContent:'↩ Reabrir',onclick:()=>{ t.cerrado=false; marcar(); render(); toast('Torneo reabierto'); }})
+        : el('button',{className:'btn small',textContent:'🏁 Finalizar',onclick:()=>finalizarTorneo(t)}),
       el('button',{className:'btn small danger',textContent:'Eliminar',onclick:()=>{
         const usado=S.partidos.some(x=>x.torneoId===t.id)||S.triangulares.some(x=>x.torneoId===t.id)||S.sanciones.some(x=>x.torneoId===t.id);
         if(usado) return toast('Tiene partidos o sanciones cargados: no se puede eliminar');
@@ -2690,7 +2771,7 @@ function vConfig(m){
     ul.appendChild(r);
   });
   p3.appendChild(ul);
-  p3.querySelector('#cNuevoT').onclick=()=>{ const n=prompt('Nombre del nuevo torneo (ej: Apertura 2026)'); if(n&&n.trim()){ const t={id:uid('t'),nombre:n.trim()}; S.torneos.push(t); torneoFiltro=t.id; marcar(); render(); toast('Torneo creado'); } };
+  p3.querySelector('#cNuevoT').onclick=()=> nuevoTorneo(S.torneos.at(-1)?.id);
   m.appendChild(p3);
 
   const p5=el('div',{className:'panel'});
@@ -2708,6 +2789,84 @@ function vConfig(m){
     f.text().then(t=>{ try{ const d=JSON.parse(t); if(!d.jugadores||!d.partidos) throw 0; S=d; marcar(); render(); toast('Datos importados y guardándose'); }catch(err){ toast('El archivo no es un respaldo válido'); } });
   };
   m.appendChild(p5);
+}
+
+/* ---------- Torneos: finalizar, ascensos/descensos, zonas y puntos propios ---------- */
+function finalizarTorneo(t){
+  const f=prompt('Fecha de finalización (AAAA-MM-DD):', t.fechaFin||hoy());
+  if(f==null) return;
+  t.cerrado=true;
+  if(f.trim()) t.fechaFin=f.trim();
+  if(!t.fechaInicio){ const ini=primeraFechaDe(t.id); if(ini) t.fechaInicio=ini; }
+  marcar(); render(); toast('Torneo finalizado');
+  if(confirm('¿Crear el próximo torneo ahora? Bajan los últimos 4 de la A y suben los primeros 4 de la B (después podés retocarlo a mano en "Zonas A/B").')) nuevoTorneo(t.id);
+}
+function nuevoTorneo(prevId){
+  const n=prompt('Nombre del nuevo torneo (ej: Apertura 2026)'); if(!n||!n.trim()) return;
+  const t={id:uid('t'),nombre:n.trim(),fechaInicio:hoy()};
+  const z=prevId? computarZonas(prevId) : null;
+  if(z) t.zonas=z;
+  S.torneos.push(t); torneoFiltro=t.id; ordenColA=ordenColB=null;
+  marcar(); render();
+  toast(z?'Torneo creado con ascensos y descensos aplicados':'Torneo creado');
+}
+function computarZonas(prevId){
+  const jugado=S.partidos.some(x=>x.torneoId===prevId)||S.triangulares.some(x=>x.torneoId===prevId);
+  if(!jugado) return null;
+  const {primera,b}=zonasSplitFor(prevId);
+  const bajan   = primera.length>4 ? primera.slice(-4)  : [];
+  const quedanA = primera.length>4 ? primera.slice(0,-4): [...primera];
+  const suben   = b.slice(0,4);
+  const quedanB = b.slice(4);
+  return { primera:[...quedanA,...suben].map(r=>r.id), b:[...bajan,...quedanB].map(r=>r.id) };
+}
+function formZonas(t){
+  if(!t.zonas || (!(t.zonas.primera||[]).length && !(t.zonas.b||[]).length)){
+    const {primera,b}=zonasSplitFor(t.id);
+    t.zonas={primera:primera.map(r=>r.id), b:b.map(r=>r.id)};
+    marcar();
+  }
+  t.zonas.primera=t.zonas.primera||[]; t.zonas.b=t.zonas.b||[];
+  openModal(`<h3 class="display">Zonas A/B · ${esc(t.nombre)}</h3>
+    <div class="hint">Estas zonas quedan <b>fijas</b> para el torneo: la tabla de la Primera A y de la Primera B se arma con esta lista, en este orden. Movés a cualquiera con los botones.</div>
+    <div class="grid2">
+      <div><b style="color:var(--verde)">Primera A</b><div class="plist" id="zA"></div></div>
+      <div><b style="color:var(--azul)">Primera B</b><div class="plist" id="zB"></div></div>
+    </div>
+    <div id="zRestWrap"></div>
+    <div class="modalacts"><button class="btn ghost" id="zAuto">Quitar zonas fijas</button><button class="btn primary" id="zOk">Listo</button></div>`);
+  const fila=(id,acciones)=>{ const d=el('label'); d.append(el('span',{textContent:jnom(id)}), el('span',{className:'spacer'}), ...acciones); return d; };
+  const draw=()=>{
+    const A=$('#zA'), B=$('#zB'); A.innerHTML=''; B.innerHTML='';
+    t.zonas.primera.forEach(id=> A.appendChild(fila(id,[el('button',{className:'btn small',type:'button',textContent:'↓ a la B',onclick:()=>{ t.zonas.primera=t.zonas.primera.filter(x=>x!==id); t.zonas.b.push(id); marcar(); draw(); }})])));
+    t.zonas.b.forEach(id=> B.appendChild(fila(id,[el('button',{className:'btn small',type:'button',textContent:'↑ a la A',onclick:()=>{ t.zonas.b=t.zonas.b.filter(x=>x!==id); t.zonas.primera.push(id); marcar(); draw(); }})])));
+    const asignados=new Set([...t.zonas.primera,...t.zonas.b]);
+    const libres=jugadoresActivos().filter(j=>!asignados.has(j.id));
+    const w=$('#zRestWrap'); w.innerHTML='';
+    if(libres.length){
+      w.appendChild(el('div',{className:'hint',style:'margin-top:10px',textContent:'Sin zona asignada (mientras tanto aparecen en la B):'}));
+      const lst=el('div',{className:'plist'});
+      libres.forEach(j=> lst.appendChild(fila(j.id,[
+        el('button',{className:'btn small',type:'button',textContent:'+ A',onclick:()=>{ t.zonas.primera.push(j.id); marcar(); draw(); }}),
+        el('button',{className:'btn small',type:'button',textContent:'+ B',onclick:()=>{ t.zonas.b.push(j.id); marcar(); draw(); }})
+      ])));
+      w.appendChild(lst);
+    }
+  };
+  draw();
+  $('#zAuto').onclick=()=>{ delete t.zonas; marcar(); closeModal(); render(); toast('El torneo vuelve al corte automático por posiciones'); };
+  $('#zOk').onclick=()=>{ closeModal(); render(); };
+}
+function formPuntosTorneo(t){
+  const P=puntosDe(t.id);
+  const campos=[['pj','Partido jugado'],['g','Victoria'],['e','Empate'],['p','Derrota'],['mvp','MVP'],['domador','Domador'],['domado','Domado'],['goleadaFavor','Goleada a favor'],['goleadaContra','Goleada en contra'],['tri1','Triangular 1°'],['tri2','Triangular 2°'],['tri3','Triangular 3°'],['gano4pj','Ganó 4PJ (triangular)']];
+  openModal(`<h3 class="display">Puntos · ${esc(t.nombre)}</h3>
+    <div class="hint">${t.puntos?'Este torneo usa <b>puntos propios</b>.':'Este torneo usa los puntos por defecto de la liga.'} Cualquier valor que cambies vale <b>solo para este torneo</b>; el resto sigue tomando los valores de la liga.</div>
+    <div class="pgrid">${campos.map(([k,l])=>`<div class="field"><label>${l}</label><input type="number" step="0.5" data-tp="${k}" value="${P[k]}"></div>`).join('')}</div>
+    <div class="modalacts"><button class="btn ghost" id="tpReset">Usar los de la liga</button><button class="btn primary" id="tpOk">Listo</button></div>`);
+  document.querySelectorAll('[data-tp]').forEach(i=> i.onchange=()=>{ t.puntos=t.puntos||{}; t.puntos[i.dataset.tp]=+i.value||0; marcar(); toast('Puntos del torneo actualizados'); });
+  $('#tpReset').onclick=()=>{ delete t.puntos; marcar(); closeModal(); render(); toast('El torneo vuelve a usar los puntos de la liga'); };
+  $('#tpOk').onclick=()=>{ closeModal(); render(); };
 }
 
 /* ---------- Guardado en servidor ---------- */
