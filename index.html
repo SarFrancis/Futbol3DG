@@ -178,8 +178,8 @@ details.pcard[open] summary{border-bottom:1px solid var(--line)}
 .tout .avg{font-size:12.5px; color:var(--muted); margin-top:8px; border-top:1px dashed var(--line); padding-top:6px}
 
 /* ---------- mmr / charts / matriz ---------- */
-.mmr-table td.delta-pos{color:var(--verde); font-weight:700}
-.mmr-table td.delta-neg{color:var(--rojo); font-weight:700}
+.delta-pos{color:var(--verde); font-weight:700}
+.delta-neg{color:var(--rojo); font-weight:700}
 svg.chart{width:100%; height:auto; background:#fff; border:1px solid var(--line); border-radius:10px}
 .legend{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0}
 .legend .lg{border:1px solid var(--line2); background:#fff; border-radius:16px; padding:4px 11px 4px 9px; font:700 12px 'Inter'; cursor:pointer; color:var(--muted); display:inline-flex; align-items:center; gap:6px; transition:.15s}
@@ -1920,7 +1920,7 @@ function mmrTimeline(tid){
     const out = [];
     for(const e of events){
       const hit = map.get(e.id);
-      if(hit){ last = hit.r; out.push({eventId:e.id, fecha:e.fecha, r:hit.r, played:true}); }
+      if(hit){ last = hit.r; out.push({eventId:e.id, fecha:e.fecha, r:hit.r, played:true, delta:hit.delta}); }
       else out.push({eventId:e.id, fecha:e.fecha, r:last, played:false});
     }
     return out;
@@ -2129,10 +2129,57 @@ function campeonesMap(){
 function campeonBadge(playerId){
   if(torneoFiltro==='ALL'){
     const n = campeonesMap()[playerId]||0;
-    return n>0 ? ` <span title="Campeón de ${n} torneo${n>1?'s':''}">🏆${n>1?`×${n}`:''}</span>` : '';
+    return n>0 ? ` <span title="Campeón de ${n} torneo${n>1?'s':''}">${'🏆'.repeat(n)}</span>` : '';
   }
   const t = torneo(torneoFiltro);
   return (t && t.campeonId===playerId) ? ` <span title="Campeón de ${esc(t.nombre)}">🏆</span>` : '';
+}
+let ordenColAll = null;
+function tablaUnica(rows){
+  const ordenDef = S.config.ordenTabla || 'mmr';
+  const orden = ordenColAll || ordenDef;
+  const base = {}; rows.forEach((r,i)=>base[r.id]=i);
+  const sorted = orden===ordenDef ? rows : ordenar([...rows], orden, base);
+  const {F, cols, MIN} = colsTabla();
+  const p = el('div',{className:'panel'});
+  p.innerHTML = `<div class="zona-h"><h2 class="display">Histórico completo</h2></div>`;
+  const wrap = el('div',{className:'tablewrap'});
+  const td = (k,inner)=>`<td class="${MIN.has(k)?'min':''}">${inner}</td>`;
+  let html = `<table class="tabla"><thead><tr><th class="zh">#</th><th class="nombre">Jugador</th>` +
+    cols.map(([k,l])=>`<th data-k="${k}" class="${MIN.has(k)?'min ':''}${orden===k?'sorted':''}">${l}</th>`).join('') + `</tr></thead><tbody>`;
+  sorted.forEach((r,i)=>{
+    html += `<tr class="${i<4?'r-top':''}"><td class="rank">${i+1}</td><td class="nombre">${esc(r.nombre)}${campeonBadge(r.id)}</td>
+      <td class="pts">${fmt(r.total)}</td>
+      ${F.mmrCol?`<td class="mmr">${fmt(r.mmr,0)}</td>`:''}
+      <td>${r.pj}</td><td>${r.g}</td><td>${r.e}</td><td>${r.p}</td>
+      ${F.mvp?td('mvp',r.mvp||''):''}
+      ${F.doma?td('domador',r.domador?`<span class="pos">${r.domador}</span>`:'')+td('domado',r.domado?`<span class="neg">${r.domado}</span>`:''):''}
+      ${F.gol?td('gf',r.gf||'')+td('gc',r.gc?`<span class="neg">${r.gc}</span>`:''):''}
+      ${F.tri?td('t1',r.t1||'')+td('t2',r.t2||'')+td('t3',r.t3||'')+td('g4',r.g4||''):''}
+      ${td('sanc',r.sanc?`<span class="neg">−${fmt(r.sanc)}</span>`:'')}${td('ppp',fmt(r.ppp,2))}</tr>`;
+  });
+  wrap.innerHTML = html + '</tbody></table>';
+  wrap.querySelectorAll('th[data-k]').forEach(th=> th.onclick=()=>{
+    ordenColAll = th.dataset.k===orden ? null : th.dataset.k;
+    render();
+  });
+  p.appendChild(wrap);
+  if(orden!==ordenDef) p.appendChild(el('div',{className:'hint',style:'margin-top:8px',innerHTML:'Ordenada por otra columna. Tocá de nuevo la columna para volver al orden oficial.'}));
+  return p;
+}
+function bloqueDerechaTabla(tid){
+  const box=el('div');
+  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--azul);margin-bottom:8px',textContent:'Puntos totales, partido a partido'}));
+  const pt=pointsTimeline(tid);
+  if(!pt.events.length){ box.appendChild(el('div',{className:'empty',textContent:'Sin partidos todavía.'})); return box; }
+  const idsSet=new Set(); pt.events.forEach(e=>participantesDe(e).forEach(id=>idsSet.add(id)));
+  const jugadores=[...idsSet].map(id=>({id,nombre:jnom(id)})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  const colorMapLocal=new Map();
+  jugadores.forEach((j,i)=> colorMapLocal.set(j.id, colorGenerado(i)));
+  const serie=jugadores.map(j=>({nombre:j.nombre, color:colorMapLocal.get(j.id), pts:pt.series(j.id)}));
+  box.appendChild(chartLineas(serie, pt.events, {zeroFloor:true}));
+  box.appendChild(leyendaEstatica(jugadores, colorMapLocal));
+  return box;
 }
 function tablaZona(tipo, zrows, base){
   const ordenDef = S.config.ordenTabla || 'mmr';
@@ -2171,32 +2218,51 @@ function tablaZona(tipo, zrows, base){
 }
 function vTabla(m){
   const t = torneo(torneoFiltro);
-  const {primera, b, base} = zonasSplitFor(torneoFiltro);
+  const esAll = torneoFiltro==='ALL';
   const p = el('div',{className:'panel'});
   const rango = rangoTorneoTxt(t);
   p.innerHTML = `<div class="rowflex"><h2 class="display">Tabla · ${esc(nombreFiltro())}</h2><span class="spacer"></span>
     <button class="btn wsp" id="btnWsp">📋 Copiar para WhatsApp</button></div>
     ${rango?`<div class="trango">${rango}</div>`:''}
-    <div class="leyenda"><span class="l-desc">Descienden (últimos 4 de la A)</span><span class="l-asc">Ascienden (primeros 4 de la B)</span></div>`;
+    ${esAll?'':'<div class="leyenda"><span class="l-desc">Descienden (últimos 4 de la A)</span><span class="l-asc">Ascienden (primeros 4 de la B)</span></div>'}`;
   if(isAdmin && t){
     const fr = p.querySelector('.rowflex');
     fr.insertBefore(el('button',{className:'btn',textContent:'⚑ Editar zonas A/B',onclick:()=>formZonas(t)}), fr.querySelector('#btnWsp'));
   }
   p.querySelector('#btnWsp').onclick=()=>copiarTablaWsp();
   m.appendChild(p);
-  if(primera.length) m.appendChild(tablaZona('A', primera, base));
-  if(b.length) m.appendChild(tablaZona('B', b, base));
-  if(!primera.length && !b.length) m.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
+
+  const grid=el('div',{className:'mmr-grid'});
+  const leftCol=el('div');
+  if(esAll){
+    const rows=tablaRows('ALL');
+    if(rows.length) leftCol.appendChild(tablaUnica(rows));
+    else leftCol.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
+  } else {
+    const {primera, b, base} = zonasSplitFor(torneoFiltro);
+    if(primera.length) leftCol.appendChild(tablaZona('A', primera, base));
+    if(b.length) leftCol.appendChild(tablaZona('B', b, base));
+    if(!primera.length && !b.length) leftCol.appendChild(el('div',{className:'empty',textContent:'Todavía no hay jugadores en la tabla.'}));
+  }
+  grid.appendChild(leftCol);
+  grid.appendChild(bloqueDerechaTabla(torneoFiltro));
+  m.appendChild(grid);
 }
 function copiarTablaWsp(){
-  const {primera, b} = zonasSplitFor(torneoFiltro);
   const conMMR = S.config.mostrarMMR===true;
   const linea = (r,i,ico) => `${ico} ${i+1}. ${r.nombre} — *${fmt(r.total)} pts*${conMMR?` · MMR ${fmt(r.mmr,0)}`:''} · ${r.pj}PJ\n`;
   let t = `🏆 *${S.config.nombreLiga}* — ${nombreFiltro()}\n`;
   const rango = rangoTorneoTxt(torneo(torneoFiltro)); if(rango) t += `_${rango}_\n`;
-  t += `\n🟢 *PRIMERA A*\n`;
-  primera.forEach((r,i)=> t += linea(r,i, i<4?'⭐': i>=primera.length-4?'🔻':'▪️'));
-  if(b.length){ t += `\n🔵 *PRIMERA B*\n`; b.forEach((r,i)=> t += linea(r,i, i<4?'🔺':'▪️')); }
+  if(torneoFiltro==='ALL'){
+    const rows = ordenar(tablaRows('ALL'), S.config.ordenTabla||'mmr');
+    t += `\n`;
+    rows.forEach((r,i)=> t += linea(r,i, i<4?'⭐':'▪️'));
+  } else {
+    const {primera, b} = zonasSplitFor(torneoFiltro);
+    t += `\n🟢 *PRIMERA A*\n`;
+    primera.forEach((r,i)=> t += linea(r,i, i<4?'⭐': i>=primera.length-4?'🔻':'▪️'));
+    if(b.length){ t += `\n🔵 *PRIMERA B*\n`; b.forEach((r,i)=> t += linea(r,i, i<4?'🔺':'▪️')); }
+  }
   t += `\n_Actualizada ${fFecha(hoy())}_`;
   (navigator.clipboard?.writeText(t)||Promise.reject()).then(()=>toast('Tabla copiada: pegala en WhatsApp'))
     .catch(()=>{ prompt('Copiá el texto:', t); });
@@ -2313,10 +2379,12 @@ function vTris(m){
 let mmrSel = null, ptsSel = null;
 const mmrColorMap = new Map(), ptsColorMap = new Map();
 const CHART_COLORS = ['#f2c13d','#4cb872','#5aa7d6','#e05548','#c48ef2','#f2985a'];
+function colorGenerado(i){ return `hsl(${Math.round((i*137.508)%360)},62%,45%)`; }
 function asignarColor(colorMap, id){
   if(colorMap.has(id)) return colorMap.get(id);
   const usados = new Set(colorMap.values());
-  const libre = CHART_COLORS.find(c=>!usados.has(c)) ?? CHART_COLORS[colorMap.size % CHART_COLORS.length];
+  let libre = CHART_COLORS.find(c=>!usados.has(c));
+  if(!libre) libre = colorGenerado(colorMap.size);
   colorMap.set(id, libre);
   return libre;
 }
@@ -2325,9 +2393,20 @@ function renderLegend(rows, sel, colorMap){
   if(!rows.length) return leg;
   rows.forEach(r=>{
     const on=sel.has(r.id);
-    const b=el('span',{className:'lg'+(on?' on':''),onclick:()=>{ on?sel.delete(r.id):(sel.size<6&&sel.add(r.id)); render(); }});
+    const b=el('span',{className:'lg'+(on?' on':''),onclick:()=>{ on?sel.delete(r.id):sel.add(r.id); render(); }});
     if(on){ const color=asignarColor(colorMap,r.id); b.style.background=color; b.style.borderColor=color; b.innerHTML='<span class="dot"></span>'; }
     else colorMap.delete(r.id);
+    b.appendChild(document.createTextNode(r.nombre));
+    leg.appendChild(b);
+  });
+  return leg;
+}
+function leyendaEstatica(rows, colorMap){
+  const leg=el('div',{className:'legend'});
+  rows.forEach(r=>{
+    const color=colorMap.get(r.id);
+    const b=el('span',{className:'lg on',style:`background:${color};border-color:${color};cursor:default`});
+    b.innerHTML='<span class="dot"></span>';
     b.appendChild(document.createTextNode(r.nombre));
     leg.appendChild(b);
   });
@@ -2341,18 +2420,15 @@ function vMMR(m){
   const p=el('div',{className:'panel'});
   p.innerHTML=`<h2 class="display">Ranking MMR</h2>
   <div class="hint">Elo por equipos: todos arrancan en ${S.config.mmr.inicial} y cada partido mueve el puntaje según el resultado y la diferencia contra el promedio rival (K=${S.config.mmr.K}, goleada ×${fmt(golK,1)}). Se recalcula siempre desde el historial completo. Este número se usa para armar equipos parejos.</div>`;
-  let html=`<div class="tablewrap"><table class="tabla mmr-table"><thead><tr><th>#</th><th class="nombre">Jugador</th><th>MMR</th><th>Último Δ</th><th>Evolución</th></tr></thead><tbody>`;
+  let html=`<div class="tablewrap"><table class="tabla mmr-table"><thead><tr><th>#</th><th class="nombre">Jugador</th><th>MMR</th></tr></thead><tbody>`;
   rows.forEach((r,i)=>{
-    const last=r.h.length>1? r.h[r.h.length-1].delta : 0;
-    html+=`<tr><td class="rank">${i+1}</td><td class="nombre">${esc(r.nombre)}</td><td class="mmr">${fmt(r.r,1)}</td>
-      <td>${r.h.length>1?`<span class="${last>=0?'delta-pos':'delta-neg'}">${last>=0?'▲':'▼'} ${fmt(Math.abs(last),1)}</span>`:'—'}</td>
-      <td class="spark">${spark(r.h.map(x=>x.r))}</td></tr>`;
+    html+=`<tr><td class="rank">${i+1}</td><td class="nombre">${esc(r.nombre)}</td><td class="mmr">${fmt(r.r,1)}</td></tr>`;
   });
   p.innerHTML+=html+'</tbody></table></div>'; m.appendChild(p);
 
   // Gráfico Evolución — histórico completo (todos los torneos), eje X con fechas reales
   const p2=el('div',{className:'panel'});
-  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Tocá los nombres para comparar hasta 6 jugadores. Tramo punteado = ese jugador no jugó ese partido.</div>`;
+  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Tocá los nombres para comparar los jugadores que quieras. Tramo punteado = ese jugador no jugó ese partido.</div>`;
   if(!mmrSel) mmrSel = new Set(rows.slice(0,4).map(r=>r.id));
   p2.appendChild(renderLegend(rows, mmrSel, mmrColorMap));
   const tlAll = mmrTimeline('ALL');
@@ -2360,12 +2436,12 @@ function vMMR(m){
   p2.appendChild(chartLineas(serieEvol, tlAll.events));
   m.appendChild(p2);
 
-  // Detalle del torneo elegido: fecha a fecha (MMR) + partidos + evolución de puntos de tabla
+  // Detalle histórico completo: fecha a fecha (MMR) de todos los torneos + lista de todos los partidos
   const p3=el('div',{className:'panel'});
-  p3.innerHTML=`<h2 class="display">Detalle · ${esc(nombreFiltro())}</h2>`;
+  p3.innerHTML=`<h2 class="display">Historial completo</h2>`;
   const grid=el('div',{className:'mmr-grid'});
-  grid.appendChild(bloqueFechaAFecha(torneoFiltro));
-  grid.appendChild(bloqueDerechaMMR(torneoFiltro));
+  grid.appendChild(bloqueFechaAFecha('ALL'));
+  grid.appendChild(bloqueListaPartidos('ALL'));
   p3.appendChild(grid);
   m.appendChild(p3);
 }
@@ -2373,7 +2449,7 @@ function bloqueFechaAFecha(tid){
   const box=el('div');
   box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--verde);margin-bottom:8px',textContent:'MMR fecha a fecha'}));
   const tl=mmrTimeline(tid);
-  if(!tl.events.length){ box.appendChild(el('div',{className:'empty',textContent:'Sin partidos en este torneo todavía.'})); return box; }
+  if(!tl.events.length){ box.appendChild(el('div',{className:'empty',textContent:'Sin partidos todavía.'})); return box; }
   const idsSet=new Set(); tl.events.forEach(e=> participantesDe(e).forEach(id=>idsSet.add(id)));
   const jugadores=[...idsSet].map(id=>({id,nombre:jnom(id)})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
   const seriePorJ={}; jugadores.forEach(j=> seriePorJ[j.id]=tl.series(j.id));
@@ -2381,38 +2457,28 @@ function bloqueFechaAFecha(tid){
   tl.events.forEach((e,i)=>{
     html+=`<tr><td class="fcol">${fFecha(e.fecha)}</td>`+jugadores.map(j=>{
       const pt=seriePorJ[j.id][i];
-      return pt.played? `<td>${fmt(pt.r,0)}</td>` : `<td class="np" title="${fmt(pt.r,0)} (no jugó)">—</td>`;
+      if(!pt.played) return `<td class="np" title="${fmt(pt.r,0)} (no jugó)">—</td>`;
+      const d=pt.delta||0;
+      return `<td>${fmt(pt.r,0)} <span class="${d>=0?'delta-pos':'delta-neg'}" style="font-size:10.5px">(${d>=0?'+':'−'}${fmt(Math.abs(d),0)})</span></td>`;
     }).join('')+`</tr>`;
   });
   html+='</tbody></table></div>';
   box.appendChild(el('div',{innerHTML:html}).firstChild);
   return box;
 }
-function bloqueDerechaMMR(tid){
+function bloqueListaPartidos(tid){
   const box=el('div');
-  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--azul);margin-bottom:8px',textContent:'Puntos de tabla, partido a partido'}));
-  const pt=pointsTimeline(tid);
-  const rowsTorneo=S.jugadores.filter(j=> pt.events.some(e=>participantesDe(e).includes(j.id))).map(j=>({id:j.id,nombre:j.nombre})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
-  if(!pt.events.length){
-    box.appendChild(el('div',{className:'empty',textContent:'Sin partidos en este torneo todavía.'}));
-  } else {
-    ptsSel = new Set([...(ptsSel||[])].filter(id=>rowsTorneo.some(r=>r.id===id)));
-    if(!ptsSel.size) ptsSel = new Set(rowsTorneo.slice(0,4).map(r=>r.id));
-    box.appendChild(renderLegend(rowsTorneo, ptsSel, ptsColorMap));
-    const seriePts=[...ptsSel].map(id=>({nombre:jnom(id), color:asignarColor(ptsColorMap,id), pts:pt.series(id)}));
-    box.appendChild(chartLineas(seriePts, pt.events));
-  }
-  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--verde);margin:16px 0 8px',textContent:'Partidos de este torneo'}));
-  const listWrap=el('div',{style:'max-height:420px;overflow:auto'});
+  box.appendChild(el('h3',{className:'display',style:'font-size:16px;color:var(--verde);margin-bottom:8px',textContent:'Todos los partidos'}));
+  const listWrap=el('div',{style:'max-height:560px;overflow:auto'});
   const partidos=S.partidos.filter(x=>matchTorneo(tid,x.torneoId)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
   const tris=S.triangulares.filter(x=>matchTorneo(tid,x.torneoId)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
   if(!partidos.length && !tris.length) listWrap.appendChild(el('div',{className:'empty',textContent:'Sin partidos cargados.'}));
   partidos.forEach(pp=>{
     const resTxt = pp.res==='E'?'Empate':`Ganó Equipo ${pp.res==='E1'?1:2}`;
-    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(pp.fecha)}</b> — ${resTxt} · ${pp.e1.length} vs ${pp.e2.length}${pp.goleada?' · 🔥 Goleada':''}`}));
+    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(pp.fecha)}</b> — ${torneoBadge(pp.torneoId)} ${resTxt} · ${pp.e1.length} vs ${pp.e2.length}${pp.goleada?' · 🔥 Goleada':''}`}));
   });
   tris.forEach(tt=>{
-    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(tt.fecha)}</b> — Triangular · 🥇 Equipo ${tt.posiciones[0]+1}`}));
+    listWrap.appendChild(el('div',{className:'pcard-mini',innerHTML:`<b>${fFecha(tt.fecha)}</b> — ${torneoBadge(tt.torneoId)} Triangular · 🥇 Equipo ${tt.posiciones[0]+1}`}));
   });
   box.appendChild(listWrap);
   return box;
@@ -2424,16 +2490,20 @@ function spark(vals){
   const up=vals[vals.length-1]>=vals[0];
   return `<svg width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${up?'var(--verde)':'var(--rojo)'}" stroke-width="1.8"/></svg>`;
 }
-function chartLineas(series, events){
+function chartLineas(series, events, opts={}){
   const wrap=el('div',{className:'chart-wrap'});
   if(!series.length || !events || events.length<2){ wrap.innerHTML='<div class="empty">Elegí jugadores con partidos jugados.</div>'; return wrap; }
-  const W=980,H=340,pad={l:52,r:14,t:14,b:34};
+  const W=980,H=340,pad={l:56,r:14,t:14,b:34};
   const allVals=series.flatMap(s=>s.pts.map(x=>x.r));
-  const min=Math.floor(Math.min(...allVals,0)/25)*25, max=Math.ceil(Math.max(...allVals,25)/25)*25;
+  let lo=Math.min(...allVals), hi=Math.max(...allVals);
+  if(opts.zeroFloor) lo=Math.min(lo,0);
+  if(lo===hi){ lo-=25; hi+=25; }
+  const padVal=Math.max((hi-lo)*0.1, 5);
+  const min=Math.floor((lo-padVal)/25)*25, max=Math.ceil((hi+padVal)/25)*25;
   const n=events.length;
   const X=i=> pad.l+(n<2?0:i/(n-1))*(W-pad.l-pad.r);
   const Y=v=> pad.t+(1-(v-min)/((max-min)||1))*(H-pad.t-pad.b);
-  let defs='', g='';
+  let g='';
   for(let v=min; v<=max; v+=Math.max(25,Math.round((max-min)/6/25)*25)){
     g+=`<line x1="${pad.l}" x2="${W-pad.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(233,242,228,.5)"/><text x="${pad.l-8}" y="${Y(v)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${v}</text>`;
   }
@@ -2441,11 +2511,7 @@ function chartLineas(series, events){
   for(let i=0;i<n;i+=step){
     g+=`<text x="${X(i)}" y="${H-10}" fill="var(--muted)" font-size="10" text-anchor="middle">${fFecha(events[i].fecha)}</text>`;
   }
-  series.forEach((s,si)=>{
-    const gid='grad'+si+'_'+Math.random().toString(36).slice(2,7);
-    defs+=`<linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.color}" stop-opacity=".22"/><stop offset="1" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
-    const areaPts=s.pts.map((pt,i)=>`${X(i)},${Y(pt.r)}`).join(' ');
-    g+=`<polygon points="${pad.l},${Y(min)} ${areaPts} ${X(n-1)},${Y(min)}" fill="url(#${gid})" stroke="none"/>`;
+  series.forEach(s=>{
     let i=0;
     while(i<s.pts.length){
       let j=i;
@@ -2453,14 +2519,13 @@ function chartLineas(series, events){
       const start=i>0? i-1 : i;
       const seg=s.pts.slice(start,j+1).map((pt,k)=>`${X(start+k)},${Y(pt.r)}`).join(' ');
       const dashed=!s.pts[i].played;
-      g+=`<polyline points="${seg}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round" ${dashed?'stroke-dasharray="5,4" opacity=".5"':''}/>`;
+      g+=`<polyline points="${seg}" fill="none" stroke="${s.color}" stroke-width="2.2" stroke-linejoin="round" ${dashed?'stroke-dasharray="5,4" opacity=".5"':''}/>`;
       i=j+1;
     }
     const li=s.pts.length-1;
-    g+=`<circle cx="${X(li)}" cy="${Y(s.pts[li].r)}" r="5" fill="${s.color}" stroke="#fff" stroke-width="1.5"/>`;
-    g+=`<text x="${X(li)+8}" y="${Y(s.pts[li].r)+4}" fill="${s.color}" font-size="11.5" font-weight="700">${fmt(s.pts[li].r,0)}</text>`;
+    g+=`<circle cx="${X(li)}" cy="${Y(s.pts[li].r)}" r="4.5" fill="${s.color}" stroke="#fff" stroke-width="1.5"/>`;
   });
-  wrap.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución">${defs?`<defs>${defs}</defs>`:''}${g}<rect x="${pad.l}" y="${pad.t}" width="${W-pad.l-pad.r}" height="${H-pad.t-pad.b}" fill="transparent"/></svg><div class="chart-tip"></div>`;
+  wrap.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución">${g}<rect x="${pad.l}" y="${pad.t}" width="${W-pad.l-pad.r}" height="${H-pad.t-pad.b}" fill="transparent"/></svg><div class="chart-tip"></div>`;
   const svg=wrap.querySelector('svg'), tip=wrap.querySelector('.chart-tip'), rectEl=wrap.querySelector('rect');
   rectEl.addEventListener('mousemove', ev=>{
     const box=svg.getBoundingClientRect();
@@ -2645,7 +2710,6 @@ function formSancion(){
 
 /* ---------- JUGADORES ---------- */
 function vJugadores(m){
-  const {ratings}=getCache().mmr;
   const apariciones = id => S.partidos.some(x=>x.e1.includes(id)||x.e2.includes(id))
     || S.triangulares.some(x=>x.equipos.flat().includes(id)) || S.sanciones.some(x=>x.jugadorId===id);
   const p=el('div',{className:'panel'});
@@ -2679,9 +2743,9 @@ function vJugadores(m){
   };
 
   const activos=S.jugadores.filter(j=>!j.borrado && j.activo!==false).sort((a,b)=>a.nombre.localeCompare(b.nombre));
-  let html=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
+  let html=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
   activos.forEach(j=>{
-    html+=`<tr><td class="nombre">${esc(j.nombre)}</td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
+    html+=`<tr><td class="nombre">${esc(j.nombre)}</td>
     ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎ Renombrar</button> <button class="btn small ghost" data-tog="${j.id}">Desactivar</button> <button class="btn small danger" data-del="${j.id}">Eliminar</button></td>`:''}</tr>`;
   });
   const wrap=el('div',{innerHTML:html+'</tbody></table></div>'});
@@ -2692,9 +2756,9 @@ function vJugadores(m){
   if(inactivos.length){
     const p2=el('div',{className:'panel'});
     p2.innerHTML=`<h2 class="display" style="font-size:17px;color:var(--muted)">Inactivos</h2>`;
-    let html2=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th><th>MMR</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
+    let html2=`<div class="tablewrap"><table class="tabla"><thead><tr><th class="nombre">Jugador</th>${isAdmin?'<th>Acciones</th>':''}</tr></thead><tbody>`;
     inactivos.forEach(j=>{
-      html2+=`<tr><td class="nombre"><span class="muted">${esc(j.nombre)}</span></td><td class="mmr">${fmt(ratings[j.id]??S.config.mmr.inicial,0)}</td>
+      html2+=`<tr><td class="nombre"><span class="muted">${esc(j.nombre)}</span></td>
       ${isAdmin?`<td><button class="btn small" data-ren="${j.id}">✎ Renombrar</button> <button class="btn small" data-tog="${j.id}">Activar</button> <button class="btn small danger" data-del="${j.id}">Eliminar</button></td>`:''}</tr>`;
     });
     const wrap2=el('div',{innerHTML:html2+'</tbody></table></div>'});
