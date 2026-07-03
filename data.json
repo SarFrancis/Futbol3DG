@@ -146,6 +146,53 @@
    "campeonId": "j9"
   },
   {
+   "id": "t1",
+   "nombre": "Clausura 2025",
+   "cerrado": true,
+   "fechaInicio": "2025-06-12",
+   "fechaFin": "2025-11-13",
+   "zonas": {
+    "primera": [
+     "j9",
+     "j28",
+     "j3",
+     "j10",
+     "j17",
+     "j30",
+     "j34",
+     "j11",
+     "j2",
+     "j31",
+     "j27",
+     "j7",
+     "j13",
+     "j14",
+     "j32",
+     "j8",
+     "j12",
+     "j22",
+     "j19",
+     "j24",
+     "j29",
+     "j16",
+     "j21",
+     "j15",
+     "j18",
+     "j5",
+     "j4",
+     "j26",
+     "j6",
+     "j35",
+     "j33",
+     "jiwhkfog",
+     "j23",
+     "j25",
+     "jtp89cay"
+    ],
+    "b": []
+   }
+  },
+  {
    "id": "tmmaram2",
    "nombre": "Apertura 2026",
    "cerrado": true,
@@ -202,53 +249,6 @@
      "j23",
      "j6"
     ]
-   }
-  },
-  {
-   "id": "t1",
-   "nombre": "Clausura 2025",
-   "cerrado": true,
-   "fechaInicio": "2025-06-12",
-   "fechaFin": "2025-11-13",
-   "zonas": {
-    "primera": [
-     "j9",
-     "j28",
-     "j3",
-     "j10",
-     "j17",
-     "j30",
-     "j34",
-     "j11",
-     "j2",
-     "j31",
-     "j27",
-     "j7",
-     "j13",
-     "j14",
-     "j32",
-     "j8",
-     "j12",
-     "j22",
-     "j19",
-     "j24",
-     "j29",
-     "j16",
-     "j21",
-     "j15",
-     "j18",
-     "j5",
-     "j4",
-     "j26",
-     "j6",
-     "j35",
-     "j33",
-     "jiwhkfog",
-     "j23",
-     "j25",
-     "jtp89cay"
-    ],
-    "b": []
    }
   },
   {
@@ -5854,7 +5854,7 @@
    "fecha": "2024-11-28",
    "torneoId": "tewu9u5g",
    "jugadorId": "j3",
-   "puntos": 2.0,
+   "puntos": 2,
    "motivo": "Ajuste de importación histórica"
   },
   {
@@ -5926,7 +5926,7 @@
    "fecha": "2024-11-28",
    "torneoId": "tewu9u5g",
    "jugadorId": "j5",
-   "puntos": 3.0,
+   "puntos": 3,
    "motivo": "Ajuste de importación histórica"
   },
   {
@@ -5950,7 +5950,7 @@
    "fecha": "2024-11-28",
    "torneoId": "tewu9u5g",
    "jugadorId": "j26",
-   "puntos": 2.0,
+   "puntos": 2,
    "motivo": "Ajuste de importación histórica"
   },
   {
@@ -6248,6 +6248,278 @@
    "jugadorId": "j4",
    "puntos": 0.5,
    "motivo": "Ajuste de importación histórica"
+  }
+ ],
+ "modificaciones": [
+  {
+   "id": "adjlh0t8om",
+   "jugadorId": "j9",
+   "puntos": 39.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjnnxjl31",
+   "jugadorId": "j11",
+   "puntos": 5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjkh9pig7",
+   "jugadorId": "j3",
+   "puntos": 13,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adju6eanj3",
+   "jugadorId": "j17",
+   "puntos": 22.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjsmhv52h",
+   "jugadorId": "j28",
+   "puntos": 7,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj2wuas5e",
+   "jugadorId": "j30",
+   "puntos": 30.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj3x03hv8",
+   "jugadorId": "j27",
+   "puntos": 23,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjadgij6m",
+   "jugadorId": "j7",
+   "puntos": 19.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjwyy49r1",
+   "jugadorId": "j12",
+   "puntos": 9,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj20vmshv",
+   "jugadorId": "j22",
+   "puntos": -1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjthtk02t",
+   "jugadorId": "j10",
+   "puntos": 5.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjubvihj3",
+   "jugadorId": "j4",
+   "puntos": 17,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjxgg4776",
+   "jugadorId": "j8",
+   "puntos": 16,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjj1kx5ro",
+   "jugadorId": "j34",
+   "puntos": 5.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjhrv3h4s",
+   "jugadorId": "j5",
+   "puntos": 25,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj2a5i3az",
+   "jugadorId": "j32",
+   "puntos": 11.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjbnx415l",
+   "jugadorId": "j24",
+   "puntos": 10,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjmixyxc5",
+   "jugadorId": "j16",
+   "puntos": 9.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjt0atf7g",
+   "jugadorId": "j29",
+   "puntos": -2,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjxy7pptm",
+   "jugadorId": "j6",
+   "puntos": -4.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjxjbas7k",
+   "jugadorId": "j14",
+   "puntos": -0.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjhzyh1sq",
+   "jugadorId": "j33",
+   "puntos": 9.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjzdn5wnw",
+   "jugadorId": "j25",
+   "puntos": 11.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj6ua9xzu",
+   "jugadorId": "jtp89cay",
+   "puntos": 2,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj3op4lcl",
+   "jugadorId": "j2",
+   "puntos": -9,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj4ge1z36",
+   "jugadorId": "j31",
+   "puntos": -24,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjjs6k12x",
+   "jugadorId": "j50",
+   "puntos": 7.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj2e1y0nq",
+   "jugadorId": "j51",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adja0mvsfp",
+   "jugadorId": "j52",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjb40meoo",
+   "jugadorId": "j13",
+   "puntos": 7,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjaovd9kv",
+   "jugadorId": "j19",
+   "puntos": 14.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjjh80tlw",
+   "jugadorId": "j36",
+   "puntos": 3,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjy9owwez",
+   "jugadorId": "j21",
+   "puntos": -1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj7nak0l8",
+   "jugadorId": "j40",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjsjnk4nx",
+   "jugadorId": "j15",
+   "puntos": 1.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjeca1y4q",
+   "jugadorId": "j37",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj17ct7tc",
+   "jugadorId": "j26",
+   "puntos": 4.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjxz485z0",
+   "jugadorId": "j20",
+   "puntos": 5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjgewl6h4",
+   "jugadorId": "j38",
+   "puntos": 2,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjwfbyxix",
+   "jugadorId": "j39",
+   "puntos": -1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjeph6khv",
+   "jugadorId": "j41",
+   "puntos": 2,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj9rtg52b",
+   "jugadorId": "j46",
+   "puntos": 0.5,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjnlniuca",
+   "jugadorId": "j43",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adj3gakmmr",
+   "jugadorId": "j18",
+   "puntos": -6,
+   "motivo": "Ajuste para igualar tabla total histórica"
+  },
+  {
+   "id": "adjc8m8sm6",
+   "jugadorId": "j47",
+   "puntos": 1,
+   "motivo": "Ajuste para igualar tabla total histórica"
   }
  ]
 }
