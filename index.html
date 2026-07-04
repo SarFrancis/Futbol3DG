@@ -21,22 +21,22 @@ body{background:var(--bg); color:var(--ink); font:15px/1.5 'Inter',system-ui,san
 
 /* ---------- header ---------- */
 header{background:linear-gradient(135deg,#14532d 0%,#1e7a3c 60%,#2e9e54 100%); color:#fff; padding:14px 16px 0; box-shadow:var(--shadow); position:sticky; top:0; z-index:40}
-.hrow{display:flex; align-items:center; gap:12px; max-width:1180px; margin:0 auto; flex-wrap:wrap}
+.hrow{display:flex; align-items:center; gap:12px; max-width:1260px; margin:0 auto; flex-wrap:wrap}
 .copa h1{font-size:clamp(20px,4vw,30px); line-height:1}
 .copa .liga{color:#ffd75e}
 .tsel{margin-left:auto; background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:8px; padding:7px 10px; font:600 13px 'Inter'; max-width:46vw}
 .tsel option{color:#222}
 #btnAdmin{border-color:rgba(255,255,255,.4); color:#fff; background:rgba(255,255,255,.1)}
-#adminbar{display:none; max-width:1180px; margin:10px auto 0; background:rgba(0,0,0,.22); border-radius:10px 10px 0 0; padding:8px 12px; font-size:13px; align-items:center; gap:12px; flex-wrap:wrap}
+#adminbar{display:none; max-width:1260px; margin:10px auto 0; background:rgba(0,0,0,.22); border-radius:10px 10px 0 0; padding:8px 12px; font-size:13px; align-items:center; gap:12px; flex-wrap:wrap}
 #adminbar.on{display:flex}
-nav.tabs{max-width:1180px; margin:10px auto 0; display:flex; gap:2px; overflow-x:auto; scrollbar-width:none}
+nav.tabs{max-width:1260px; margin:10px auto 0; display:flex; gap:2px; overflow-x:auto; scrollbar-width:none}
 nav.tabs::-webkit-scrollbar{display:none}
 nav.tabs button{flex:0 0 auto; background:transparent; color:rgba(255,255,255,.75); border:0; border-bottom:3px solid transparent; padding:9px 13px; font:700 13px 'Inter'; cursor:pointer; border-radius:8px 8px 0 0}
 nav.tabs button.on{color:#fff; background:var(--bg); color:var(--verde); border-bottom-color:var(--amarillo)}
 nav.tabs button:hover:not(.on){background:rgba(255,255,255,.1); color:#fff}
 
 /* ---------- layout ---------- */
-main{max-width:1180px; margin:18px auto; padding:0 14px}
+main{max-width:1260px; margin:18px auto; padding:0 14px}
 .panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:18px; margin-bottom:14px; box-shadow:var(--shadow)}
 .panel h2{font-size:22px; color:var(--verde); margin-bottom:6px}
 .rowflex{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
@@ -185,13 +185,18 @@ details.pcard[open] summary{border-bottom:1px solid var(--line)}
 .delta-pos{color:var(--verde); font-weight:700}
 .delta-neg{color:var(--rojo); font-weight:700}
 svg.chart{width:100%; height:auto; background:#fff; border:1px solid var(--line); border-radius:10px}
-.legend{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0}
-.legend .lg{border:1px solid var(--line2); background:#fff; border-radius:16px; padding:4px 11px 4px 9px; font:700 12px 'Inter'; cursor:pointer; color:var(--muted); display:inline-flex; align-items:center; gap:6px; transition:.15s}
-.legend .lg:hover{border-color:var(--verde); color:var(--verde)}
-.legend .lg.on{color:#fff; border-color:transparent}
-.legend .lg .dot{width:9px; height:9px; border-radius:50%; display:inline-block; background:currentColor}
+.msel{position:relative; display:inline-block; margin:10px 0}
+.msel-btn{border:1px solid var(--line2); background:#fff; border-radius:10px; padding:8px 14px; font:700 13px 'Inter'; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; gap:8px}
+.msel-btn:hover{border-color:var(--verde); color:var(--verde)}
+.msel-menu{display:none; position:absolute; top:calc(100% + 6px); left:0; z-index:60; background:#fff; border:1px solid var(--line2); border-radius:12px; box-shadow:0 14px 34px rgba(0,0,0,.2); padding:10px; width:270px; max-height:330px; overflow:auto}
+.msel.open .msel-menu{display:block}
+.msel-acts{display:flex; gap:8px; margin-bottom:8px; position:sticky; top:0}
+.msel-item{display:flex; align-items:center; gap:8px; padding:5px 6px; border-radius:7px; cursor:pointer; font:600 13px 'Inter'}
+.msel-item:hover{background:var(--panel2)}
+.msel-item .dot{width:10px; height:10px; border-radius:50%; background:var(--line2); flex-shrink:0}
 .spark{vertical-align:middle}
 .mmr-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:start}
+.mmr-grid>div{min-width:0}
 @media(max-width:760px){.mmr-grid{grid-template-columns:1fr}}
 .fechatabla{overflow:auto; border:1px solid var(--line); border-radius:10px; max-height:520px}
 .fechatabla table{border-collapse:collapse; font-size:12px; background:#fff}
@@ -205,14 +210,17 @@ svg.chart{width:100%; height:auto; background:#fff; border:1px solid var(--line)
 .chart-tip.on{opacity:1}
 .pcard-mini{background:var(--panel2); border:1px solid var(--line); border-radius:9px; padding:9px 11px; margin-bottom:7px; font-size:12.5px}
 .pcard-mini b{color:var(--verde)}
-.matriz{overflow-x:auto; border:1px solid var(--line); border-radius:10px}
-.matriz table{border-collapse:collapse; font-size:12px; background:#fff}
-.matriz th{background:#20372a; color:#e8e4d5; padding:5px 7px; font-size:10.5px; white-space:nowrap; position:sticky; top:0}
-.matriz td{border:1px solid var(--line); padding:4px 7px; text-align:center; min-width:34px}
+.matriz{overflow:auto; border:1px solid var(--line); border-radius:10px; max-height:72vh}
+.matriz table{border-collapse:separate; border-spacing:0; font-size:12px; background:#fff; table-layout:fixed}
+.matriz th,.matriz td{border-right:1px solid var(--line); border-bottom:1px solid var(--line)}
+.matriz th{background:#20372a; color:#e8e4d5; padding:5px 4px; font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:56px; min-width:56px; max-width:56px}
+.matriz tr:first-child th{position:sticky; top:0; z-index:2}
+.matriz th.row{position:sticky; left:0; z-index:3; width:120px; min-width:120px; max-width:120px; font-weight:700; text-align:left; padding:5px 8px}
+.matriz tr:first-child th.row{z-index:4}
+.matriz td{padding:4px 2px; text-align:center; white-space:nowrap; overflow:hidden}
 .matriz td.p{background:var(--verde-suave); color:var(--verde); font-weight:800}
 .matriz td.n{background:var(--rojo-suave); color:var(--rojo); font-weight:800}
-.matriz td.dot{background:var(--panel2)}
-.matriz td.row{background:#20372a; color:#e8e4d5; font-weight:700; text-align:left; position:sticky; left:0}
+.matriz td.diag{background:#d8d8d0}
 
 /* ---------- admin / misc ---------- */
 .admin-only{display:none}
@@ -222,6 +230,9 @@ body.is-admin .admin-only.panel{display:block}
 .toast{position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(80px); background:#22301f; color:#fff; border-radius:10px; padding:11px 20px; font:600 14px 'Inter'; box-shadow:0 8px 24px rgba(0,0,0,.25); z-index:100; opacity:0; transition:.25s; max-width:90vw; text-align:center}
 .toast.on{opacity:1; transform:translateX(-50%) translateY(0)}
 .jrow{display:flex; gap:10px; align-items:center; padding:8px 0; border-bottom:1px dashed var(--line); flex-wrap:wrap}
+.jrow.trow{flex-wrap:nowrap; overflow-x:auto; gap:7px}
+.trow b{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px; flex:0 1 auto}
+.trow .btn,.trow .muted.small,.trow input{white-space:nowrap; flex-shrink:0}
 .jrow b.inactivo{color:var(--muted); text-decoration:line-through}
 </style>
 </head>
@@ -2210,9 +2221,15 @@ function bloqueDerechaTabla(tid){
   const idsSet=new Set(); pt.events.forEach(e=>participantesDe(e).forEach(id=>idsSet.add(id)));
   const jugadores=[...idsSet].map(id=>({id,nombre:jnom(id)})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
   if(!evoSel) evoSel = new Set(jugadores.map(j=>j.id));
-  box.appendChild(renderLegend(jugadores, evoSel, evoColorMap));
-  const serie=jugadores.filter(j=>evoSel.has(j.id)).map(j=>({nombre:j.nombre, color:asignarColor(evoColorMap,j.id), pts:pt.series(j.id)}));
-  box.appendChild(chartLineas(serie, pt.events, {zeroFloor:true, hoverSolo:true}));
+  const chartBoxEvo = el('div');
+  const drawEvo = ()=>{
+    chartBoxEvo.innerHTML='';
+    const serie=jugadores.filter(j=>evoSel.has(j.id)).map(j=>({nombre:j.nombre, color:asignarColor(evoColorMap,j.id), pts:pt.series(j.id)}));
+    chartBoxEvo.appendChild(chartLineas(serie, pt.events, {zeroFloor:true, hoverSolo:true}));
+  };
+  box.appendChild(playerMultiselect(jugadores, evoSel, evoColorMap, drawEvo));
+  drawEvo();
+  box.appendChild(chartBoxEvo);
   return box;
 }
 function tablaZona(tipo, zrows, base){
@@ -2276,7 +2293,7 @@ function vTabla(m){
 function vEvolucionHistorica(m){
   const p=el('div',{className:'panel'});
   p.innerHTML = `<h2 class="display">Evolución histórica · ${esc(nombreFiltro())}</h2>
-    <div class="hint">Puntos totales acumulados, partido a partido. Tocá los nombres para elegir qué jugadores se ven en el gráfico; pasando el mouse por una línea ves solo a ese jugador.</div>`;
+    <div class="hint">Puntos totales acumulados, partido a partido. Elegí en el desplegable qué jugadores se ven en el gráfico; pasando el mouse por una línea ves solo a ese jugador.</div>`;
   p.appendChild(bloqueDerechaTabla(torneoFiltro));
   m.appendChild(p);
 }
@@ -2402,18 +2419,43 @@ function asignarColor(colorMap, id){
   colorMap.set(id, libre);
   return libre;
 }
-function renderLegend(rows, sel, colorMap){
-  const leg=el('div',{className:'legend'});
-  if(!rows.length) return leg;
+function playerMultiselect(rows, sel, colorMap, onChange){
+  const box=el('div',{className:'msel'});
+  const btn=el('button',{className:'msel-btn',type:'button'});
+  const menu=el('div',{className:'msel-menu'});
+  const acts=el('div',{className:'msel-acts'});
+  acts.append(
+    el('button',{className:'btn small ghost',textContent:'Todos',onclick:()=>{ rows.forEach(r=>sel.add(r.id)); sync(); onChange(); }}),
+    el('button',{className:'btn small ghost',textContent:'Ninguno',onclick:()=>{ rows.forEach(r=>sel.delete(r.id)); sync(); onChange(); }})
+  );
+  menu.appendChild(acts);
+  const items=[];
   rows.forEach(r=>{
-    const on=sel.has(r.id);
-    const b=el('span',{className:'lg'+(on?' on':''),onclick:()=>{ on?sel.delete(r.id):sel.add(r.id); render(); }});
-    if(on){ const color=asignarColor(colorMap,r.id); b.style.background=color; b.style.borderColor=color; b.innerHTML='<span class="dot"></span>'; }
-    else colorMap.delete(r.id);
-    b.appendChild(document.createTextNode(r.nombre));
-    leg.appendChild(b);
+    const cb=el('input',{type:'checkbox'});
+    const dot=el('span',{className:'dot'});
+    const it=el('label',{className:'msel-item'});
+    it.append(cb, dot, document.createTextNode(r.nombre));
+    cb.onchange=()=>{ if(cb.checked) sel.add(r.id); else sel.delete(r.id); sync(); onChange(); };
+    items.push({r,cb,dot});
+    menu.appendChild(it);
   });
-  return leg;
+  function sync(){
+    items.forEach(({r,cb,dot})=>{
+      const on=sel.has(r.id);
+      cb.checked=on;
+      if(on) dot.style.background=asignarColor(colorMap,r.id);
+      else { colorMap.delete(r.id); dot.style.background='var(--line2)'; }
+    });
+    const n=rows.filter(r=>sel.has(r.id)).length;
+    btn.textContent=`👥 Jugadores: ${n} de ${rows.length} ▾`;
+  }
+  sync();
+  btn.onclick=e=>{ e.stopPropagation(); box.classList.toggle('open'); };
+  menu.onclick=e=> e.stopPropagation();
+  const closer=()=>{ if(!box.isConnected){ document.removeEventListener('click',closer); return; } box.classList.remove('open'); };
+  document.addEventListener('click',closer);
+  box.append(btn,menu);
+  return box;
 }
 function participantesDe(e){ return e._tipo==='partido' ? [...(e.e1||[]),...(e.e2||[])] : (e.equipos||[]).flat(); }
 function vMMR(m){
@@ -2431,12 +2473,18 @@ function vMMR(m){
 
   // Gráfico Evolución — histórico completo (todos los torneos), eje X con fechas reales
   const p2=el('div',{className:'panel'});
-  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Tocá los nombres para comparar los jugadores que quieras. Tramo punteado = ese jugador no jugó ese partido.</div>`;
+  p2.innerHTML=`<h2 class="display">Evolución</h2><div class="hint">Elegí en el desplegable los jugadores que quieras comparar. Tramo punteado = ese jugador no jugó ese partido.</div>`;
   if(!mmrSel) mmrSel = new Set(rows.slice(0,4).map(r=>r.id));
-  p2.appendChild(renderLegend(rows, mmrSel, mmrColorMap));
   const tlAll = mmrTimeline('ALL');
-  const serieEvol = [...mmrSel].map(id=>({nombre:jnom(id), color:asignarColor(mmrColorMap,id), pts:tlAll.series(id)}));
-  p2.appendChild(chartLineas(serieEvol, tlAll.events));
+  const chartBoxMMR = el('div');
+  const drawMMR = ()=>{
+    chartBoxMMR.innerHTML='';
+    const serieEvol = rows.filter(r=>mmrSel.has(r.id)).map(r=>({nombre:r.nombre, color:asignarColor(mmrColorMap,r.id), pts:tlAll.series(r.id)}));
+    chartBoxMMR.appendChild(chartLineas(serieEvol, tlAll.events));
+  };
+  p2.appendChild(playerMultiselect(rows, mmrSel, mmrColorMap, drawMMR));
+  drawMMR();
+  p2.appendChild(chartBoxMMR);
   m.appendChild(p2);
 
   // Detalle histórico completo: fecha a fecha (MMR) de todos los torneos + lista de todos los partidos
@@ -2673,7 +2721,7 @@ function vMatriz(m){
   let html='<div class="matriz"><table><tr><th class="row"></th>'+cols.map(c=>`<th title="${esc(jnom(c))}">${esc(jnom(c).slice(0,6))}</th>`).join('')+'</tr>';
   cols.forEach(a=>{
     html+=`<tr><th class="row">${esc(jnom(a))}</th>`+cols.map(b=>{
-      if(a===b) return '<td style="background:rgba(233,242,228,.06)"></td>';
+      if(a===b) return '<td class="diag"></td>';
       const {w,l}=M[a][b];
       if(!w && !l) return '<td></td>';
       const net=w-l;
@@ -3035,14 +3083,14 @@ function vConfig(m){
   p3.innerHTML=`<div class="rowflex"><h2 class="display">Torneos</h2><span class="spacer"></span><button class="btn primary" id="cNuevoT">+ Nuevo torneo</button></div>
   <div class="hint">Cada torneo tiene sus fechas, su corte de zona, sus <b>zonas A/B</b> y sus <b>puntos propios</b>. El orden de esta lista es el orden cronológico: el de más abajo es el más reciente (usá ▲▼ para acomodarlos; eso define el orden del selector de arriba y de la lista de partidos). Al finalizar un torneo podés crear el siguiente con ascensos y descensos automáticos: bajan los últimos 4 de la A y suben los primeros 4 de la B (después podés retocarlo a mano en "Zonas A/B").</div>`;
   const ul=el('div');
-  const inpStyle='border:1px solid var(--line2);border-radius:8px;padding:6px 8px;font:600 13px Inter';
+  const inpStyle='border:1px solid var(--line2);border-radius:8px;padding:5px 6px;font:600 12px Inter';
   S.torneos.forEach((t,ti)=>{
-    const r=el('div',{className:'jrow'});
-    const corteInp=el('input',{type:'number',value:t.zonaCorte||'',placeholder:String(C.zonaCorte),style:'width:64px;'+inpStyle});
+    const r=el('div',{className:'jrow trow'});
+    const corteInp=el('input',{type:'number',value:t.zonaCorte||'',placeholder:String(C.zonaCorte),style:'width:54px;'+inpStyle});
     corteInp.onchange=()=>{ const v=+corteInp.value; if(v>0) t.zonaCorte=v; else delete t.zonaCorte; marcar(); render(); toast('Corte de zona actualizado'); };
-    const fIni=el('input',{type:'date',value:t.fechaInicio||'',title:'Fecha de inicio',style:inpStyle});
+    const fIni=el('input',{type:'date',value:t.fechaInicio||'',title:'Fecha de inicio',style:'width:128px;'+inpStyle});
     fIni.onchange=()=>{ if(fIni.value) t.fechaInicio=fIni.value; else delete t.fechaInicio; marcar(); render(); };
-    const fFin=el('input',{type:'date',value:t.fechaFin||'',title:'Fecha de finalización',style:inpStyle});
+    const fFin=el('input',{type:'date',value:t.fechaFin||'',title:'Fecha de finalización',style:'width:128px;'+inpStyle});
     fFin.onchange=()=>{ if(fFin.value) t.fechaFin=fFin.value; else delete t.fechaFin; marcar(); render(); };
     const mover=d=>{ const i=S.torneos.indexOf(t), j=i+d; if(j<0||j>=S.torneos.length) return; [S.torneos[i],S.torneos[j]]=[S.torneos[j],S.torneos[i]]; marcar(); render(); toast('Orden de torneos actualizado'); };
     r.append(
@@ -3052,14 +3100,14 @@ function vConfig(m){
       el('span',{className:'muted small',textContent:'Del'}), fIni,
       el('span',{className:'muted small',textContent:'al'}), fFin,
       el('span',{className:'muted small',textContent:'Corte:'}), corteInp,
-      el('button',{className:'btn small',textContent:'⚑ Zonas A/B',onclick:()=>formZonas(t)}),
-      el('button',{className:'btn small',textContent:'★ Puntos',onclick:()=>formPuntosTorneo(t)}),
-      el('button',{className:'btn small',textContent:'🏆 Campeón',onclick:()=>formCampeon(t)}),
+      el('button',{className:'btn small',textContent:'⚑ Zonas',title:'Zonas A/B',onclick:()=>formZonas(t)}),
+      el('button',{className:'btn small',textContent:'★ Puntos',title:'Puntos del torneo',onclick:()=>formPuntosTorneo(t)}),
+      el('button',{className:'btn small',textContent:'🏆',title:'Campeón',onclick:()=>formCampeon(t)}),
       el('button',{className:'btn small',textContent:'✎',title:'Renombrar',onclick:()=>{const n=prompt('Nombre del torneo',t.nombre); if(n&&n.trim()){t.nombre=n.trim(); marcar(); render();}}}),
       t.cerrado
-        ? el('button',{className:'btn small ghost',textContent:'↩ Reabrir',onclick:()=>{ t.cerrado=false; marcar(); render(); toast('Torneo reabierto'); }})
-        : el('button',{className:'btn small',textContent:'🏁 Finalizar',onclick:()=>finalizarTorneo(t)}),
-      el('button',{className:'btn small danger',textContent:'Eliminar',onclick:()=>{
+        ? el('button',{className:'btn small ghost',textContent:'↩',title:'Reabrir torneo',onclick:()=>{ t.cerrado=false; marcar(); render(); toast('Torneo reabierto'); }})
+        : el('button',{className:'btn small',textContent:'🏁',title:'Finalizar torneo',onclick:()=>finalizarTorneo(t)}),
+      el('button',{className:'btn small danger',textContent:'✕',title:'Eliminar torneo',onclick:()=>{
         const usado=S.partidos.some(x=>x.torneoId===t.id)||S.triangulares.some(x=>x.torneoId===t.id)||S.sanciones.some(x=>x.torneoId===t.id);
         if(usado) return toast('Tiene partidos o sanciones cargados: no se puede eliminar');
         if(confirm('¿Eliminar torneo vacío?')){ S.torneos=S.torneos.filter(x=>x.id!==t.id); marcar(); render(); }
