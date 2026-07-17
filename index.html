@@ -69,6 +69,8 @@ table.tabla{border-collapse:collapse; width:100%; font-size:13.5px; background:#
 .tabla th.zh{cursor:default; width:34px}
 .tabla td{padding:7px 8px; text-align:center; border-bottom:1px solid var(--line); white-space:nowrap}
 .tabla td.nombre{text-align:left; font-weight:700; min-width:130px}
+.trofeo-mitad{display:inline-block; width:.5em; overflow:hidden; vertical-align:-1px}
+.trofeo-mitad-img{vertical-align:-.1em}
 .tabla td.rank{color:var(--muted); font-weight:700; width:34px}
 .tabla td.pts{font-weight:800; font-size:15px}
 .tabla th[data-k="total"], .tabla td.pts{border-right:2px solid var(--line2)}
@@ -2165,18 +2167,75 @@ function celdaParDoble(pos, neg){
   if(neg) partes.push(`<span class="neg">−${neg}</span>`);
   return partes.join(' / ');
 }
+function campeonesDe(t){
+  if(Array.isArray(t.campeonIds)) return t.campeonIds.filter(Boolean);
+  if(t.campeonId) return [t.campeonId];
+  return [];
+}
+const FRACCIONES = {2:'½',3:'⅓',4:'¼',5:'⅕',6:'⅙',7:'⅐',8:'⅛'};
+let _trofeoMitad = undefined; // undefined=sin calcular, null=no se pudo, {uri,ratio}=lista
+function trofeoMitad(){
+  if(_trofeoMitad !== undefined) return _trofeoMitad;
+  try{
+    const size = 128;
+    const cv = document.createElement('canvas'); cv.width = size*2; cv.height = size*2;
+    const ctx = cv.getContext('2d');
+    ctx.font = size + 'px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+    ctx.textBaseline = 'top';
+    ctx.fillText('🏆', size*0.4, size*0.4);
+    const {data} = ctx.getImageData(0,0,cv.width,cv.height);
+    let minX=cv.width, maxX=-1, minY=cv.height, maxY=-1;
+    for(let y=0; y<cv.height; y++){
+      for(let x=0; x<cv.width; x++){
+        if(data[(y*cv.width+x)*4+3] > 10){
+          if(x<minX) minX=x; if(x>maxX) maxX=x;
+          if(y<minY) minY=y; if(y>maxY) maxY=y;
+        }
+      }
+    }
+    if(maxX<minX || maxY<minY) throw new Error('sin píxeles detectados');
+    const w = maxX-minX+1, h = maxY-minY+1, halfW = Math.ceil(w/2);
+    const out = document.createElement('canvas'); out.width = halfW; out.height = h;
+    out.getContext('2d').drawImage(cv, minX, minY, halfW, h, 0, 0, halfW, h);
+    _trofeoMitad = {uri: out.toDataURL('image/png'), ratio: halfW/h};
+  }catch(e){ _trofeoMitad = null; }
+  return _trofeoMitad;
+}
+function trofeoHtml(n){
+  if(n<=1) return '🏆';
+  if(n===2){
+    const d = trofeoMitad();
+    if(d) return `<img src="${d.uri}" alt="🏆" class="trofeo-mitad-img" style="height:.85em;width:${(d.ratio*.85).toFixed(3)}em">`;
+    return `<span class="trofeo-mitad">🏆</span>`;
+  }
+  return `🏆<sup>${FRACCIONES[n]||('1⁄'+n)}</sup>`;
+}
+function tituloCampeon(t, ids, playerId){
+  if(ids.length<=1) return `Campeón de ${esc(t.nombre)}`;
+  const otros = ids.filter(x=>x!==playerId).map(jnom).join(', ');
+  return `Co-campeón de ${esc(t.nombre)} (junto con ${esc(otros)})`;
+}
 function campeonesMap(){
   const mp = {};
-  S.torneos.forEach(t=>{ if(t.campeonId) mp[t.campeonId]=(mp[t.campeonId]||0)+1; });
+  S.torneos.forEach(t=>{
+    const ids = campeonesDe(t);
+    ids.forEach(id=> (mp[id]=mp[id]||[]).push({t, ids}));
+  });
   return mp;
 }
 function campeonBadge(playerId){
   if(torneoFiltro==='ALL'){
-    const n = campeonesMap()[playerId]||0;
-    return n>0 ? ` <span title="Campeón de ${n} torneo${n>1?'s':''}">${'🏆'.repeat(n)}</span>` : '';
+    const list = campeonesMap()[playerId]||[];
+    if(!list.length) return '';
+    const iconos = list.map(x=>trofeoHtml(x.ids.length)).join('');
+    const titulo = list.map(x=>tituloCampeon(x.t,x.ids,playerId)).join(' · ');
+    return ` <span title="${titulo}">${iconos}</span>`;
   }
   const t = torneo(torneoFiltro);
-  return (t && t.campeonId===playerId) ? ` <span title="Campeón de ${esc(t.nombre)}">🏆</span>` : '';
+  if(!t) return '';
+  const ids = campeonesDe(t);
+  if(!ids.includes(playerId)) return '';
+  return ` <span title="${tituloCampeon(t,ids,playerId)}">${trofeoHtml(ids.length)}</span>`;
 }
 let ordenColAll = null;
 function tablaUnica(rows){
@@ -3218,15 +3277,26 @@ function formPuntosTorneo(t){
 }
 function formCampeon(t){
   const jugs = jugadoresActivos();
-  const opts = `<option value="">— Sin campeón —</option>` + jugs.map(j=>`<option value="${j.id}" ${t.campeonId===j.id?'selected':''}>${esc(j.nombre)}</option>`).join('');
+  const seleccion = new Set(campeonesDe(t));
   openModal(`<h3 class="display">Campeón · ${esc(t.nombre)}</h3>
-    <div class="hint">Elegí quién se consagró campeón de este torneo. Va a aparecer con 🏆 junto a su nombre en la tabla de este torneo, y también en "Todos los torneos".</div>
-    <div class="field"><label>Campeón</label><select id="fCampeon">${opts}</select></div>
+    <div class="hint">Tildá quién se consagró campeón de este torneo. Si hubo <b>más de un campeón</b> (co-campeones), tildá a todos: en la tabla cada uno va a aparecer con un trofeo 🏆 partido a la mitad (o con una fracción si son más de dos), en vez del trofeo entero.</div>
+    <div class="plist" id="fCampeonList"></div>
     <div class="modalacts"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn primary" id="fOk">Guardar</button></div>`);
+  const lista=$('#fCampeonList');
+  jugs.forEach(j=>{
+    const lb=el('label',{className:seleccion.has(j.id)?'on':''});
+    const cb=el('input',{type:'checkbox',checked:seleccion.has(j.id),onchange:()=>{
+      cb.checked?seleccion.add(j.id):seleccion.delete(j.id); lb.classList.toggle('on',cb.checked);
+    }});
+    lb.append(cb, document.createTextNode(j.nombre));
+    lista.appendChild(lb);
+  });
   $('#fOk').onclick=()=>{
-    const v=$('#fCampeon').value;
-    if(v) t.campeonId=v; else delete t.campeonId;
-    marcar(); closeModal(); render(); toast(v?'Campeón guardado':'Campeón quitado');
+    const arr=[...seleccion];
+    delete t.campeonId;
+    if(arr.length) t.campeonIds=arr; else delete t.campeonIds;
+    marcar(); closeModal(); render();
+    toast(!arr.length?'Campeón quitado': arr.length>1?'Co-campeones guardados':'Campeón guardado');
   };
 }
 
